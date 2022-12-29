@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_LoginRegister.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Đăng ký tài khoản</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" action="" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Tài khoản" name="username" type="text" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Tên người dùng" name="name" type="text" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Điện thoại" name="phone" type="text" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Mật khẩu" name="password" type="password" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Nhập lại mật khẩu" name="repeatPassword" type="password" autofocus>
+                            </div>
+                            <button type="submit" class="btn btn-lg btn-success btn-block">Đăng ký</button>
+                        </fieldset>
+                        <hr />
+                        <center><a href="/User/Login" class="btn-link">Bạn đã có tài khoản, đăng nhập?</a></center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

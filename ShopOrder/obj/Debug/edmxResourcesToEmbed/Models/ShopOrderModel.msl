@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShopOrderModelStoreContainer" CdmEntityContainer="ShopOrderEntities">
+    <EntitySetMapping Name="DANHs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DANH">
+        <MappingFragment StoreEntitySet="DANH">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DDANGs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DDANG">
+        <MappingFragment StoreEntitySet="DDANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DMATHANGs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DMATHANG">
+        <MappingFragment StoreEntitySet="DMATHANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DNHOMHANGID" ColumnName="DNHOMHANGID" />
+          <ScalarProperty Name="DPHANLOAIID" ColumnName="DPHANLOAIID" />
+          <ScalarProperty Name="DDANGID" ColumnName="DDANGID" />
+          <ScalarProperty Name="DMAUID" ColumnName="DMAUID" />
+          <ScalarProperty Name="DTHOIGIANDATID" ColumnName="DTHOIGIANDATID" />
+          <ScalarProperty Name="GIABAN" ColumnName="GIABAN" />
+          <ScalarProperty Name="GIABAN2" ColumnName="GIABAN2" />
+          <ScalarProperty Name="GIABAN3" ColumnName="GIABAN3" />
+          <ScalarProperty Name="GIABAN4" ColumnName="GIABAN4" />
+          <ScalarProperty Name="GIABAN5" ColumnName="GIABAN5" />
+          <ScalarProperty Name="GIABAN6" ColumnName="GIABAN6" />
+          <ScalarProperty Name="GIABAN7" ColumnName="GIABAN7" />
+          <ScalarProperty Name="GIABAN8" ColumnName="GIABAN8" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DMAUs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DMAU">
+        <MappingFragment StoreEntitySet="DMAU">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DNHOMHANGs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DNHOMHANG">
+        <MappingFragment StoreEntitySet="DNHOMHANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DPHANLOAIs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DPHANLOAI">
+        <MappingFragment StoreEntitySet="DPHANLOAI">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DSIZEs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DSIZE">
+        <MappingFragment StoreEntitySet="DSIZE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DSIZECHITIETs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DSIZECHITIET">
+        <MappingFragment StoreEntitySet="DSIZECHITIET">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
+          <ScalarProperty Name="DSIZEID" ColumnName="DSIZEID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DTHOIGIANDATs">
+      <EntityTypeMapping TypeName="ShopOrderModel.DTHOIGIANDAT">
+        <MappingFragment StoreEntitySet="DTHOIGIANDAT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

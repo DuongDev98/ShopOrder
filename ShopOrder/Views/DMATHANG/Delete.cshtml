@@ -1,0 +1,139 @@
+﻿@model ShopOrder.Models.DMATHANG
+
+@{
+    ViewBag.Title = "Xóa";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h4 class="page-header">Danh mục mặt hàng</h4>
+    </div>
+</div>
+
+<h3>Xóa dữ liệu đang chọn?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Mã hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODE)
+        </dd>
+
+        <dt>
+            Mặt hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        @*<dt>
+            Giá bán
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN)
+        </dd>
+
+        <dt>
+            Giá bán 2
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN2)
+        </dd>
+
+        <dt>
+            Giá bán 3
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN3)
+        </dd>
+
+        <dt>
+            Giá bán 4
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN4)
+        </dd>
+
+        <dt>
+            Giá bán 5
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN5)
+        </dd>
+
+        <dt>
+            Giá bán 6
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN6)
+        </dd>
+
+        <dt>
+            Giá bán 7
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN7)
+        </dd>
+
+        <dt>
+            Giá bán 8
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN8)
+        </dd>*@
+
+        <dt>
+            Kiểu dáng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DDANG.NAME)
+        </dd>
+
+        <dt>
+            Nhóm hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNHOMHANG.NAME)
+        </dd>
+
+        <dt>
+            Phân loại
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DPHANLOAI.NAME)
+        </dd>
+
+        <dt>
+            Thời gian đặt
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DTHOIGIANDAT.NAME)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Danh sách", "Index")
+        </div>
+    }
+</div>

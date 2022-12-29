@@ -1,0 +1,35 @@
+﻿@model ShopOrder.Models.DPHANLOAI
+@{
+    ViewBag.Title = "Xóa";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h4 class="page-header">Danh mục phân loại</h4>
+    </div>
+</div>
+
+<h3>Xóa dữ liệu đang chọn?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Danh sách", "Index")|
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+        </div>
+    }
+</div>
