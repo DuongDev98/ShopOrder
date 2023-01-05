@@ -2,39 +2,44 @@
     ViewBag.Title = "Đăng ký";
     Layout = "~/Views/Shared/_LoginRegister.cshtml";
 }
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Đăng ký tài khoản</h3>
+<form class="splash-container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-1">Registrations Form</h3>
+            <p>Please enter your user information.</p>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <input class="form-control form-control-lg" type="text" name="nick" required="" placeholder="Username" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control form-control-lg" type="email" name="email" required="" placeholder="E-mail" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control form-control-lg" id="pass1" type="password" required="" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input class="form-control form-control-lg" required="" placeholder="Confirm">
+            </div>
+            <div class="form-group pt-2">
+                <button class="btn btn-block btn-primary" type="submit">Register My Account</button>
+            </div>
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox"><span class="custom-control-label">By creating an account, you agree the <a href="#">terms and conditions</a></span>
+                </label>
+            </div>
+            <div class="form-group row pt-0">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                    <button class="btn btn-block btn-social btn-facebook " type="button">Facebook</button>
                 </div>
-                <div class="panel-body">
-                    <form role="form" action="" method="post">
-                        <fieldset>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Tài khoản" name="username" type="text" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Tên người dùng" name="name" type="text" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Điện thoại" name="phone" type="text" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Mật khẩu" name="password" type="password" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Nhập lại mật khẩu" name="repeatPassword" type="password" autofocus>
-                            </div>
-                            <button type="submit" class="btn btn-lg btn-success btn-block">Đăng ký</button>
-                        </fieldset>
-                        <hr />
-                        <center><a href="/User/Login" class="btn-link">Bạn đã có tài khoản, đăng nhập?</a></center>
-                    </form>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <button class="btn  btn-block btn-social btn-twitter" type="button">Twitter</button>
                 </div>
             </div>
         </div>
+        <div class="card-footer bg-white">
+            <p>Already member? <a href="#" class="text-secondary">Login Here.</a></p>
+        </div>
     </div>
-</div>
+</form>

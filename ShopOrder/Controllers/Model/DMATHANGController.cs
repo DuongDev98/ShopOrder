@@ -58,7 +58,6 @@ namespace ShopOrder.Controllers.Model
             return dic;
         }
 
-        //[Bind(Include = "ID,CODE,NAME,DNHOMHANGID,DPHANLOAIID,DDANGID,DTHOIGIANDATID,GIABAN,GIABAN2,GIABAN3,GIABAN4,GIABAN5,GIABAN6,GIABAN7,GIABAN8")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DMATHANG dMATHANG)

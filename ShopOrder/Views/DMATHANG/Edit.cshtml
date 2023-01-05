@@ -1,16 +1,11 @@
 ﻿@model ShopOrder.Models.DMATHANG
 
 @{
-    ViewBag.Title = "Chỉnh sửa";
+    ViewBag.Title = "Danh mục mặt hàng";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-<link href="~/Content/Admin/fileInput/src/image-uploader.css" rel="stylesheet" />
+<link href="~/Content/fileInput/src/image-uploader.css" rel="stylesheet" />
 
-<div class="row">
-    <div class="col-lg-12">
-        <h4 class="page-header">Chỉnh sửa</h4>
-    </div>
-</div>
 <form method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
@@ -180,7 +175,7 @@
     </div>
 </form>
 
-<script src="~/Content/Admin/fileInput/src/image-uploader.js"></script>
+<script src="~/Content/fileInput/src/image-uploader.js"></script>
 <script>
     $('.check-custom').change(function () {
         $(this).parent().find('input[type=number]').val($(this).is(':checked') ? 30 : 0);

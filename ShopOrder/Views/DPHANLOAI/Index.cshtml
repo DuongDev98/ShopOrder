@@ -1,14 +1,9 @@
 ﻿@model IEnumerable<ShopOrder.Models.DPHANLOAI>
 
 @{
-    ViewBag.Title = "Phân loại";
+    ViewBag.Title = "Danh mục phân loại";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-<div class="row">
-    <div class="col-lg-12">
-        <h4 class="page-header">Danh sách phân loại</h4>
-    </div>
-</div>
 <p>
     @Html.ActionLink("Thêm mới", "Edit", null, new { @class = "btn btn-info" })
 </p>
