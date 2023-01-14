@@ -6,7 +6,7 @@ using System.Web.Mvc.Filters;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI.WebControls;
-using ShopOrder.Models;
+using ShopOrder.Entities;
 
 namespace ShopOrder.Utils
 {

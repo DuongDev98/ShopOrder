@@ -1,7 +1,8 @@
-﻿using ShopOrder.Models;
+﻿using ShopOrder.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -77,7 +78,24 @@ namespace ShopOrder.Controllers.Model
         {
             DNHOMHANG model = db.DNHOMHANGs.Find(ID);
             db.DNHOMHANGs.Remove(model);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                string error = "";
+                if (ex.GetType() == typeof(DbUpdateException) && ex.ToString().Contains("REFERENCE constraint"))
+                {
+                    error = "Dữ liệu đã phát sinh liên kết, không thể xóa";
+                }
+                else
+                {
+                    error = ex.ToString();
+                }
+                ViewBag.errorMessage = error;
+                return View("Delete", model);
+            }
             return RedirectToAction("Index");
         }
 

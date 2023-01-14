@@ -8,7 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
-using ShopOrder.Models;
+using ShopOrder.Entities;
 using ShopOrder.Utils;
 
 namespace ShopOrder.Controllers.Model
@@ -43,7 +43,10 @@ namespace ShopOrder.Controllers.Model
             ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs, "ID", "NAME", dMATHANG.DPHANLOAIID);
             ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs, "ID", "NAME", dMATHANG.DTHOIGIANDATID);
             ViewBag.Sizes = db.DSIZEs.ToList();
+            ViewBag.Maus = db.DMAUs.ToList();
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
+            ViewBag.SizeSelect = LayDanhSachSizeDangChon(dMATHANG);
+            ViewBag.MauSelect = LayDanhSachMauDangChon(dMATHANG);
             return View(dMATHANG);
         }
 
@@ -53,7 +56,7 @@ namespace ShopOrder.Controllers.Model
             List<DANH> lstAnhs = db.DANHs.Where(x => x.DMATHANGID == mhRow.ID).ToList();
             foreach (DANH anh in lstAnhs)
             {
-                dic.Add(anh.ID, "/Images/Upload/" + anh.NAME);
+                dic.Add(anh.ID, string.Format("/Images/{0}/", FileFolders.MatHang) + anh.NAME);
             }
             return dic;
         }
@@ -75,28 +78,117 @@ namespace ShopOrder.Controllers.Model
                 }
                 if (!hasImg) hasImg = preloaded != null && preloaded.Length > 0;
 
-                if (dMATHANG.ID == null)
+                string error = "";
+                if (dMATHANG.NAME != null && dMATHANG.NAME.Length > 0)
                 {
-                    dMATHANG.ID = Guid.NewGuid().ToString();
-                    dMATHANG.CODE = DatabaseUtils.GenCode("CODE", "DMATHANG");
-                    db.DMATHANGs.Add(dMATHANG);
+                    if (!hasImg)
+                    {
+                        error = "Hình ảnh sản phẩm không được trống";
+                    }
                 }
                 else
                 {
-                    db.Entry(dMATHANG).State = EntityState.Modified;
-                }                
-                db.SaveChanges();
+                    error = "Tên sản phẩm trống";
+                }
 
-                //upload anh
-                uploadAnhMatHang(db, Server, preloaded, files, dMATHANG);
+                if (error.Length == 0)
+                {
+                    if (dMATHANG.ID == null)
+                    {
+                        dMATHANG.ID = Guid.NewGuid().ToString();
+                        dMATHANG.CODE = DatabaseUtils.GenCode("CODE", "DMATHANG");
+                        dMATHANG.TIMECREATED = DateTime.Now;
+                        db.DMATHANGs.Add(dMATHANG);
+                    }
+                    else
+                    {
+                        db.Entry(dMATHANG).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    //xóa dữ liệu chi tiết
+                    db.DSIZECHITIETs.RemoveRange(db.DSIZECHITIETs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList());
+                    db.DMAUCHITIETs.RemoveRange(db.DMAUCHITIETs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList());
+                    db.SaveChanges();
+
+                    //luu size
+                    if (Request.Params.AllKeys.Contains("sizeTmp"))
+                    {
+                        string[] data = Request.Params.GetValues("sizeTmp");
+                        if (data != null && data.Length > 0)
+                        {
+                            foreach (string val in data)
+                            {
+                                DSIZECHITIET ctRow = new DSIZECHITIET();
+                                ctRow.ID = Guid.NewGuid().ToString();
+                                ctRow.DSIZEID = val;
+                                ctRow.DMATHANGID = dMATHANG.ID;
+                                db.DSIZECHITIETs.Add(ctRow);
+                            }
+                            db.SaveChanges();
+                        }
+                    }
+
+                    //luu mau
+                    if (Request.Params.AllKeys.Contains("mauTmp"))
+                    {
+                        string[] data = Request.Params.GetValues("mauTmp");
+                        if (data != null && data.Length > 0)
+                        {
+                            foreach (string val in data)
+                            {
+                                DMAUCHITIET ctRow = new DMAUCHITIET();
+                                ctRow.ID = Guid.NewGuid().ToString();
+                                ctRow.DMAUID = val;
+                                ctRow.DMATHANGID = dMATHANG.ID;
+                                db.DMAUCHITIETs.Add(ctRow);
+                            }
+                            db.SaveChanges();
+                        }
+                    }
+
+                    //upload anh
+                    uploadAnhMatHang(db, Server, preloaded, files, dMATHANG);
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.errorMessage = error;
+                }
             }
             ViewBag.DDANGID = new SelectList(db.DDANGs, "ID", "NAME", dMATHANG.DDANGID);
             ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs, "ID", "NAME", dMATHANG.DNHOMHANGID);
             ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs, "ID", "NAME", dMATHANG.DPHANLOAIID);
             ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs, "ID", "NAME", dMATHANG.DTHOIGIANDATID);
+            ViewBag.Sizes = db.DSIZEs.ToList();
+            ViewBag.Maus = db.DMAUs.ToList();
+            ViewBag.imgs = GetDicAnhs(db, dMATHANG);
+            ViewBag.SizeSelect = LayDanhSachSizeDangChon(dMATHANG);
+            ViewBag.MauSelect = LayDanhSachMauDangChon(dMATHANG);
             return View(dMATHANG);
+        }
+
+        private List<DMAU> LayDanhSachMauDangChon(DMATHANG dMATHANG)
+        {
+            var rs = new List<DMAU>();
+            var lst = db.DMAUCHITIETs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList();
+            foreach (var x in lst)
+            {
+                rs.Add(x.DMAU);
+            }
+            return rs;
+        }
+
+        private List<DSIZE> LayDanhSachSizeDangChon(DMATHANG dMATHANG)
+        {
+            var rs = new List<DSIZE>();
+            var lst = db.DSIZECHITIETs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList();
+            foreach (var x in lst)
+            {
+                rs.Add(x.DSIZE);
+            }
+            return rs;
         }
 
         private void uploadAnhMatHang(ShopOrderEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, DMATHANG item)
@@ -109,7 +201,7 @@ namespace ShopOrder.Controllers.Model
                 {
                     if (olds == null || !olds.Contains(itemAnh.ID))
                     {
-                        FileUploads.Delete(httpServer, itemAnh.NAME);
+                        FileUploads.DeleteMatHang(httpServer, itemAnh.NAME);
                         db.DANHs.Remove(itemAnh);
                     }
                 }
@@ -120,7 +212,7 @@ namespace ShopOrder.Controllers.Model
                 foreach (HttpPostedFileBase fileItem in files)
                 {
                     if (fileItem.ContentLength == 0) continue;
-                    string file = FileUploads.Upload(httpServer, fileItem);
+                    string file = FileUploads.UploadMatHang(httpServer, fileItem);
                     DANH itemAnh = new DANH();
                     itemAnh.ID = Guid.NewGuid().ToString();
                     itemAnh.DMATHANGID = item.ID;
@@ -150,6 +242,14 @@ namespace ShopOrder.Controllers.Model
         public ActionResult DeleteConfirmed(string id)
         {
             DMATHANG dMATHANG = db.DMATHANGs.Find(id);
+
+            //xóa dữ liệu chi tiết trước
+            db.DSIZECHITIETs.RemoveRange(db.DSIZECHITIETs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList());
+            db.DMAUCHITIETs.RemoveRange(db.DMAUCHITIETs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList());
+            db.DANHs.RemoveRange(db.DANHs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList());
+            db.SaveChanges();
+
+            //xóa dữ liệu ảnh
             db.DMATHANGs.Remove(dMATHANG);
             db.SaveChanges();
             return RedirectToAction("Index");

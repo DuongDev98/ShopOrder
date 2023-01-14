@@ -1,24 +1,26 @@
-﻿@model ShopOrder.Models.DMATHANG
+﻿@model ShopOrder.Entities.DMATHANG
 
 @{
     ViewBag.Title = "Danh mục mặt hàng";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-<link href="~/Content/fileInput/src/image-uploader.css" rel="stylesheet" />
+<link href="~/Content/image-uploader/src/image-uploader.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/vendor/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
-<form method="post" enctype="multipart/form-data">
+<form class="card p-t-10" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal col-lg-6 col-sm-12">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.TIMECREATED)
 
         @{
             if (Model.ID != null)
             {
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CODE, "Mã hàng", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    @Html.LabelFor(model => model.CODE, "Mã hàng", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
                         <input type="text" class="form-control" value="@Model.CODE" disabled>
                         <input type="text" class="form-control" value="@Model.CODE" name="CODE" style="display:none;">
                     </div>
@@ -27,144 +29,184 @@
         }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NAME, "Tên hàng", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.NAME, "Tên hàng", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DNHOMHANGID, "Nhóm hàng", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.DNHOMHANGID, "Nhóm hàng", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.DropDownList("DNHOMHANGID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DNHOMHANGID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DPHANLOAIID, "Phân loại", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.DPHANLOAIID, "Phân loại", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.DropDownList("DPHANLOAIID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DPHANLOAIID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DDANGID, "Kiểu dáng", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.DDANGID, "Kiểu dáng", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.DropDownList("DDANGID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DDANGID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DTHOIGIANDATID, "Thời gian đặt hàng", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.DTHOIGIANDATID, "Thời gian đặt hàng", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.DropDownList("DTHOIGIANDATID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DTHOIGIANDATID, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-3"></div>
-                <div class="col-md-3">
-                    <input type="checkbox" class="form-check-input check-custom" id="chkHangSapVe" @(Model.HANGSAPVE > 0 ? "checked" : "")>
-                    <label class="form-check-label" for="chkHangSapVe">Hàng sắp về</label>
-                    <input type="number" name="HANGSAPVE" style="display: none;" value="@(Model.HANGSAPVE > 0 ? "30" : "")">
-                </div>
+        <div class="form-group">
+            <div class="col-12">
+                <div class="row p-l-25">
+                    @*<div class="col-md-3">
+                        <input type="checkbox" class="form-check-input check-custom" id="chkHangSapVe" @(Model.HANGSAPVE > 0 ? "checked" : "")>
+                        <label class="form-check-label" for="chkHangSapVe">Hàng sắp về</label>
+                        <input type="number" name="HANGSAPVE" style="display: none;" value="@(Model.HANGSAPVE > 0 ? "30" : "")">
+                    </div>*@
 
-                <div class="col-md-3">
-                    <input type="checkbox" class="form-check-input check-custom" id="chkHangMoiVe" @(Model.HANGMOIVE > 0 ? "checked" : "")>
-                    <label class="form-check-label" for="chkHangMoiVe">Hàng mới về</label>
-                    <input type="number" name="HANGMOIVE" style="display: none;" value="@(Model.HANGMOIVE > 0 ? "30" : "")">
-                </div>
+                    @*<div class="col-md-3">
+                        <input type="checkbox" class="form-check-input check-custom" id="chkHangMoiVe" @(Model.HANGMOIVE > 0 ? "checked" : "")>
+                        <label class="form-check-label" for="chkHangMoiVe">Hàng mới về</label>
+                        <input type="number" name="HANGMOIVE" style="display: none;" value="@(Model.HANGMOIVE > 0 ? "30" : "")">
+                    </div>*@
 
-                <div class="col-md-3">
-                    <input type="checkbox" class="form-check-input check-custom" id="chkHangSale" @(Model.HANGSALE > 0 ? "checked" : "")>
-                    <label class="form-check-label" for="chkHangSale">Hàng sale</label>
-                    <input type="number" name="HANGSALE" style="display: none;" value="@(Model.HANGSALE > 0 ? "30" : "")">
+                    <div class="col-md-3">
+                        <input type="checkbox" class="form-check-input check-custom" id="chkHangSale" @(Model.HANGSALE > 0 ? "checked" : "")>
+                        <label class="form-check-label" for="chkHangSale">Hàng sale</label>
+                        <input type="number" name="HANGSALE" style="display: none;" value="@(Model.HANGSALE > 0 ? "30" : "")">
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GIABAN, "Giá bán", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.GIABAN, "Giá bán", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.GIABAN, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
                 @Html.ValidationMessageFor(model => model.GIABAN, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GIABAN2, "Giá bán 2", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.GIABAN2, "Giá bán 2", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.GIABAN2, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
                 @Html.ValidationMessageFor(model => model.GIABAN2, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GIABAN3, "Giá bán 3", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.GIABAN3, "Giá bán 3", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.GIABAN3, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
                 @Html.ValidationMessageFor(model => model.GIABAN3, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GIABAN4, "Giá bán 4", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.GIABAN4, "Giá bán 4", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.GIABAN4, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
                 @Html.ValidationMessageFor(model => model.GIABAN4, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @*<div class="form-group">
-                @Html.LabelFor(model => model.GIABAN5, "Giá bán 5", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.GIABAN5, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN5, "", new { @class = "text-danger" })
-                </div>
+            @Html.LabelFor(model => model.GIABAN5, "Giá bán 5", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN5, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN5, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.GIABAN6, "Giá bán 6", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.GIABAN6, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN6, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIABAN6, "Giá bán 6", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN6, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN6, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.GIABAN7, "Giá bán 7", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.GIABAN7, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN7, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIABAN7, "Giá bán 7", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN7, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN7, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.GIABAN8, "Giá bán 8", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.GIABAN8, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN8, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIABAN8, "Giá bán 8", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN8, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN8, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         @*anh san pham*@
+
+        @{
+            List<ShopOrder.Entities.DSIZE> lstSizes = ViewBag.Sizes;
+            if (lstSizes != null && lstSizes.Count > 0)
+            {
+                List<ShopOrder.Entities.DSIZE> sizeSelect = ViewBag.SizeSelect ?? new List<ShopOrder.Entities.DSIZE>();
+                <div class="card-body border-top col-md-8">
+                    <h5 class="card-title">Size</h5>
+                    <select class="selectpicker" name="sizeTmp" multiple>
+                        @{
+                            foreach (var item in lstSizes)
+                            {
+                                <option value="@item.ID" @(sizeSelect.Contains(item) ? "selected" : "")>@item.NAME</option>
+                            }
+                        }
+                    </select>
+                </div>
+            }
+        }
+
+        @{
+            List<ShopOrder.Entities.DMAU> lstMaus = ViewBag.Maus;
+            if (lstMaus != null && lstMaus.Count > 0)
+            {
+                List<ShopOrder.Entities.DMAU> mauSelect = ViewBag.MauSelect ?? new List<ShopOrder.Entities.DMAU>();
+                <div class="card-body border-top col-md-8">
+                    <h5 class="card-title">Màu</h5>
+                    <select class="selectpicker" name="mauTmp" multiple>
+                        @{
+                            foreach (var item in lstMaus)
+                            {
+                                <option value="@item.ID" @(mauSelect.Contains(item) ? "selected" : "")>@item.NAME</option>
+                            }
+                        }
+                    </select>
+                </div>
+            }
+        }
+
         <div class="form-group">
-            <div class="control-label col-md-2">
+            <div class="control-label col-md-4">
                 Ảnh
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <div class="input-images" name="files" style="padding-top: .5rem;"></div>
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-8">
                 <input type="submit" value="Save" class="btn btn-success" />
             </div>
         </div>
@@ -174,8 +216,9 @@
         </div>
     </div>
 </form>
-
-<script src="~/Content/fileInput/src/image-uploader.js"></script>
+<script src="~/Content/Admin/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="~/Content/Admin/assets/vendor/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="~/Content/image-uploader/src/image-uploader.js"></script>
 <script>
     $('.check-custom').change(function () {
         $(this).parent().find('input[type=number]').val($(this).is(':checked') ? 30 : 0);

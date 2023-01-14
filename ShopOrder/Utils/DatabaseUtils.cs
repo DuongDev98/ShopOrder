@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using ShopOrder.Models;
+using ShopOrder.Entities;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;

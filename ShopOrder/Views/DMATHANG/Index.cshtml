@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShopOrder.Models.DMATHANG>
+﻿@model IEnumerable<ShopOrder.Entities.DMATHANG>
 
 @{
     ViewBag.Title = "Danh mục mặt hàng";
@@ -18,8 +18,6 @@
                 <th>Giá bán 2</th>
                 <th>Giá bán 3</th>
                 <th>Giá bán 4</th>
-                <th>Hàng sắp về</th>
-                <th>Hàng mới về</th>
                 <th>Hàng sale</th>
                 <th></th>
             </tr>
@@ -38,8 +36,6 @@
                         <td>@((item.GIABAN2 ?? 0).ToString("n0"))</td>
                         <td>@((item.GIABAN3 ?? 0).ToString("n0"))</td>
                         <td>@((item.GIABAN4 ?? 0).ToString("n0"))</td>
-                        <td><span style="display:none">@item.HANGSAPVE</span><input type="checkbox" @(item.HANGSAPVE > 0 ? "checked" : "") disabled /></td>
-                        <td><span style="display:none">@item.HANGMOIVE</span><input type="checkbox" @(item.HANGMOIVE > 0 ? "checked" : "") disabled /></td>
                         <td><span style="display:none">@item.HANGSALE</span><input type="checkbox" @(item.HANGSALE > 0 ? "checked" : "") disabled /></td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-warning" })

@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DANH">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DMATHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DMATHANG" Relationship="Self.FK__DANH__DMATHANGID__7D439ABD" FromRole="DANH" ToRole="DMATHANG" />
+  </EntityType>
+  <EntityType Name="DDANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DMATHANGs" Relationship="Self.FK__DMATHANG__DDANGI__71D1E811" FromRole="DDANG" ToRole="DMATHANG" />
+  </EntityType>
+  <EntityType Name="DMATHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DNHOMHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="DPHANLOAIID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="DDANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="DTHOIGIANDATID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="GIABAN" Type="Int64" />
+    <Property Name="GIABAN2" Type="Int64" />
+    <Property Name="GIABAN3" Type="Int64" />
+    <Property Name="GIABAN4" Type="Int64" />
+    <Property Name="GIABAN5" Type="Int64" />
+    <Property Name="GIABAN6" Type="Int64" />
+    <Property Name="GIABAN7" Type="Int64" />
+    <Property Name="GIABAN8" Type="Int64" />
+    <Property Name="HANGMOIVE" Type="Int32" />
+    <Property Name="HANGSAPVE" Type="Int32" />
+    <Property Name="HANGSALE" Type="Int32" />
+    <Property Name="BANAMKHO" Type="Int32" />
+    <Property Name="TIMECREATED" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DANHs" Relationship="Self.FK__DANH__DMATHANGID__7D439ABD" FromRole="DMATHANG" ToRole="DANH" />
+    <NavigationProperty Name="DDANG" Relationship="Self.FK__DMATHANG__DDANGI__71D1E811" FromRole="DMATHANG" ToRole="DDANG" />
+    <NavigationProperty Name="DNHOMHANG" Relationship="Self.FK__DMATHANG__DNHOMH__6FE99F9F" FromRole="DMATHANG" ToRole="DNHOMHANG" />
+    <NavigationProperty Name="DPHANLOAI" Relationship="Self.FK__DMATHANG__DPHANL__70DDC3D8" FromRole="DMATHANG" ToRole="DPHANLOAI" />
+    <NavigationProperty Name="DTHOIGIANDAT" Relationship="Self.FK__DMATHANG__DTHOIG__72C60C4A" FromRole="DMATHANG" ToRole="DTHOIGIANDAT" />
+    <NavigationProperty Name="DMAUCHITIETs" Relationship="Self.FK__DMAUCHITI__DMATH__797309D9" FromRole="DMATHANG" ToRole="DMAUCHITIET" />
+    <NavigationProperty Name="DSIZECHITIETs" Relationship="Self.FK__DSIZECHIT__DMATH__75A278F5" FromRole="DMATHANG" ToRole="DSIZECHITIET" />
+  </EntityType>
+  <EntityType Name="DMAU">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DMAUCHITIETs" Relationship="Self.FK__DMAUCHITI__DMAUI__7A672E12" FromRole="DMAU" ToRole="DMAUCHITIET" />
+  </EntityType>
+  <EntityType Name="DMAUCHITIET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DMATHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="DMAUID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DMATHANG" Relationship="Self.FK__DMAUCHITI__DMATH__797309D9" FromRole="DMAUCHITIET" ToRole="DMATHANG" />
+    <NavigationProperty Name="DMAU" Relationship="Self.FK__DMAUCHITI__DMAUI__7A672E12" FromRole="DMAUCHITIET" ToRole="DMAU" />
+  </EntityType>
+  <EntityType Name="DNHOMHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DMATHANGs" Relationship="Self.FK__DMATHANG__DNHOMH__6FE99F9F" FromRole="DNHOMHANG" ToRole="DMATHANG" />
+  </EntityType>
+  <EntityType Name="DPHANLOAI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DMATHANGs" Relationship="Self.FK__DMATHANG__DPHANL__70DDC3D8" FromRole="DPHANLOAI" ToRole="DMATHANG" />
+  </EntityType>
+  <EntityType Name="DSIZE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DSIZECHITIETs" Relationship="Self.FK__DSIZECHIT__DSIZE__76969D2E" FromRole="DSIZE" ToRole="DSIZECHITIET" />
+  </EntityType>
+  <EntityType Name="DSIZECHITIET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DMATHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="DSIZEID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DMATHANG" Relationship="Self.FK__DSIZECHIT__DMATH__75A278F5" FromRole="DSIZECHITIET" ToRole="DMATHANG" />
+    <NavigationProperty Name="DSIZE" Relationship="Self.FK__DSIZECHIT__DSIZE__76969D2E" FromRole="DSIZECHITIET" ToRole="DSIZE" />
+  </EntityType>
+  <EntityType Name="DTHOIGIANDAT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DMATHANGs" Relationship="Self.FK__DMATHANG__DTHOIG__72C60C4A" FromRole="DTHOIGIANDAT" ToRole="DMATHANG" />
+  </EntityType>
+  <Association Name="FK__DANH__DMATHANGID__7D439ABD">
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
+    <End Role="DANH" Type="Self.DANH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMATHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DANH">
+        <PropertyRef Name="DMATHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DMATHANG__DDANGI__71D1E811">
+    <End Role="DDANG" Type="Self.DDANG" Multiplicity="0..1" />
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DDANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMATHANG">
+        <PropertyRef Name="DDANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DMATHANG__DNHOMH__6FE99F9F">
+    <End Role="DNHOMHANG" Type="Self.DNHOMHANG" Multiplicity="0..1" />
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHOMHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMATHANG">
+        <PropertyRef Name="DNHOMHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DMATHANG__DPHANL__70DDC3D8">
+    <End Role="DPHANLOAI" Type="Self.DPHANLOAI" Multiplicity="0..1" />
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPHANLOAI">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMATHANG">
+        <PropertyRef Name="DPHANLOAIID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DMATHANG__DTHOIG__72C60C4A">
+    <End Role="DTHOIGIANDAT" Type="Self.DTHOIGIANDAT" Multiplicity="0..1" />
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTHOIGIANDAT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMATHANG">
+        <PropertyRef Name="DTHOIGIANDATID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DMAUCHITI__DMATH__797309D9">
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
+    <End Role="DMAUCHITIET" Type="Self.DMAUCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMATHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMAUCHITIET">
+        <PropertyRef Name="DMATHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DSIZECHIT__DMATH__75A278F5">
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
+    <End Role="DSIZECHITIET" Type="Self.DSIZECHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMATHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DSIZECHITIET">
+        <PropertyRef Name="DMATHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DMAUCHITI__DMAUI__7A672E12">
+    <End Role="DMAU" Type="Self.DMAU" Multiplicity="0..1" />
+    <End Role="DMAUCHITIET" Type="Self.DMAUCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMAU">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMAUCHITIET">
+        <PropertyRef Name="DMAUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DSIZECHIT__DSIZE__76969D2E">
+    <End Role="DSIZE" Type="Self.DSIZE" Multiplicity="0..1" />
+    <End Role="DSIZECHITIET" Type="Self.DSIZECHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DSIZE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DSIZECHITIET">
+        <PropertyRef Name="DSIZEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopOrderEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DANHs" EntityType="Self.DANH" />
+    <EntitySet Name="DDANGs" EntityType="Self.DDANG" />
+    <EntitySet Name="DMATHANGs" EntityType="Self.DMATHANG" />
+    <EntitySet Name="DMAUs" EntityType="Self.DMAU" />
+    <EntitySet Name="DMAUCHITIETs" EntityType="Self.DMAUCHITIET" />
+    <EntitySet Name="DNHOMHANGs" EntityType="Self.DNHOMHANG" />
+    <EntitySet Name="DPHANLOAIs" EntityType="Self.DPHANLOAI" />
+    <EntitySet Name="DSIZEs" EntityType="Self.DSIZE" />
+    <EntitySet Name="DSIZECHITIETs" EntityType="Self.DSIZECHITIET" />
+    <EntitySet Name="DTHOIGIANDATs" EntityType="Self.DTHOIGIANDAT" />
+    <AssociationSet Name="FK__DANH__DMATHANGID__7D439ABD" Association="Self.FK__DANH__DMATHANGID__7D439ABD">
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+      <End Role="DANH" EntitySet="DANHs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DMATHANG__DDANGI__71D1E811" Association="Self.FK__DMATHANG__DDANGI__71D1E811">
+      <End Role="DDANG" EntitySet="DDANGs" />
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DMATHANG__DNHOMH__6FE99F9F" Association="Self.FK__DMATHANG__DNHOMH__6FE99F9F">
+      <End Role="DNHOMHANG" EntitySet="DNHOMHANGs" />
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DMATHANG__DPHANL__70DDC3D8" Association="Self.FK__DMATHANG__DPHANL__70DDC3D8">
+      <End Role="DPHANLOAI" EntitySet="DPHANLOAIs" />
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DMATHANG__DTHOIG__72C60C4A" Association="Self.FK__DMATHANG__DTHOIG__72C60C4A">
+      <End Role="DTHOIGIANDAT" EntitySet="DTHOIGIANDATs" />
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DMAUCHITI__DMATH__797309D9" Association="Self.FK__DMAUCHITI__DMATH__797309D9">
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+      <End Role="DMAUCHITIET" EntitySet="DMAUCHITIETs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DSIZECHIT__DMATH__75A278F5" Association="Self.FK__DSIZECHIT__DMATH__75A278F5">
+      <End Role="DMATHANG" EntitySet="DMATHANGs" />
+      <End Role="DSIZECHITIET" EntitySet="DSIZECHITIETs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DMAUCHITI__DMAUI__7A672E12" Association="Self.FK__DMAUCHITI__DMAUI__7A672E12">
+      <End Role="DMAU" EntitySet="DMAUs" />
+      <End Role="DMAUCHITIET" EntitySet="DMAUCHITIETs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DSIZECHIT__DSIZE__76969D2E" Association="Self.FK__DSIZECHIT__DSIZE__76969D2E">
+      <End Role="DSIZE" EntitySet="DSIZEs" />
+      <End Role="DSIZECHITIET" EntitySet="DSIZECHITIETs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

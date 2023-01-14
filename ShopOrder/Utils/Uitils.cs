@@ -1,4 +1,4 @@
-﻿using ShopOrder.Models;
+﻿using ShopOrder.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
