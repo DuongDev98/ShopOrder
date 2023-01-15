@@ -1,0 +1,39 @@
+﻿@model ShopOrder.Entities.DNHOMKHACHHANG
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h3>Xóa dữ liệu đang chọn?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nhóm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            Loại giá
+        </dt>
+
+        <dd>
+            @("Giá bán" + (Model.LOAIGIA == 0 ? "" : " " + (Model.LOAIGIA + 1)))
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Danh sách", "Index", null, new { @class = "btn btn-outline-primary" })|
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+        </div>
+    }
+</div>

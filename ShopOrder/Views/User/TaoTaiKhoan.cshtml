@@ -1,0 +1,32 @@
+﻿@model string
+@{
+    ViewBag.Title = "Tạo tài khoản";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h3>Tạo tài khoản nhân viên</h3>
+            </div>
+            <form method="post">
+                <input type="text" name="DNHANVIENID" value="@Model" hidden>
+                <div class="form-group">
+                    <label for="ipUSERNAME">Tài khoản</label>
+                    <input type="text" class="form-control" id="ipUSERNAME" aria-describedby="usernameHelp" name="username" autocomplete="off" placeholder="Nhập tên tài khoản" required>
+                    <small id="usernameHelp" class="form-text text-muted">Tài khoản viết liền không dấu</small>
+                </div>
+                <div class="form-group">
+                    <label for="ipPASSWORD">Mật khẩu</label>
+                    <input type="password" class="form-control" id="ipPASSWORD" name="password" placeholder="Mật khẩu" required>
+                </div>
+                <div class="form-group">
+                    <label for="ipCFPASSWORD">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control" id="ipCFPASSWORD" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Lưu dữ liệu</button>
+            </form>
+        </div>
+    </div>
+</div>

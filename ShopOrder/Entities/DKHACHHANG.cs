@@ -22,7 +22,7 @@ namespace ShopOrder.Entities
     
         public string ID { get; set; }
         public string NAME { get; set; }
-        public Nullable<long> DIENTHOAI { get; set; }
+        public string DIENTHOAI { get; set; }
         public string TINHTHANH { get; set; }
         public string QUANHUYEN { get; set; }
         public string PHUONGXA { get; set; }
@@ -31,7 +31,10 @@ namespace ShopOrder.Entities
         public string TAIKHOAN { get; set; }
         public string MATKHAU { get; set; }
         public string DNHOMKHACHHANGID { get; set; }
+        public Nullable<int> LOAIVANCHUYEN { get; set; }
+        public string DNHAXEID { get; set; }
     
+        public virtual DNHAXE DNHAXE { get; set; }
         public virtual DNHOMKHACHHANG DNHOMKHACHHANG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANG> TDONHANGs { get; set; }

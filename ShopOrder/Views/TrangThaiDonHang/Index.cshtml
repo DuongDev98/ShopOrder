@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ShopOrder.Entities.DTRANGTHAIDON>
+
+@{
+    ViewBag.Title = "Danh mục trạng thái đơn";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Thêm mới", "Edit", null, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

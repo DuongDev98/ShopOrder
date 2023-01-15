@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="~/Content/Admin/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
 </head>
 <body>
+    <div class="row">
+        <div class="col-12">
+            @{
+                if (ViewBag.errorMessage != null && ViewBag.errorMessage.Length > 0)
+                {
+                    <div class="p-3 mb-2 bg-danger text-white text-center">@ViewBag.errorMessage</div>
+                }
+                else if (ViewBag.message != null && ViewBag.message.Length > 0)
+                {
+                    <div class="p-3 mb-2 bg-success text-white text-center">@ViewBag.message</div>
+                }
+            }
+        </div>
+    </div>
     @RenderBody()
     <script src="~/Content/Admin/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="~/Content/Admin/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>

@@ -1,0 +1,76 @@
+﻿@model ShopOrder.Entities.DNHAXE
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h3>Xóa dữ liệu đang chọn?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            Điện thoại
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIENTHOAI)
+        </dd>
+
+        <dt>
+            Xe ôm
+        </dt>
+
+        <dd>
+            <input type="checkbox" class="" @((Model.XEOM ?? 0) > 0 ? "checked" : "") disabled>
+        </dd>
+
+        @{
+            if ((Model.XEOM ?? 0) == 0)
+            {
+                <dt>
+                    Biển số
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BIENSO)
+                </dd>
+
+                <dt>
+                    Bến đỗ
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BENDO)
+                </dd>
+
+                <dt>
+                    Giờ xe chạy
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GIOXECHAY)
+                </dd>
+            }
+        }
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Danh sách", "Index", null, new { @class = "btn btn-outline-primary" })|
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+        </div>
+    }
+</div>

@@ -31,8 +31,17 @@ namespace ShopOrder.Entities
         public string PHUONGXA { get; set; }
         public string DIACHI { get; set; }
         public string DKHACHHANGID { get; set; }
+        public Nullable<int> LOAIGIA { get; set; }
+        public Nullable<int> LOAIVANCHUYEN { get; set; }
+        public string DNHAXEID { get; set; }
+        public string LABEL_GHTK { get; set; }
+        public string DNHANVIENID { get; set; }
+        public string DTRANGTHAIDONID { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
+        public virtual DNHANVIEN DNHANVIEN { get; set; }
+        public virtual DNHAXE DNHAXE { get; set; }
+        public virtual DTRANGTHAIDON DTRANGTHAIDON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
     }

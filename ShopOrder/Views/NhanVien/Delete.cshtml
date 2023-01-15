@@ -1,0 +1,55 @@
+﻿@model ShopOrder.Entities.DNHANVIEN
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h3>Xóa dữ liệu đang chọn?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nhân viên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            Điện thoại
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIENTHOAI)
+        </dd>
+
+        <dt>
+            Địa chỉ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIACHI)
+        </dd>
+
+        <dt>
+            Ghi chú
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOTE)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Danh sách", "Index", null, new { @class = "btn btn-outline-primary" })|
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+        </div>
+    }
+</div>

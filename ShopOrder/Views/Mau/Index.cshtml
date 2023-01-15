@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ShopOrder.Entities.DMAU>
+
+@{
+    ViewBag.Title = "Danh mục màu";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@*<div class="row">
+    <div class="col-lg-12">
+        <h4 class="page-header">Danh sách màu</h4>
+    </div>
+</div>*@
+<p>
+    @Html.ActionLink("Thêm mới", "Edit", null, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

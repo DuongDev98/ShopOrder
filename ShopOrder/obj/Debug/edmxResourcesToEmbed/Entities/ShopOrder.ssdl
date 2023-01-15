@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="shoporderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="ShopOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="DANH">
     <Key>
       <PropertyRef Name="ID" />
@@ -21,7 +21,7 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="NAME" Type="nvarchar" MaxLength="255" />
-    <Property Name="DIENTHOAI" Type="bigint" />
+    <Property Name="DIENTHOAI" Type="nvarchar" MaxLength="255" />
     <Property Name="TINHTHANH" Type="nvarchar" MaxLength="255" />
     <Property Name="QUANHUYEN" Type="nvarchar" MaxLength="255" />
     <Property Name="PHUONGXA" Type="nvarchar" MaxLength="255" />
@@ -30,6 +30,8 @@
     <Property Name="TAIKHOAN" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="MATKHAU" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="DNHOMKHACHHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="LOAIVANCHUYEN" Type="int" />
+    <Property Name="DNHAXEID" Type="varchar" MaxLength="36" />
   </EntityType>
   <EntityType Name="DMATHANG">
     <Key>
@@ -53,7 +55,7 @@
     <Property Name="NOIBAT" Type="int" />
     <Property Name="HANGSALE" Type="int" />
     <Property Name="BANAMKHO" Type="int" />
-    <Property Name="TIMECREATED" Type="datetime" />
+    <Property Name="TIMECREATED" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="DMAU">
     <Key>
@@ -76,9 +78,21 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="NAME" Type="nvarchar" MaxLength="255" />
-    <Property Name="DIENTHOAI" Type="bigint" />
+    <Property Name="DIENTHOAI" Type="nvarchar" MaxLength="255" />
     <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
     <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DNHAXE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="DIENTHOAI" Type="nvarchar" MaxLength="255" />
+    <Property Name="BIENSO" Type="nvarchar" MaxLength="255" />
+    <Property Name="GIOXECHAY" Type="nvarchar" MaxLength="255" />
+    <Property Name="BENDO" Type="nvarchar" MaxLength="255" />
+    <Property Name="XEOM" Type="int" />
   </EntityType>
   <EntityType Name="DNHOMHANG">
     <Key>
@@ -124,6 +138,13 @@
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="NAME" Type="nvarchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="DTRANGTHAIDON">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+  </EntityType>
   <EntityType Name="SUSER">
     <Key>
       <PropertyRef Name="ID" />
@@ -138,7 +159,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
-    <Property Name="NGAY" Type="datetime" />
+    <Property Name="NGAY" Type="datetime" Nullable="false" />
     <Property Name="NAME" Type="nvarchar" MaxLength="255" />
     <Property Name="TIENHANG" Type="bigint" />
     <Property Name="PHIVANCUYEN" Type="nvarchar" MaxLength="255" />
@@ -148,6 +169,12 @@
     <Property Name="PHUONGXA" Type="nvarchar" MaxLength="255" />
     <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
     <Property Name="DKHACHHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="LOAIGIA" Type="int" />
+    <Property Name="LOAIVANCHUYEN" Type="int" />
+    <Property Name="DNHAXEID" Type="varchar" MaxLength="36" />
+    <Property Name="LABEL_GHTK" Type="nvarchar" MaxLength="255" />
+    <Property Name="DNHANVIENID" Type="varchar" MaxLength="36" />
+    <Property Name="DTRANGTHAIDONID" Type="varchar" MaxLength="36" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>
@@ -163,7 +190,7 @@
     <Property Name="THANHTIEN" Type="bigint" />
     <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
   </EntityType>
-  <Association Name="FK__DANH__DMATHANGID__498EEC8D">
+  <Association Name="FK__DANH__DMATHANGID__10216507">
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
     <End Role="DANH" Type="Self.DANH" Multiplicity="*" />
     <ReferentialConstraint>
@@ -175,7 +202,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DKHACHHAN__DNHOM__4F47C5E3">
+  <Association Name="FK__DKHACHHAN__DNHAX__2F9A1060">
+    <End Role="DNHAXE" Type="Self.DNHAXE" Multiplicity="0..1" />
+    <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHAXE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DKHACHHANG">
+        <PropertyRef Name="DNHAXEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DKHACHHAN__DNHOM__2EA5EC27">
     <End Role="DNHOMKHACHHANG" Type="Self.DNHOMKHACHHANG" Multiplicity="0..1" />
     <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
     <ReferentialConstraint>
@@ -187,7 +226,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DMATHANG__DDANGI__32AB8735">
+  <Association Name="FK__DMATHANG__DDANGI__04AFB25B">
     <End Role="DDANG" Type="Self.DDANG" Multiplicity="0..1" />
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
     <ReferentialConstraint>
@@ -199,7 +238,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DMATHANG__DNHOMH__30C33EC3">
+  <Association Name="FK__DMATHANG__DNHOMH__02C769E9">
     <End Role="DNHOMHANG" Type="Self.DNHOMHANG" Multiplicity="0..1" />
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
     <ReferentialConstraint>
@@ -211,7 +250,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DMATHANG__DPHANL__31B762FC">
+  <Association Name="FK__DMATHANG__DPHANL__03BB8E22">
     <End Role="DPHANLOAI" Type="Self.DPHANLOAI" Multiplicity="0..1" />
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
     <ReferentialConstraint>
@@ -223,7 +262,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DMATHANG__DTHOIG__339FAB6E">
+  <Association Name="FK__DMATHANG__DTHOIG__05A3D694">
     <End Role="DTHOIGIANDAT" Type="Self.DTHOIGIANDAT" Multiplicity="0..1" />
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
     <ReferentialConstraint>
@@ -235,7 +274,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DMAUCHITI__DMATH__45BE5BA9">
+  <Association Name="FK__DMAUCHITI__DMATH__0C50D423">
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
     <End Role="DMAUCHITIET" Type="Self.DMAUCHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -247,7 +286,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DMAUCHITI__DMAUI__46B27FE2">
+  <Association Name="FK__DMAUCHITI__DMAUI__0D44F85C">
     <End Role="DMAU" Type="Self.DMAU" Multiplicity="0..1" />
     <End Role="DMAUCHITIET" Type="Self.DMAUCHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -259,7 +298,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DSIZECHIT__DMATH__41EDCAC5">
+  <Association Name="FK__DSIZECHIT__DMATH__0880433F">
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
     <End Role="DSIZECHITIET" Type="Self.DSIZECHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -271,7 +310,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DSIZECHIT__DSIZE__42E1EEFE">
+  <Association Name="FK__DSIZECHIT__DSIZE__09746778">
     <End Role="DSIZE" Type="Self.DSIZE" Multiplicity="0..1" />
     <End Role="DSIZECHITIET" Type="Self.DSIZECHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -295,7 +334,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TDONHANG__DKHACH__73852659">
+  <Association Name="FK__TDONHANG__DKHACH__3DE82FB7">
     <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="0..1" />
     <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
     <ReferentialConstraint>
@@ -307,7 +346,43 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TDONHANGC__DMATH__76619304">
+  <Association Name="FK__TDONHANG__DNHANV__3FD07829">
+    <End Role="DNHANVIEN" Type="Self.DNHANVIEN" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHANVIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DNHANVIENID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDONHANG__DNHAXE__3EDC53F0">
+    <End Role="DNHAXE" Type="Self.DNHAXE" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHAXE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DNHAXEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDONHANG__DTRANG__40C49C62">
+    <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTRANGTHAIDON">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DTRANGTHAIDONID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDONHANGC__DMATH__43A1090D">
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
     <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -319,7 +394,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TDONHANGC__DMAUI__7849DB76">
+  <Association Name="FK__TDONHANGC__DMAUI__4589517F">
     <End Role="DMAU" Type="Self.DMAU" Multiplicity="0..1" />
     <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -331,7 +406,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TDONHANGC__DSIZE__7755B73D">
+  <Association Name="FK__TDONHANGC__DSIZE__44952D46">
     <End Role="DSIZE" Type="Self.DSIZE" Multiplicity="0..1" />
     <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -343,7 +418,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TDONHANGC__TDONH__793DFFAF">
+  <Association Name="FK__TDONHANGC__TDONH__467D75B8">
     <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
     <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
     <ReferentialConstraint>
@@ -355,7 +430,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="shoporderModelStoreContainer">
+  <EntityContainer Name="ShopOrderModelStoreContainer">
     <EntitySet Name="DANH" EntityType="Self.DANH" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DDANG" EntityType="Self.DDANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DKHACHHANG" EntityType="Self.DKHACHHANG" Schema="dbo" store:Type="Tables" />
@@ -363,52 +438,58 @@
     <EntitySet Name="DMAU" EntityType="Self.DMAU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DMAUCHITIET" EntityType="Self.DMAUCHITIET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DNHANVIEN" EntityType="Self.DNHANVIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DNHAXE" EntityType="Self.DNHAXE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DNHOMHANG" EntityType="Self.DNHOMHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DNHOMKHACHHANG" EntityType="Self.DNHOMKHACHHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DPHANLOAI" EntityType="Self.DPHANLOAI" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DSIZE" EntityType="Self.DSIZE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DSIZECHITIET" EntityType="Self.DSIZECHITIET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DTHOIGIANDAT" EntityType="Self.DTHOIGIANDAT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DTRANGTHAIDON" EntityType="Self.DTRANGTHAIDON" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SUSER" EntityType="Self.SUSER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__DANH__DMATHANGID__498EEC8D" Association="Self.FK__DANH__DMATHANGID__498EEC8D">
+    <AssociationSet Name="FK__DANH__DMATHANGID__10216507" Association="Self.FK__DANH__DMATHANGID__10216507">
       <End Role="DMATHANG" EntitySet="DMATHANG" />
       <End Role="DANH" EntitySet="DANH" />
     </AssociationSet>
-    <AssociationSet Name="FK__DKHACHHAN__DNHOM__4F47C5E3" Association="Self.FK__DKHACHHAN__DNHOM__4F47C5E3">
+    <AssociationSet Name="FK__DKHACHHAN__DNHAX__2F9A1060" Association="Self.FK__DKHACHHAN__DNHAX__2F9A1060">
+      <End Role="DNHAXE" EntitySet="DNHAXE" />
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DKHACHHAN__DNHOM__2EA5EC27" Association="Self.FK__DKHACHHAN__DNHOM__2EA5EC27">
       <End Role="DNHOMKHACHHANG" EntitySet="DNHOMKHACHHANG" />
       <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
     </AssociationSet>
-    <AssociationSet Name="FK__DMATHANG__DDANGI__32AB8735" Association="Self.FK__DMATHANG__DDANGI__32AB8735">
+    <AssociationSet Name="FK__DMATHANG__DDANGI__04AFB25B" Association="Self.FK__DMATHANG__DDANGI__04AFB25B">
       <End Role="DDANG" EntitySet="DDANG" />
       <End Role="DMATHANG" EntitySet="DMATHANG" />
     </AssociationSet>
-    <AssociationSet Name="FK__DMATHANG__DNHOMH__30C33EC3" Association="Self.FK__DMATHANG__DNHOMH__30C33EC3">
+    <AssociationSet Name="FK__DMATHANG__DNHOMH__02C769E9" Association="Self.FK__DMATHANG__DNHOMH__02C769E9">
       <End Role="DNHOMHANG" EntitySet="DNHOMHANG" />
       <End Role="DMATHANG" EntitySet="DMATHANG" />
     </AssociationSet>
-    <AssociationSet Name="FK__DMATHANG__DPHANL__31B762FC" Association="Self.FK__DMATHANG__DPHANL__31B762FC">
+    <AssociationSet Name="FK__DMATHANG__DPHANL__03BB8E22" Association="Self.FK__DMATHANG__DPHANL__03BB8E22">
       <End Role="DPHANLOAI" EntitySet="DPHANLOAI" />
       <End Role="DMATHANG" EntitySet="DMATHANG" />
     </AssociationSet>
-    <AssociationSet Name="FK__DMATHANG__DTHOIG__339FAB6E" Association="Self.FK__DMATHANG__DTHOIG__339FAB6E">
+    <AssociationSet Name="FK__DMATHANG__DTHOIG__05A3D694" Association="Self.FK__DMATHANG__DTHOIG__05A3D694">
       <End Role="DTHOIGIANDAT" EntitySet="DTHOIGIANDAT" />
       <End Role="DMATHANG" EntitySet="DMATHANG" />
     </AssociationSet>
-    <AssociationSet Name="FK__DMAUCHITI__DMATH__45BE5BA9" Association="Self.FK__DMAUCHITI__DMATH__45BE5BA9">
+    <AssociationSet Name="FK__DMAUCHITI__DMATH__0C50D423" Association="Self.FK__DMAUCHITI__DMATH__0C50D423">
       <End Role="DMATHANG" EntitySet="DMATHANG" />
       <End Role="DMAUCHITIET" EntitySet="DMAUCHITIET" />
     </AssociationSet>
-    <AssociationSet Name="FK__DMAUCHITI__DMAUI__46B27FE2" Association="Self.FK__DMAUCHITI__DMAUI__46B27FE2">
+    <AssociationSet Name="FK__DMAUCHITI__DMAUI__0D44F85C" Association="Self.FK__DMAUCHITI__DMAUI__0D44F85C">
       <End Role="DMAU" EntitySet="DMAU" />
       <End Role="DMAUCHITIET" EntitySet="DMAUCHITIET" />
     </AssociationSet>
-    <AssociationSet Name="FK__DSIZECHIT__DMATH__41EDCAC5" Association="Self.FK__DSIZECHIT__DMATH__41EDCAC5">
+    <AssociationSet Name="FK__DSIZECHIT__DMATH__0880433F" Association="Self.FK__DSIZECHIT__DMATH__0880433F">
       <End Role="DMATHANG" EntitySet="DMATHANG" />
       <End Role="DSIZECHITIET" EntitySet="DSIZECHITIET" />
     </AssociationSet>
-    <AssociationSet Name="FK__DSIZECHIT__DSIZE__42E1EEFE" Association="Self.FK__DSIZECHIT__DSIZE__42E1EEFE">
+    <AssociationSet Name="FK__DSIZECHIT__DSIZE__09746778" Association="Self.FK__DSIZECHIT__DSIZE__09746778">
       <End Role="DSIZE" EntitySet="DSIZE" />
       <End Role="DSIZECHITIET" EntitySet="DSIZECHITIET" />
     </AssociationSet>
@@ -416,23 +497,35 @@
       <End Role="DNHANVIEN" EntitySet="DNHANVIEN" />
       <End Role="SUSER" EntitySet="SUSER" />
     </AssociationSet>
-    <AssociationSet Name="FK__TDONHANG__DKHACH__73852659" Association="Self.FK__TDONHANG__DKHACH__73852659">
+    <AssociationSet Name="FK__TDONHANG__DKHACH__3DE82FB7" Association="Self.FK__TDONHANG__DKHACH__3DE82FB7">
       <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
       <End Role="TDONHANG" EntitySet="TDONHANG" />
     </AssociationSet>
-    <AssociationSet Name="FK__TDONHANGC__DMATH__76619304" Association="Self.FK__TDONHANGC__DMATH__76619304">
+    <AssociationSet Name="FK__TDONHANG__DNHANV__3FD07829" Association="Self.FK__TDONHANG__DNHANV__3FD07829">
+      <End Role="DNHANVIEN" EntitySet="DNHANVIEN" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDONHANG__DNHAXE__3EDC53F0" Association="Self.FK__TDONHANG__DNHAXE__3EDC53F0">
+      <End Role="DNHAXE" EntitySet="DNHAXE" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDONHANG__DTRANG__40C49C62" Association="Self.FK__TDONHANG__DTRANG__40C49C62">
+      <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDONHANGC__DMATH__43A1090D" Association="Self.FK__TDONHANGC__DMATH__43A1090D">
       <End Role="DMATHANG" EntitySet="DMATHANG" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
     </AssociationSet>
-    <AssociationSet Name="FK__TDONHANGC__DMAUI__7849DB76" Association="Self.FK__TDONHANGC__DMAUI__7849DB76">
+    <AssociationSet Name="FK__TDONHANGC__DMAUI__4589517F" Association="Self.FK__TDONHANGC__DMAUI__4589517F">
       <End Role="DMAU" EntitySet="DMAU" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
     </AssociationSet>
-    <AssociationSet Name="FK__TDONHANGC__DSIZE__7755B73D" Association="Self.FK__TDONHANGC__DSIZE__7755B73D">
+    <AssociationSet Name="FK__TDONHANGC__DSIZE__44952D46" Association="Self.FK__TDONHANGC__DSIZE__44952D46">
       <End Role="DSIZE" EntitySet="DSIZE" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
     </AssociationSet>
-    <AssociationSet Name="FK__TDONHANGC__TDONH__793DFFAF" Association="Self.FK__TDONHANGC__TDONH__793DFFAF">
+    <AssociationSet Name="FK__TDONHANGC__TDONH__467D75B8" Association="Self.FK__TDONHANGC__TDONH__467D75B8">
       <End Role="TDONHANG" EntitySet="TDONHANG" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
     </AssociationSet>

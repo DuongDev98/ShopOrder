@@ -12,6 +12,18 @@ namespace ShopOrder.Utils
     public class CookieUtils
     {
         const string GIOHANG = "Items";
+        const string USER = "User";
+
+        public static void LuuTaiKhoanDangNhap(UserModel newItem)
+        {
+            AddOrEdit(USER, JsonConvert.SerializeObject(newItem));
+        }
+
+        public static void XoaDuLieuDangNhap()
+        {
+            Remove(USER);
+        }
+
         public static void ThemGioHang(ItemModel newItem)
         {
             List<ItemModel> lst = LayGioHang();

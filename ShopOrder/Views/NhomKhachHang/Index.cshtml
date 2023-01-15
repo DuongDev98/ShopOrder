@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ShopOrder.Entities.DNHOMKHACHHANG>
+
+@{
+    ViewBag.Title = "Danh mục nhóm khách hàng";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Thêm mới", "Edit", null, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nhóm
+        </th>
+        <th>
+            Loại giá
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NAME)
+        </td>
+        <td>
+            @("Giá bán" + (item.LOAIGIA == 0 ? "" : " " + (item.LOAIGIA + 1)))
+        </td>
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

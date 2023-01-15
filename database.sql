@@ -1,28 +1,35 @@
 ﻿--Mặt hàng
+--1
 create table DNHOMHANG (
 	ID varchar(36) primary key,
 	NAME nvarchar(255)
 );
+--2
 create table DPHANLOAI (
 	ID varchar(36) primary key,
 	NAME nvarchar(255)
 );
+--3
 create table DSIZE (
 	ID varchar(36) primary key,
 	NAME nvarchar(255)
 );
+--4
 create table DDANG (
 	ID varchar(36) primary key,
 	NAME nvarchar(255)
 );
+--5
 create table DMAU (
 	ID varchar(36) primary key,
 	NAME nvarchar(255)
 );
+--6
 create table DTHOIGIANDAT (
 	ID varchar(36) primary key,
 	NAME nvarchar(255)
 );
+--7
 create table DMATHANG (
 	ID varchar(36) primary key,
 	CODE nvarchar(255),
@@ -44,16 +51,19 @@ create table DMATHANG (
 	BANAMKHO int,
 	TIMECREATED datetime not null,
 );
+--8
 create table DSIZECHITIET (
 	ID varchar(36) primary key,
 	DMATHANGID varchar(36) foreign key references DMATHANG(ID),
 	DSIZEID varchar(36) foreign key references DSIZE(ID),
 );
+--9
 create table DMAUCHITIET (
 	ID varchar(36) primary key,
 	DMATHANGID varchar(36) foreign key references DMATHANG(ID),
 	DMAUID varchar(36) foreign key references DMAU(ID),
 );
+--10
 create table DANH (
 	ID varchar(36) primary key,
 	NAME nvarchar(255),
@@ -61,15 +71,42 @@ create table DANH (
 );
 
 --đơn hàng
+--11
+create table DNHANVIEN (
+	ID varchar(36) primary key,
+	NAME nvarchar(255),
+	DIENTHOAI nvarchar(255),
+	DIACHI nvarchar(255),
+	NOTE nvarchar(255),
+);
+--12
+create table SUSER (
+	ID varchar(36) primary key,
+	USERNAME nvarchar(255),
+	PASSWORD nvarchar(255),
+	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
+);
+--13
+create table DNHAXE (
+	ID varchar(36) primary key,
+	NAME nvarchar(255),
+	DIENTHOAI nvarchar(255),
+	BIENSO nvarchar(255),
+	GIOXECHAY nvarchar(255),
+	BENDO nvarchar(255),
+	XEOM int
+);
+--14
 create table DNHOMKHACHHANG (
 	ID varchar(36) primary key,
 	NAME nvarchar(255),
 	LOAIGIA int,
 );
+--15
 create table DKHACHHANG (
 	ID varchar(36) primary key,
 	NAME nvarchar(255),
-	DIENTHOAI bigint,
+	DIENTHOAI nvarchar(255),
 	TINHTHANH nvarchar(255),
 	QUANHUYEN nvarchar(255),
 	PHUONGXA nvarchar(255),
@@ -78,20 +115,15 @@ create table DKHACHHANG (
 	TAIKHOAN nvarchar(255) not null,
 	MATKHAU nvarchar(255) not null,
 	DNHOMKHACHHANGID varchar(36) foreign key references DNHOMKHACHHANG(ID),
+	LOAIVANCHUYEN int,
+	DNHAXEID varchar(36) foreign key references DNHAXE(ID)
 );
-create table DNHANVIEN (
+--16
+create table DTRANGTHAIDON (
 	ID varchar(36) primary key,
 	NAME nvarchar(255),
-	DIENTHOAI bigint,
-	DIACHI nvarchar(255),
-	NOTE nvarchar(255),
 );
-create table SUSER (
-	ID varchar(36) primary key,
-	USERNAME nvarchar(255),
-	PASSWORD nvarchar(255),
-	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
-);
+--17
 create table TDONHANG (
 	ID varchar(36) primary key,
 	NGAY datetime not null,
@@ -104,7 +136,14 @@ create table TDONHANG (
 	PHUONGXA nvarchar(255),
 	DIACHI nvarchar(255),
 	DKHACHHANGID varchar(36) foreign key references DKHACHHANG(ID),
+	LOAIGIA int,
+	LOAIVANCHUYEN int,
+	DNHAXEID varchar(36) foreign key references DNHAXE(ID),
+	LABEL_GHTK nvarchar(255),
+	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
+	DTRANGTHAIDONID varchar(36) foreign key references DTRANGTHAIDON(ID),
 );
+--18
 create table TDONHANGCHITIET (
 	ID varchar(36) primary key,
 	DMATHANGID varchar(36) foreign key references DMATHANG(ID),

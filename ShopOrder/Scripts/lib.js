@@ -34,6 +34,11 @@ $(document).ready(function () {
         $(this).parent().append('<input type="text" class="form-control number-input" value="' + UiUtils.formatNumber($(this).val()) + '">');
         $(this).css("display", "none");
     });
+
+    $('html').on("change", ".custom-checkbox", function () {
+        let checked = $(this).is(":checked");
+        $(this).parent().find('input').val(checked ? 1 : 0);
+    });
 });
 
 ////ConvertToJs

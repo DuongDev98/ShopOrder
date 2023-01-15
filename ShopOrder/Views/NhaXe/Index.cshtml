@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ShopOrder.Entities.DNHAXE>
+
+@{
+    ViewBag.Title = "Danh mục nhà xe";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Thêm mới", "Edit", null, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nhà xe
+        </th>
+        <th>
+            Điện thoại
+        </th>
+        <th>
+            Xe ôm
+        </th>
+        <th>
+            Biển số
+        </th>
+        <th>
+            Giờ xe chạy
+        </th>
+        <th>
+            Bến đỗ
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIENTHOAI)
+            </td>
+            <td>
+                <input type="checkbox" class="" @((item.XEOM ?? 0) > 0 ? "checked" : "") disabled>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENSO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GIOXECHAY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BENDO)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
