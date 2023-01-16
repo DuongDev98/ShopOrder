@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ShopOrder.Entities;
 using ShopOrder.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,26 @@ namespace ShopOrder.Utils
     {
         const string GIOHANG = "Items";
         const string USER = "User";
+
+        public static UserModel UserLogin()
+        {
+            ShopOrderEntities db = new ShopOrderEntities();
+            UserModel model = JsonConvert.DeserializeObject<UserModel>(Get(USER));
+            if (model != null)
+            {
+                DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.USERNAME == model.USERNAME && x.PASSWORD == model.PASSWORD).FirstOrDefault();
+                if (khRow == null)
+                {
+                    SUSER userRow = db.SUSERs.Where(x => x.USERNAME == model.USERNAME && x.PASSWORD == model.PASSWORD).FirstOrDefault();
+                    if (userRow != null) model.sUSER = userRow;
+                }
+                else
+                {
+                    model.dKHACHHANG = khRow;
+                }
+            }
+            return model;
+        }
 
         public static void LuuTaiKhoanDangNhap(UserModel newItem)
         {
@@ -115,7 +136,12 @@ namespace ShopOrder.Utils
 
         private static void Remove(string name)
         {
-            SetCookies().Remove(name);
+            HttpCookie ck = ReadCookies().Get(name);
+            if (ck != null)
+            {
+                ck.Expires = DateTime.Now.AddDays(-100);
+                SetCookies().Set(ck);
+            }
         }
 
         private static HttpCookieCollection ReadCookies()

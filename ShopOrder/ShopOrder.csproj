@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
+    <Compile Include="Controllers\Admin\BaseController.cs" />
     <Compile Include="Controllers\Home\CartController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Model\DangController.cs" />
@@ -809,6 +810,7 @@
     <Folder Include="Images\Customers\" />
     <Folder Include="Images\Invoices\" />
     <Folder Include="Images\Items\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\assets\vendor\fonts\circular-std\CircularStd-Black.woff" />

@@ -1,13 +1,13 @@
-﻿using ShopOrder.Entities;
-using System;
+﻿using ShopOrder.Controllers.Home;
+using ShopOrder.Entities;
+using ShopOrder.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ShopOrder.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         ShopOrderEntities db = new ShopOrderEntities();
 

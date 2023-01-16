@@ -1,4 +1,5 @@
-﻿using ShopOrder.Entities;
+﻿using Microsoft.Ajax.Utilities;
+using ShopOrder.Entities;
 using ShopOrder.Models;
 using ShopOrder.Utils;
 using System;
@@ -9,13 +10,14 @@ using System.Web.Mvc;
 
 namespace ShopOrder.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 
         [HttpGet]
         public ActionResult Login()
         {
+            CookieUtils.XoaDuLieuDangNhap();
             return View();
         }
 
@@ -28,7 +30,7 @@ namespace ShopOrder.Controllers
                 //khách hàng và nhân viên
                 SUSER userRow = null;
                 string passwordMd5 = PasswordUtils.EncrytPass(password);
-                DKHACHHANG khRow = db.DKHACHHANGs.Where(x=>x.TAIKHOAN == username && x.MATKHAU == passwordMd5).FirstOrDefault();
+                DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.USERNAME == username && x.PASSWORD == passwordMd5).FirstOrDefault();
                 if (khRow == null)
                 {
                     userRow = db.SUSERs.Where(x => x.USERNAME == username && x.PASSWORD == passwordMd5).FirstOrDefault();
@@ -50,8 +52,8 @@ namespace ShopOrder.Controllers
                     {
                         //khách hàng
                         controller = "Home";
-                        user.USERNAME = khRow.TAIKHOAN;
-                        user.PASSWORD = khRow.MATKHAU;
+                        user.USERNAME = khRow.USERNAME;
+                        user.PASSWORD = khRow.PASSWORD;
                     }
                     else
                     {
@@ -90,7 +92,7 @@ namespace ShopOrder.Controllers
                     {
                         error = "Số điện thoại không đúng định dạng";
                     }
-                    else if (db.DKHACHHANGs.Where(x => x.TAIKHOAN == username).ToList().Count > 0)
+                    else if (db.DKHACHHANGs.Where(x => x.USERNAME == username).ToList().Count > 0)
                     {
                         error = "Tài khoản đã tồn tại trong hệ thống";
                     }
@@ -115,8 +117,8 @@ namespace ShopOrder.Controllers
                 {
                     DKHACHHANG khRow = new DKHACHHANG();
                     khRow.ID = Guid.NewGuid().ToString();
-                    khRow.TAIKHOAN = username;
-                    khRow.MATKHAU = PasswordUtils.EncrytPass(password);
+                    khRow.USERNAME = username;
+                    khRow.PASSWORD = PasswordUtils.EncrytPass(password);
                     khRow.NAME = name;
                     khRow.DIENTHOAI = phone;
                     db.DKHACHHANGs.Add(khRow);
@@ -193,7 +195,7 @@ namespace ShopOrder.Controllers
                 {
                     error = "Nhập lại mật khẩu không trùng khớp";
                 }
-                else if (db.DKHACHHANGs.Where(x => x.TAIKHOAN == username).ToList().Count > 0)
+                else if (db.DKHACHHANGs.Where(x => x.USERNAME == username).ToList().Count > 0)
                 {
                     error = "Tài khoản đã tồn tại trong hệ thống";
                 }
@@ -213,6 +215,7 @@ namespace ShopOrder.Controllers
                     userRow.USERNAME = username;
                     userRow.PASSWORD = PasswordUtils.EncrytPass(password);
                     userRow.DNHANVIENID = DNHANVIENID;
+                    userRow.ISADMIN = 0;
                     db.SUSERs.Add(userRow);
                     db.SaveChanges();
                     return RedirectToAction("Index", "Nhanvien");
@@ -225,35 +228,49 @@ namespace ShopOrder.Controllers
         {
             DNHANVIEN nvRow = db.DNHANVIENs.Find(DNHANVIENID);
             if (nvRow == null || nvRow.SUSERs == null || nvRow.SUSERs.Count == 0) return HttpNotFound();
-            return RedirectToAction("DoiMatKhau", "User", new { SUSERID = nvRow.SUSERs.ElementAt(0).ID });
+            return RedirectToAction("DoiMatKhau", "User", new { ID = nvRow.SUSERs.ElementAt(0).ID, KhachHang = false });
         }
 
-        public ActionResult DoiMatKhau(string SUSERID)
+        public ActionResult DoiMatKhau(string iD, bool khachHang)
         {
-            SUSER userRow = db.SUSERs.Find(SUSERID);
-            if (userRow == null) return HttpNotFound();
-            bool isAdmin = false;
-            if (!isAdmin)
+            UserModel userLogin = CookieUtils.UserLogin();
+            if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
+            ViewBag.ID = iD;
+            ViewBag.KhachHang = khachHang;
+            return View();
+        }
+
+        private bool UserLoginIsValid(string iD, bool khachHang, UserModel userLogin)
+        {
+            if (khachHang)
             {
-                //so sánh với tài khoản đăng nhập
-                //if (false) return HttpNotFound();
+                DKHACHHANG khRow = db.DKHACHHANGs.Find(iD);
+                if (khRow == null) return false;
+
+                //so sánh với tài khoản đăng nhập khách hàng
+                if (khRow.USERNAME != userLogin.USERNAME) return false;
             }
-            return View("", "", SUSERID);
+            else
+            {
+                SUSER userRow = db.SUSERs.Find(iD);
+                if (userRow == null) return false;
+                if (!userLogin.IsAdmin)
+                {
+                    //so sánh với tài khoản đăng nhập nhân viên
+                    if (userRow.USERNAME != userLogin.USERNAME) return false;
+                }
+            }
+            return true;
         }
 
         [HttpPost]
-        public ActionResult DoiMatKhau(string SUSERID, string oldPassword, string password, string confirmPassword)
+        public ActionResult DoiMatKhau(string iD, bool khachHang, string oldPassword, string password, string confirmPassword)
         {
             if (ModelState.IsValid)
             {
-                //kiểm tra mật khẩu cũ
-                SUSER userRow = db.SUSERs.Find(SUSERID);
-                if (userRow == null)
-                {
-                    return HttpNotFound();
-                }
+                UserModel userLogin = CookieUtils.UserLogin();
+                if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
 
-                bool isAdmin = false;
                 string error = "";
                 if (password != confirmPassword)
                 {
@@ -263,7 +280,7 @@ namespace ShopOrder.Controllers
                 {
                     error = "Mật khẩu mới phải khác mật khẩu cũ";
                 }
-                else if (!isAdmin && userRow.PASSWORD != PasswordUtils.EncrytPass(oldPassword))
+                else if (!userLogin.IsAdmin && userLogin.PASSWORD != PasswordUtils.EncrytPass(oldPassword))
                 {
                     error = "Mật khẩu cũ không đúng";
                 }
@@ -274,14 +291,41 @@ namespace ShopOrder.Controllers
                 }
                 else
                 {
-                    userRow.PASSWORD = PasswordUtils.EncrytPass(password);
-                    db.Entry(userRow);
+                    string controller = "";
+                    if (khachHang)
+                    {
+                        DKHACHHANG khRow = db.DKHACHHANGs.Find(iD);
+                        khRow.PASSWORD = PasswordUtils.EncrytPass(password);
+                        db.Entry(khRow);
+                        controller = "Home";
+                    }
+                    else
+                    {
+                        SUSER userRow = db.SUSERs.Find(iD);
+                        userRow.PASSWORD = PasswordUtils.EncrytPass(password);
+                        db.Entry(userRow);
+                        if (userLogin.IsAdmin)
+                        {
+                            controller = "Nhanvien";
+                        }
+                        else
+                        {
+                            controller = "Admin";
+                        }
+                    }
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Nhanvien");
+                    return RedirectToAction("Index", controller);
                 }
             }
 
-            return View("", "", SUSERID);
+            return View("", "", iD);
+        }
+
+        public ActionResult ThongTinCaNhan(string ID)
+        {
+            DKHACHHANG khRow = db.DKHACHHANGs.Find(ID);
+            if (khRow == null) return HttpNotFound();
+            return View();
         }
     }
 }

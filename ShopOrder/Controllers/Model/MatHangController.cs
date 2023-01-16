@@ -13,7 +13,8 @@ using ShopOrder.Utils;
 
 namespace ShopOrder.Controllers.Model
 {
-    public class MatHangController : Controller
+    
+    public class MatHangController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 

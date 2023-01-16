@@ -29,14 +29,14 @@
     <Property Name="PHUONGXA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="DIACHI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="TAIKHOAN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="MATKHAU" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="DNHOMKHACHHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
     <Property Name="LOAIVANCHUYEN" Type="Int32" />
     <Property Name="DNHAXEID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DNHAXE" Relationship="Self.FK__DKHACHHAN__DNHAX__2F9A1060" FromRole="DKHACHHANG" ToRole="DNHAXE" />
     <NavigationProperty Name="DNHOMKHACHHANG" Relationship="Self.FK__DKHACHHAN__DNHOM__2EA5EC27" FromRole="DKHACHHANG" ToRole="DNHOMKHACHHANG" />
     <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DKHACH__3DE82FB7" FromRole="DKHACHHANG" ToRole="TDONHANG" />
+    <Property Name="USERNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="DMATHANG">
     <Key>
@@ -100,6 +100,7 @@
     <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="SUSERs" Relationship="Self.FK__SUSER__DNHANVIEN__7EF6D905" FromRole="DNHANVIEN" ToRole="SUSER" />
     <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DNHANV__3FD07829" FromRole="DNHANVIEN" ToRole="TDONHANG" />
+    <Property Name="LOAITAIKHOAN" Type="Int32" />
   </EntityType>
   <EntityType Name="DNHAXE">
     <Key>
@@ -184,6 +185,7 @@
     <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="DNHANVIENID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DNHANVIEN" Relationship="Self.FK__SUSER__DNHANVIEN__7EF6D905" FromRole="SUSER" ToRole="DNHANVIEN" />
+    <Property Name="ISADMIN" Type="Int32" />
   </EntityType>
   <EntityType Name="TDONHANG">
     <Key>

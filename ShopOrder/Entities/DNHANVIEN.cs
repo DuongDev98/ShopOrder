@@ -26,6 +26,7 @@ namespace ShopOrder.Entities
         public string DIENTHOAI { get; set; }
         public string DIACHI { get; set; }
         public string NOTE { get; set; }
+        public Nullable<int> LOAITAIKHOAN { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUSER> SUSERs { get; set; }

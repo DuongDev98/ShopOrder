@@ -1,4 +1,5 @@
 ﻿using ShopOrder.Entities;
+using ShopOrder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +11,8 @@ using System.Web.Mvc;
 
 namespace ShopOrder.Controllers.Model
 {
-    public class PhanLoaiController : Controller
+    
+    public class PhanLoaiController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 

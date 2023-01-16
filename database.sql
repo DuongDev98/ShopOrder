@@ -78,6 +78,7 @@ create table DNHANVIEN (
 	DIENTHOAI nvarchar(255),
 	DIACHI nvarchar(255),
 	NOTE nvarchar(255),
+	LOAITAIKHOAN int,
 );
 --12
 create table SUSER (
@@ -85,6 +86,7 @@ create table SUSER (
 	USERNAME nvarchar(255),
 	PASSWORD nvarchar(255),
 	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
+	ISADMIN int,
 );
 --13
 create table DNHAXE (
@@ -112,8 +114,8 @@ create table DKHACHHANG (
 	PHUONGXA nvarchar(255),
 	DIACHI nvarchar(255),
 	NOTE nvarchar(255),
-	TAIKHOAN nvarchar(255) not null,
-	MATKHAU nvarchar(255) not null,
+	USERNAME nvarchar(255) not null,
+	PASSWORD nvarchar(255) not null,
 	DNHOMKHACHHANGID varchar(36) foreign key references DNHOMKHACHHANG(ID),
 	LOAIVANCHUYEN int,
 	DNHAXEID varchar(36) foreign key references DNHAXE(ID)
@@ -155,3 +157,6 @@ create table TDONHANGCHITIET (
 	THANHTIEN bigint,
 	NOTE nvarchar(255),
 )
+
+insert into SUSER(ID, USERNAME, PASSWORD, ISADMIN)
+values ('anhduong-823d-4502-bea8-67068da44fff', 'admin', '019113EB7DF662AAB056F68E4382BF87', 30)

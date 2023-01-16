@@ -1,5 +1,4 @@
-﻿@model string
-@{
+﻿@{
     ViewBag.Title = "Đổi mật khẩu";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
@@ -11,7 +10,8 @@
                 <h3>Đổi mật khẩu</h3>
             </div>
             <form method="post">
-                <input type="text" name="SUSERID" value="@Model" hidden>
+                <input type="text" name="ID" value="@ViewBag.ID" hidden>
+                <input type="text" name="ID" value="@ViewBag.KhachHang" hidden>
                 <div class="form-group">
                     <label for="ipPASSWORD">Mật khẩu cũ</label>
                     <input type="password" class="form-control" id="ipOLDPASSWORD" name="oldPassword" placeholder="Mật khẩu cũ" required>

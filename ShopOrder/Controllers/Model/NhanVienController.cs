@@ -8,10 +8,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ShopOrder.Entities;
+using ShopOrder.Utils;
 
 namespace ShopOrder.Controllers.Model
 {
-    public class NhanVienController : Controller
+    
+    public class NhanVienController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 
@@ -35,6 +37,7 @@ namespace ShopOrder.Controllers.Model
             {
                 return HttpNotFound();
             }
+            ViewBag.LOAITAIKHOAN = LoaiTaiKhoan(model);
             return View(model);
         }
 
@@ -56,7 +59,20 @@ namespace ShopOrder.Controllers.Model
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.LOAITAIKHOAN = LoaiTaiKhoan(model);
             return View(model);
+        }
+
+        private SelectList LoaiTaiKhoan(DNHANVIEN model)
+        {
+            List<object> lst = new List<object>();
+            object item = new { ID = 0, NAME = "Nhân viên sắp hàng" };
+            lst.Add(item);
+            item = new { ID = 1, NAME = "Nhân viên kho" };
+            lst.Add(item);
+            item = new { ID = 2, NAME = "Shipper" };
+            lst.Add(item);
+            return new SelectList(lst, "ID", "NAME", model.LOAITAIKHOAN);
         }
 
         public ActionResult Delete(string ID)

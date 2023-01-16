@@ -7,78 +7,74 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI.WebControls;
 using ShopOrder.Entities;
+using ShopOrder.Models;
 
 namespace ShopOrder.Utils
 {
-    //public class FilterUser : ActionFilterAttribute, IAuthenticationFilter
-    //{
-    //    ShopOrderEntities db = new ShopOrderEntities();
-    //    string[] adminUrls = new string[] { "Admin", "DQUAY", "DKHACHHANG", "DTRANGTHAI" };
-    //    public void OnAuthentication(AuthenticationContext filterContext)
-    //    {
-    //        string controller = filterContext.RouteData.Values["Controller"].ToString();
-    //        string action = filterContext.RouteData.Values["Action"].ToString();
-    //        if (!(controller == "Profile" && (action == "Login" || action == "Register")))
-    //        {
-    //            DKHACHHANG user = filterContext.HttpContext.Session[Contants.USER_SESSION_NAME] as DKHACHHANG;
-    //            if (user == null)
-    //            {
-    //                filterContext.Result = new HttpUnauthorizedResult();
-    //                return;
-    //            }
-    //            else
-    //            {
-    //                user = db.DKHACHHANGs.Where(x => x.ID == user.ID).FirstOrDefault();
-    //                if (user == null) filterContext.Result = new HttpUnauthorizedResult();
-    //                else
-    //                {
-    //                    if (user.ISACTIVE == 0)
-    //                    {
-    //                        filterContext.Result = new HttpUnauthorizedResult();
-    //                        return;
-    //                    }
-    //                    //truy cập đường dẫn admin thì phải là admin
-    //                    if (adminUrls.Contains(controller) && user.ISADMIN == 0)
-    //                    {
-    //                        filterContext.Result = new HttpUnauthorizedResult();
-    //                        return;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
+    public class FilterUser : ActionFilterAttribute, IAuthenticationFilter
+    {
+        ShopOrderEntities db = new ShopOrderEntities();
+        public void OnAuthentication(AuthenticationContext filterContext)
+        {
+            string controller = filterContext.RouteData.Values["Controller"].ToString();
+            string action = filterContext.RouteData.Values["Action"].ToString();
 
-    //    public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
-    //    {
-    //        string controller = filterContext.RouteData.Values["Controller"].ToString();
-    //        string action = filterContext.RouteData.Values["Action"].ToString();
+            if (!(controller.ToLower() == "User".ToLower() && (action.ToLower() == "Login".ToLower() || action.ToLower() == "Register".ToLower())))
+            {
+                UserModel userLogin = CookieUtils.UserLogin();
+                if (userLogin == null)
+                {
+                    filterContext.Result = new HttpUnauthorizedResult();
+                    return;
+                }
+                else
+                {
+                    //khách hàng không được vào admin
+                    if (userLogin.IsCustomer)
+                    {
+                        bool hasError = false;
+                        if (controller != "Home" && controller != "Cart") hasError = true;
+                        else if (controller == "User" && action != "DoiMatKhau" && action != "ThongTinCaNhan") hasError = true;
+                        if (hasError)
+                        {
+                            filterContext.Result = new HttpUnauthorizedResult();
+                        }
+                    }
+                }
+            }
+        }
 
-    //        if (controller == "Admin")
-    //        {
-    //            controller = "Home";
-    //            action = "Index";
-    //        }
-    //        else
-    //        {
-    //            controller = "Profile";
-    //            action = "Login";
-    //        }
+        public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
+        {
+            //string controller = filterContext.RouteData.Values["Controller"].ToString();
+            //string action = filterContext.RouteData.Values["Action"].ToString();
 
-    //        if (filterContext.Result == null || filterContext.Result is HttpUnauthorizedResult)
-    //        {
-    //            //Redirecting the user to the Login View of Account Controller
-    //            filterContext.Result = new RedirectToRouteResult(
-    //               new RouteValueDictionary
-    //               {
-    //                    { "controller", "Profile" },
-    //                    { "action", "Login" }
-    //               });
-    //            //If you want to redirect to some error view, use below code
-    //            //filterContext.Result = new ViewResult()
-    //            //{
-    //            //    ViewName = "Login"
-    //            //};
-    //        }
-    //    }
-    //}
+            //if (controller == "Admin")
+            //{
+            //    controller = "Home";
+            //    action = "Index";
+            //}
+            //else
+            //{
+            //    controller = "User";
+            //    action = "Login";
+            //}
+
+            if (filterContext.Result == null || filterContext.Result is HttpUnauthorizedResult)
+            {
+                //Redirecting the user to the Login View of Account Controller
+                filterContext.Result = new RedirectToRouteResult(
+                   new RouteValueDictionary
+                   {
+                        { "controller", "User" },
+                        { "action", "Login" }
+                   });
+                //If you want to redirect to some error view, use below code
+                //filterContext.Result = new ViewResult()
+                //{
+                //    ViewName = "Login"
+                //};
+            }
+        }
+    }
 }

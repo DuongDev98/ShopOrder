@@ -18,6 +18,7 @@ namespace ShopOrder.Entities
         public string USERNAME { get; set; }
         public string PASSWORD { get; set; }
         public string DNHANVIENID { get; set; }
+        public Nullable<int> ISADMIN { get; set; }
     
         public virtual DNHANVIEN DNHANVIEN { get; set; }
     }

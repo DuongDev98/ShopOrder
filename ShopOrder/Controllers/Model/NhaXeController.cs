@@ -8,10 +8,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ShopOrder.Entities;
+using ShopOrder.Utils;
 
 namespace ShopOrder.Controllers.Model
 {
-    public class NhaXeController : Controller
+    
+    public class NhaXeController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 

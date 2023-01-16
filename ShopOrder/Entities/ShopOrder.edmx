@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShopOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShopOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DANH">
           <Key>
             <PropertyRef Name="ID" />
@@ -32,11 +32,11 @@
           <Property Name="PHUONGXA" Type="nvarchar" MaxLength="255" />
           <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
           <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
-          <Property Name="TAIKHOAN" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="MATKHAU" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="DNHOMKHACHHANGID" Type="varchar" MaxLength="36" />
           <Property Name="LOAIVANCHUYEN" Type="int" />
           <Property Name="DNHAXEID" Type="varchar" MaxLength="36" />
+          <Property Name="USERNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="PASSWORD" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="DMATHANG">
           <Key>
@@ -86,6 +86,7 @@
           <Property Name="DIENTHOAI" Type="nvarchar" MaxLength="255" />
           <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
           <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
+          <Property Name="LOAITAIKHOAN" Type="int" />
         </EntityType>
         <EntityType Name="DNHAXE">
           <Key>
@@ -158,6 +159,7 @@
           <Property Name="USERNAME" Type="nvarchar" MaxLength="255" />
           <Property Name="PASSWORD" Type="nvarchar" MaxLength="255" />
           <Property Name="DNHANVIENID" Type="varchar" MaxLength="36" />
+          <Property Name="ISADMIN" Type="int" />
         </EntityType>
         <EntityType Name="TDONHANG">
           <Key>
@@ -535,8 +537,7 @@
             <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -569,14 +570,14 @@
           <Property Name="PHUONGXA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DIACHI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TAIKHOAN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MATKHAU" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DNHOMKHACHHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <Property Name="LOAIVANCHUYEN" Type="Int32" />
           <Property Name="DNHAXEID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DNHAXE" Relationship="Self.FK__DKHACHHAN__DNHAX__2F9A1060" FromRole="DKHACHHANG" ToRole="DNHAXE" />
           <NavigationProperty Name="DNHOMKHACHHANG" Relationship="Self.FK__DKHACHHAN__DNHOM__2EA5EC27" FromRole="DKHACHHANG" ToRole="DNHOMKHACHHANG" />
           <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DKHACH__3DE82FB7" FromRole="DKHACHHANG" ToRole="TDONHANG" />
+          <Property Name="USERNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DMATHANG">
           <Key>
@@ -640,6 +641,7 @@
           <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SUSERs" Relationship="Self.FK__SUSER__DNHANVIEN__7EF6D905" FromRole="DNHANVIEN" ToRole="SUSER" />
           <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DNHANV__3FD07829" FromRole="DNHANVIEN" ToRole="TDONHANG" />
+          <Property Name="LOAITAIKHOAN" Type="Int32" />
         </EntityType>
         <EntityType Name="DNHAXE">
           <Key>
@@ -724,6 +726,7 @@
           <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DNHANVIENID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DNHANVIEN" Relationship="Self.FK__SUSER__DNHANVIEN__7EF6D905" FromRole="SUSER" ToRole="DNHANVIEN" />
+          <Property Name="ISADMIN" Type="Int32" />
         </EntityType>
         <EntityType Name="TDONHANG">
           <Key>
@@ -1136,6 +1139,8 @@
           <EntitySetMapping Name="DKHACHHANGs">
             <EntityTypeMapping TypeName="ShopOrderModel.DKHACHHANG">
               <MappingFragment StoreEntitySet="DKHACHHANG">
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
@@ -1144,8 +1149,6 @@
                 <ScalarProperty Name="PHUONGXA" ColumnName="PHUONGXA" />
                 <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
                 <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-                <ScalarProperty Name="TAIKHOAN" ColumnName="TAIKHOAN" />
-                <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
                 <ScalarProperty Name="DNHOMKHACHHANGID" ColumnName="DNHOMKHACHHANGID" />
                 <ScalarProperty Name="LOAIVANCHUYEN" ColumnName="LOAIVANCHUYEN" />
                 <ScalarProperty Name="DNHAXEID" ColumnName="DNHAXEID" />
@@ -1197,6 +1200,7 @@
           <EntitySetMapping Name="DNHANVIENs">
             <EntityTypeMapping TypeName="ShopOrderModel.DNHANVIEN">
               <MappingFragment StoreEntitySet="DNHANVIEN">
+                <ScalarProperty Name="LOAITAIKHOAN" ColumnName="LOAITAIKHOAN" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
@@ -1279,6 +1283,7 @@
           <EntitySetMapping Name="SUSERs">
             <EntityTypeMapping TypeName="ShopOrderModel.SUSER">
               <MappingFragment StoreEntitySet="SUSER">
+                <ScalarProperty Name="ISADMIN" ColumnName="ISADMIN" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
                 <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />

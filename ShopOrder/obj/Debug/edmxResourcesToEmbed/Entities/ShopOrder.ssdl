@@ -27,11 +27,11 @@
     <Property Name="PHUONGXA" Type="nvarchar" MaxLength="255" />
     <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
     <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
-    <Property Name="TAIKHOAN" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="MATKHAU" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="DNHOMKHACHHANGID" Type="varchar" MaxLength="36" />
     <Property Name="LOAIVANCHUYEN" Type="int" />
     <Property Name="DNHAXEID" Type="varchar" MaxLength="36" />
+    <Property Name="USERNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="DMATHANG">
     <Key>
@@ -81,6 +81,7 @@
     <Property Name="DIENTHOAI" Type="nvarchar" MaxLength="255" />
     <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
     <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
+    <Property Name="LOAITAIKHOAN" Type="int" />
   </EntityType>
   <EntityType Name="DNHAXE">
     <Key>
@@ -153,6 +154,7 @@
     <Property Name="USERNAME" Type="nvarchar" MaxLength="255" />
     <Property Name="PASSWORD" Type="nvarchar" MaxLength="255" />
     <Property Name="DNHANVIENID" Type="varchar" MaxLength="36" />
+    <Property Name="ISADMIN" Type="int" />
   </EntityType>
   <EntityType Name="TDONHANG">
     <Key>

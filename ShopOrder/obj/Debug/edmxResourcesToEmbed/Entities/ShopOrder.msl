@@ -21,6 +21,8 @@
     <EntitySetMapping Name="DKHACHHANGs">
       <EntityTypeMapping TypeName="ShopOrderModel.DKHACHHANG">
         <MappingFragment StoreEntitySet="DKHACHHANG">
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
@@ -29,8 +31,6 @@
           <ScalarProperty Name="PHUONGXA" ColumnName="PHUONGXA" />
           <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
           <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="TAIKHOAN" ColumnName="TAIKHOAN" />
-          <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
           <ScalarProperty Name="DNHOMKHACHHANGID" ColumnName="DNHOMKHACHHANGID" />
           <ScalarProperty Name="LOAIVANCHUYEN" ColumnName="LOAIVANCHUYEN" />
           <ScalarProperty Name="DNHAXEID" ColumnName="DNHAXEID" />
@@ -82,6 +82,7 @@
     <EntitySetMapping Name="DNHANVIENs">
       <EntityTypeMapping TypeName="ShopOrderModel.DNHANVIEN">
         <MappingFragment StoreEntitySet="DNHANVIEN">
+          <ScalarProperty Name="LOAITAIKHOAN" ColumnName="LOAITAIKHOAN" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
@@ -164,6 +165,7 @@
     <EntitySetMapping Name="SUSERs">
       <EntityTypeMapping TypeName="ShopOrderModel.SUSER">
         <MappingFragment StoreEntitySet="SUSER">
+          <ScalarProperty Name="ISADMIN" ColumnName="ISADMIN" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
           <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ShopOrder.Controllers.Home
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         ShopOrderEntities db = new ShopOrderEntities();
 

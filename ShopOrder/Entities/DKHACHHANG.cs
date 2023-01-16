@@ -28,11 +28,11 @@ namespace ShopOrder.Entities
         public string PHUONGXA { get; set; }
         public string DIACHI { get; set; }
         public string NOTE { get; set; }
-        public string TAIKHOAN { get; set; }
-        public string MATKHAU { get; set; }
         public string DNHOMKHACHHANGID { get; set; }
         public Nullable<int> LOAIVANCHUYEN { get; set; }
         public string DNHAXEID { get; set; }
+        public string USERNAME { get; set; }
+        public string PASSWORD { get; set; }
     
         public virtual DNHAXE DNHAXE { get; set; }
         public virtual DNHOMKHACHHANG DNHOMKHACHHANG { get; set; }

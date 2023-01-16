@@ -5,13 +5,16 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using ShopOrder.Entities;
+using ShopOrder.Utils;
 
 namespace ShopOrder.Controllers.Model
 {
-    public class NhomKhachHangController : Controller
+    
+    public class NhomKhachHangController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 
@@ -36,12 +39,7 @@ namespace ShopOrder.Controllers.Model
                 return HttpNotFound();
             }
 
-            List<object> lst = new List<object>();
-            for (int i = 0; i < 4; i++)
-            {
-                lst.Add(new { ID = i, NAME = "Giá bán" + (i == 0 ? "" : " " + (i + 1).ToString()) });
-            }
-            ViewBag.LOAIGIA = new SelectList(lst, "ID", "NAME", model.LOAIGIA);
+            ViewBag.LOAIGIA = GetLoaiGia(model);
             return View(model);
         }
 
@@ -63,7 +61,18 @@ namespace ShopOrder.Controllers.Model
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.LOAIGIA = GetLoaiGia(model);
             return View(model);
+        }
+
+        private SelectList GetLoaiGia(DNHOMKHACHHANG model)
+        {
+            List<object> lst = new List<object>();
+            for (int i = 0; i < 4; i++)
+            {
+                lst.Add(new { ID = i, NAME = "Giá bán" + (i == 0 ? "" : " " + (i + 1).ToString()) });
+            }
+            return new SelectList(lst, "ID", "NAME", model.LOAIGIA);
         }
 
         public ActionResult Delete(string ID)
