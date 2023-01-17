@@ -135,6 +135,7 @@
     <Compile Include="Controllers\Home\CartController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Model\DangController.cs" />
+    <Compile Include="Controllers\Model\KhachHangController.cs" />
     <Compile Include="Controllers\Model\MatHangController.cs" />
     <Compile Include="Controllers\Model\MauController.cs" />
     <Compile Include="Controllers\Model\NhanVienController.cs" />
@@ -810,7 +811,6 @@
     <Folder Include="Images\Customers\" />
     <Folder Include="Images\Invoices\" />
     <Folder Include="Images\Items\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\assets\vendor\fonts\circular-std\CircularStd-Black.woff" />
@@ -959,6 +959,9 @@
     <Content Include="Entities\ShopOrder.edmx.diagram">
       <DependentUpon>ShopOrder.edmx</DependentUpon>
     </Content>
+    <Content Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </Content>
     <None Include="packages.config" />
     <Content Include="Views\Shop\Index.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
@@ -1005,6 +1008,11 @@
     <Content Include="Views\NhanVien\Index.cshtml" />
     <Content Include="Views\User\TaoTaiKhoan.cshtml" />
     <Content Include="Views\User\DoiMatKhau.cshtml" />
+    <Content Include="Views\Admin\NavbarAdminUi.cshtml" />
+    <Content Include="Views\Home\Header.cshtml" />
+    <Content Include="Views\KhachHang\Delete.cshtml" />
+    <Content Include="Views\KhachHang\Edit.cshtml" />
+    <Content Include="Views\KhachHang\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

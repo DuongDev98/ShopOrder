@@ -1,4 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
+using ShopOrder.Controllers.Model;
 using ShopOrder.Entities;
 using ShopOrder.Models;
 using ShopOrder.Utils;
@@ -235,6 +236,7 @@ namespace ShopOrder.Controllers
         {
             UserModel userLogin = CookieUtils.UserLogin();
             if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
+            ViewBag.layout = "~/Views/Shared/" + (khachHang ? "_Layout.cshtml" : "_Admin.cshtml");
             ViewBag.ID = iD;
             ViewBag.KhachHang = khachHang;
             return View();
@@ -276,13 +278,13 @@ namespace ShopOrder.Controllers
                 {
                     error = "Nhập lại mật khẩu không trùng khớp";
                 }
-                if (password != oldPassword)
-                {
-                    error = "Mật khẩu mới phải khác mật khẩu cũ";
-                }
-                else if (!userLogin.IsAdmin && userLogin.PASSWORD != PasswordUtils.EncrytPass(oldPassword))
+                else if (((userLogin.IsAdmin && userLogin.sUSER.ID == iD) ||!userLogin.IsAdmin) && userLogin.PASSWORD != PasswordUtils.EncrytPass(oldPassword))
                 {
                     error = "Mật khẩu cũ không đúng";
+                }
+                else if (password == oldPassword && !userLogin.IsAdmin)
+                {
+                    error = "Mật khẩu mới phải khác mật khẩu cũ";
                 }
 
                 if (error.Length > 0)
@@ -291,41 +293,39 @@ namespace ShopOrder.Controllers
                 }
                 else
                 {
-                    string controller = "";
+                    string controller = "User";
                     if (khachHang)
                     {
                         DKHACHHANG khRow = db.DKHACHHANGs.Find(iD);
                         khRow.PASSWORD = PasswordUtils.EncrytPass(password);
                         db.Entry(khRow);
-                        controller = "Home";
                     }
                     else
                     {
                         SUSER userRow = db.SUSERs.Find(iD);
                         userRow.PASSWORD = PasswordUtils.EncrytPass(password);
                         db.Entry(userRow);
-                        if (userLogin.IsAdmin)
+
+                        if (userLogin.IsAdmin && iD != userLogin.sUSER.ID)
                         {
                             controller = "Nhanvien";
                         }
-                        else
-                        {
-                            controller = "Admin";
-                        }
                     }
                     db.SaveChanges();
-                    return RedirectToAction("Index", controller);
+                    return RedirectToAction(controller == "Nhanvien" ? "Index" : "Login", controller);
                 }
             }
 
-            return View("", "", iD);
+            ViewBag.layout = "~/Views/Shared/" + (khachHang ? "~/Views/Shared/_Layout.cshtml" : "~/Views/Shared/_Admin.cshtml");
+            ViewBag.ID = iD;
+            ViewBag.KhachHang = khachHang;
+            return View();
         }
 
-        public ActionResult ThongTinCaNhan(string ID)
+        public ActionResult Logout()
         {
-            DKHACHHANG khRow = db.DKHACHHANGs.Find(ID);
-            if (khRow == null) return HttpNotFound();
-            return View();
+            CookieUtils.XoaDuLieuDangNhap();
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

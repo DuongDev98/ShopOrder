@@ -1,5 +1,6 @@
 ﻿using ShopOrder.Controllers.Home;
 using ShopOrder.Entities;
+using ShopOrder.Models;
 using ShopOrder.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,16 @@ namespace ShopOrder.Controllers
     {
         ShopOrderEntities db = new ShopOrderEntities();
 
-        // GET: Home
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Header()
+        {
+            UserModel userModel = CookieUtils.UserLogin();
+            ViewBag.Id = userModel.dKHACHHANG.ID;
+            return PartialView();
         }
 
         //Danh sách trang chủ

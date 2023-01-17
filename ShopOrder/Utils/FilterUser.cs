@@ -16,13 +16,13 @@ namespace ShopOrder.Utils
         ShopOrderEntities db = new ShopOrderEntities();
         public void OnAuthentication(AuthenticationContext filterContext)
         {
-            string controller = filterContext.RouteData.Values["Controller"].ToString();
-            string action = filterContext.RouteData.Values["Action"].ToString();
+            string controller = filterContext.RouteData.Values["Controller"].ToString().ToLower();
+            string action = filterContext.RouteData.Values["Action"].ToString().ToLower();
 
-            if (!(controller.ToLower() == "User".ToLower() && (action.ToLower() == "Login".ToLower() || action.ToLower() == "Register".ToLower())))
+            if (!(controller == "User".ToLower() && (action == "Login".ToLower() || action == "Register".ToLower())))
             {
                 UserModel userLogin = CookieUtils.UserLogin();
-                if (userLogin == null)
+                if (userLogin == null || userLogin.sUSER == null && userLogin.dKHACHHANG == null)
                 {
                     filterContext.Result = new HttpUnauthorizedResult();
                     return;
@@ -32,10 +32,11 @@ namespace ShopOrder.Utils
                     //khách hàng không được vào admin
                     if (userLogin.IsCustomer)
                     {
-                        bool hasError = false;
-                        if (controller != "Home" && controller != "Cart") hasError = true;
-                        else if (controller == "User" && action != "DoiMatKhau" && action != "ThongTinCaNhan") hasError = true;
-                        if (hasError)
+                        bool noError = false;
+                        if (controller == "User".ToLower() && (action == "DoiMatKhau".ToLower() || action == "ThongTinCaNhan".ToLower())) noError = true;
+                        if (controller == "Khachhang".ToLower() && action == "Edit".ToLower()) noError = true;
+                        if (controller == "Home".ToLower() || controller == "Cart".ToLower()) noError = true;
+                        if (!noError)
                         {
                             filterContext.Result = new HttpUnauthorizedResult();
                         }

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<ShopOrder.Entities.DKHACHHANG>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Tên khách
+        </th>
+        <th>
+            Điện thoại
+        </th>
+        <th>
+            Tỉnh thành
+        </th>
+        <th>
+            Quận huyện
+        </th>
+        <th>
+            Phường xã
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Ghi chú
+        </th>
+        <th>
+            Loại vận chuyển
+        </th>
+        <th>
+            Nhà xe
+        </th>
+        <th>
+            Nhóm khách
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIENTHOAI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TINHTHANH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QUANHUYEN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PHUONGXA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIACHI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NOTE)
+            </td>
+            <td>
+                @{
+                    if (item.LOAIVANCHUYEN == (int)ShopOrder.Controllers.Model.LoaiVanChuyen.GuiXe)
+                    {
+                        <p>Gửi xe</p>
+                    }
+                    else if (item.LOAIVANCHUYEN == (int)ShopOrder.Controllers.Model.LoaiVanChuyen.GiaoHangTietKiem)
+                    {
+                        <p>Giao hàng tiết kiệm</p>
+                    }
+                    else
+                    {
+                        <p>Gửi bay An Phú</p>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DNHAXE.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DNHOMKHACHHANG.NAME)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

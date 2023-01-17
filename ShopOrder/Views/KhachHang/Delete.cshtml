@@ -1,0 +1,119 @@
+﻿@model ShopOrder.Entities.DKHACHHANG
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h3>Xóa dữ liệu đang chọn?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIENTHOAI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIENTHOAI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TINHTHANH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TINHTHANH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QUANHUYEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QUANHUYEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHUONGXA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHUONGXA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIACHI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIACHI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NOTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LOAIVANCHUYEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOAIVANCHUYEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USERNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USERNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PASSWORD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PASSWORD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DNHAXE.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNHAXE.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DNHOMKHACHHANG.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNHOMKHACHHANG.NAME)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Danh sách", "Index", null, new { @class = "btn btn-outline-primary" })|
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+        </div>
+    }
+</div>
