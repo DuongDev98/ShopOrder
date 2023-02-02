@@ -43,9 +43,9 @@ namespace ShopOrder.Controllers.Model
             ViewBag.Title = userLogin.IsCustomer ? "Thông tin cá nhân" : "Chỉnh sửa";
             ViewBag.Layout = "~/Views/Shared/" + (userLogin.IsCustomer ? "_Layout.cshtml" : "_Admin.cshtml");
             ViewBag.IsCustomer = userLogin.IsCustomer;
-            ViewBag.DNHAXEID = new SelectList(db.DNHAXEs, "ID", "NAME", model.DNHAXEID);
-            ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs, "ID", "NAME", model.DNHOMKHACHHANGID);
-            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(model);
+            ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
+            ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
+            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(model.LOAIVANCHUYEN ?? 0);
             return View(model);
         }
 
@@ -53,33 +53,52 @@ namespace ShopOrder.Controllers.Model
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DKHACHHANG model)
         {
+            DKHACHHANG khRow = null;
             if (ModelState.IsValid)
             {
-                //Cập nhật dữ liệu
-                DKHACHHANG khRow = db.DKHACHHANGs.Find(model.ID);
-                model.USERNAME = khRow.USERNAME;
-                model.PASSWORD = khRow.PASSWORD;
-                db.Entry(model).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    //Cập nhật dữ liệu
+                    khRow = db.DKHACHHANGs.Find(model.ID);
+                    khRow.NAME = model.NAME;
+                    khRow.DIENTHOAI = model.DIENTHOAI;
+                    khRow.TINHTHANH = model.TINHTHANH;
+                    khRow.QUANHUYEN = model.QUANHUYEN;
+                    khRow.PHUONGXA = model.PHUONGXA;
+                    khRow.DIACHI = model.DIACHI;
+                    khRow.NOTE = model.NOTE;
+                    khRow.LOAIVANCHUYEN = model.LOAIVANCHUYEN;
+                    khRow.DNHAXEID = model.DNHAXEID;
+                    khRow.DNHOMKHACHHANGID = model.DNHOMKHACHHANGID;
+                    db.Entry(khRow).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (!CookieUtils.UserLogin().IsCustomer)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMessage = ex.Message;
+                }
             }
             UserModel userLogin = CookieUtils.UserLogin();
             ViewBag.Title = userLogin.IsCustomer ? "Thông tin cá nhân" : "Chỉnh sửa";
             ViewBag.Layout = "~/Views/Shared/" + (userLogin.IsCustomer ? "_Layout.cshtml" : "_Admin.cshtml");
             ViewBag.IsCustomer = userLogin.IsCustomer;
-            ViewBag.DNHAXEID = new SelectList(db.DNHAXEs, "ID", "NAME", model.DNHAXEID);
-            ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs, "ID", "NAME", model.DNHOMKHACHHANGID);
-            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(model);
-            return View(model);
+            ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
+            ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
+            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(model.LOAIVANCHUYEN ?? 0);
+            return View(khRow);
         }
 
-        private SelectList LayLoaiVanChuyen(DKHACHHANG khRow)
+        public static SelectList LayLoaiVanChuyen(int loai)
         {
             List<object> lst = new List<object>();
-            lst.Add(new { ID = LoaiVanChuyen.GuiXe, NAME = "Gửi xe" });
-            lst.Add(new { ID = LoaiVanChuyen.AnPhu, NAME = "Gửi bay An Phú" });
-            lst.Add(new { ID = LoaiVanChuyen.GiaoHangTietKiem, NAME = "Giao hàng tiết kiệm" });
-            return new SelectList(lst, "ID", "NAME", khRow.DNHAXEID);
+            lst.Add(new { ID = (int)LoaiVanChuyen.GuiXe, NAME = "Gửi xe" });
+            lst.Add(new { ID = (int)LoaiVanChuyen.AnPhu, NAME = "Gửi bay An Phú" });
+            lst.Add(new { ID = (int)LoaiVanChuyen.GiaoHangTietKiem, NAME = "Giao hàng tiết kiệm" });
+            return new SelectList(lst, "ID", "NAME", loai);
         }
 
         public ActionResult Delete(string ID)
@@ -135,8 +154,8 @@ namespace ShopOrder.Controllers.Model
 
     public enum LoaiVanChuyen
     {
-        GuiXe,
-        AnPhu,
-        GiaoHangTietKiem
+        GuiXe = 0,
+        AnPhu = 1,
+        GiaoHangTietKiem = 2
     }
 }

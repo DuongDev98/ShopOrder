@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ShopOrderModelStoreContainer" CdmEntityContainer="ShopOrderEntities">
+  <EntityContainerMapping StorageEntityContainer="shoporderModelStoreContainer" CdmEntityContainer="ShopOrderEntities">
     <EntitySetMapping Name="DANHs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DANH">
+      <EntityTypeMapping TypeName="shoporderModel.DANH">
         <MappingFragment StoreEntitySet="DANH">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -11,7 +11,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DDANGs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DDANG">
+      <EntityTypeMapping TypeName="shoporderModel.DDANG">
         <MappingFragment StoreEntitySet="DDANG">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -19,7 +19,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DKHACHHANGs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DKHACHHANG">
+      <EntityTypeMapping TypeName="shoporderModel.DKHACHHANG">
         <MappingFragment StoreEntitySet="DKHACHHANG">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -38,7 +38,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DMATHANGs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DMATHANG">
+      <EntityTypeMapping TypeName="shoporderModel.DMATHANG">
         <MappingFragment StoreEntitySet="DMATHANG">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
@@ -63,7 +63,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DMAUs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DMAU">
+      <EntityTypeMapping TypeName="shoporderModel.DMAU">
         <MappingFragment StoreEntitySet="DMAU">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -71,7 +71,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DMAUCHITIETs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DMAUCHITIET">
+      <EntityTypeMapping TypeName="shoporderModel.DMAUCHITIET">
         <MappingFragment StoreEntitySet="DMAUCHITIET">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
@@ -80,7 +80,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DNHANVIENs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DNHANVIEN">
+      <EntityTypeMapping TypeName="shoporderModel.DNHANVIEN">
         <MappingFragment StoreEntitySet="DNHANVIEN">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -92,7 +92,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DNHAXEs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DNHAXE">
+      <EntityTypeMapping TypeName="shoporderModel.DNHAXE">
         <MappingFragment StoreEntitySet="DNHAXE">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -105,7 +105,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DNHOMHANGs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DNHOMHANG">
+      <EntityTypeMapping TypeName="shoporderModel.DNHOMHANG">
         <MappingFragment StoreEntitySet="DNHOMHANG">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -113,7 +113,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DNHOMKHACHHANGs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DNHOMKHACHHANG">
+      <EntityTypeMapping TypeName="shoporderModel.DNHOMKHACHHANG">
         <MappingFragment StoreEntitySet="DNHOMKHACHHANG">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -122,7 +122,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DPHANLOAIs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DPHANLOAI">
+      <EntityTypeMapping TypeName="shoporderModel.DPHANLOAI">
         <MappingFragment StoreEntitySet="DPHANLOAI">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -130,7 +130,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DSIZEs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DSIZE">
+      <EntityTypeMapping TypeName="shoporderModel.DSIZE">
         <MappingFragment StoreEntitySet="DSIZE">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -138,7 +138,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DSIZECHITIETs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DSIZECHITIET">
+      <EntityTypeMapping TypeName="shoporderModel.DSIZECHITIET">
         <MappingFragment StoreEntitySet="DSIZECHITIET">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
@@ -147,7 +147,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DTHOIGIANDATs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DTHOIGIANDAT">
+      <EntityTypeMapping TypeName="shoporderModel.DTHOIGIANDAT">
         <MappingFragment StoreEntitySet="DTHOIGIANDAT">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -155,7 +155,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DTRANGTHAIDONs">
-      <EntityTypeMapping TypeName="ShopOrderModel.DTRANGTHAIDON">
+      <EntityTypeMapping TypeName="shoporderModel.DTRANGTHAIDON">
         <MappingFragment StoreEntitySet="DTRANGTHAIDON">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -163,7 +163,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SUSERs">
-      <EntityTypeMapping TypeName="ShopOrderModel.SUSER">
+      <EntityTypeMapping TypeName="shoporderModel.SUSER">
         <MappingFragment StoreEntitySet="SUSER">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
@@ -174,14 +174,16 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDONHANGs">
-      <EntityTypeMapping TypeName="ShopOrderModel.TDONHANG">
+      <EntityTypeMapping TypeName="shoporderModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
+          <ScalarProperty Name="TMPCODE" ColumnName="TMPCODE" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NGAY" ColumnName="NGAY" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="TIENHANG" ColumnName="TIENHANG" />
-          <ScalarProperty Name="PHIVANCUYEN" ColumnName="PHIVANCUYEN" />
+          <ScalarProperty Name="PHIVANCHUYEN" ColumnName="PHIVANCHUYEN" />
           <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
+          <ScalarProperty Name="DATHANHTOAN" ColumnName="DATHANHTOAN" />
           <ScalarProperty Name="TINHTHANH" ColumnName="TINHTHANH" />
           <ScalarProperty Name="QUANHUYEN" ColumnName="QUANHUYEN" />
           <ScalarProperty Name="PHUONGXA" ColumnName="PHUONGXA" />
@@ -197,14 +199,14 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDONHANGCHITIETs">
-      <EntityTypeMapping TypeName="ShopOrderModel.TDONHANGCHITIET">
+      <EntityTypeMapping TypeName="shoporderModel.TDONHANGCHITIET">
         <MappingFragment StoreEntitySet="TDONHANGCHITIET">
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
           <ScalarProperty Name="DSIZEID" ColumnName="DSIZEID" />
           <ScalarProperty Name="DMAUID" ColumnName="DMAUID" />
           <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
-          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
           <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />
           <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
           <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />

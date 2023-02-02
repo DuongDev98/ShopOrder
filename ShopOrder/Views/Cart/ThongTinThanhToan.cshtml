@@ -1,0 +1,51 @@
+﻿@model ShopOrder.Entities.TDONHANG
+@{
+    ViewBag.Title = "Thông tin thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ShopOrder.Entities.TDONHANG tDONHANG = Model;
+    if (tDONHANG == null)
+    {
+        return;
+    }
+}
+
+<div class="row p-all-10 m-b-10 justify-content-center">
+    <div class="card">
+        <div class="card-header">
+            <div class="row justify-content-center">
+                <p>THANH TOÁN ĐƠN HÀNG</p>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <h4>Số tiền: <span style="color: red;">@tDONHANG.TONGCONG.ToString("n0") VNĐ</span></h4>
+            </div>
+            <div class="row justify-content-center">
+                <h4>Nội dung CK: <span style="color: blue;">@tDONHANG.TMPCODE</span></h4>
+            </div>
+            <hr />
+            <div class="row justify-content-center">
+                <img src="~/Images/QRcode/duong_vcb.png" width="250" height="300" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var boDemThoiGian;
+    $(document).ready(function () {
+        boDemThoiGian = setInterval(KiemTraThanhToan, 5000);
+    });
+
+    function KiemTraThanhToan() {
+        $.post("/Cart/KiemTraThanhToan/@tDONHANG.ID", null, function (data) {
+            if (data == 'ok') {
+                clearInterval(boDemThoiGian);
+                swal("", "Thanh toán thành công", "success").then(function () {
+                    window.location.href = "/Cart";
+                });
+            } else { }
+        });
+    }
+</script>

@@ -13,12 +13,6 @@
     @*dữ liệu ẩn*@
     <input id="ipDMATHANGID" name="DMATHANGID" value="@Model.ID" hidden />
     <input id="ipDONGIA" name="DONGIA" value="@Model.GIABAN" hidden />
-    @{
-        if (Model.DANHs != null && Model.DANHs.Count > 0)
-        {
-            <input id="ipAVATAR" name="AVATAR" value="@(Model.DANHs.ElementAt(0).NAME)" hidden />
-        }
-    }
 
     @*form*@
     <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
@@ -176,7 +170,7 @@
 <script src="~/Content/Shop/vendor/slick/slick.min.js"></script>
 <script src="~/Content/Shop/js/main.js"></script>
 <script src="~/Content/Shop/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-<script src="~/Content/Shop/vendor/sweetalert/sweetalert.min.js"></script>
+@*<script src="~/Content/Shop/vendor/sweetalert/sweetalert.min.js"></script>*@
 <script>
     $('.wrap-slick3').each(function () {
         $(this).find('.slick3').slick({

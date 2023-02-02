@@ -19,14 +19,16 @@ namespace ShopOrder.Entities
         public string DSIZEID { get; set; }
         public string DMAUID { get; set; }
         public string TDONHANGID { get; set; }
-        public Nullable<long> DONGIA { get; set; }
-        public Nullable<long> SOLUONG { get; set; }
-        public Nullable<long> THANHTIEN { get; set; }
+        public long DONGIA { get; set; }
+        public long SOLUONG { get; set; }
+        public long THANHTIEN { get; set; }
         public string NOTE { get; set; }
+        public string DKHACHHANGID { get; set; }
     
         public virtual DMATHANG DMATHANG { get; set; }
         public virtual DMAU DMAU { get; set; }
         public virtual DSIZE DSIZE { get; set; }
         public virtual TDONHANG TDONHANG { get; set; }
+        public virtual DKHACHHANG DKHACHHANG { get; set; }
     }
 }

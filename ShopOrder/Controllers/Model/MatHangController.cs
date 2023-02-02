@@ -39,10 +39,10 @@ namespace ShopOrder.Controllers.Model
             {
                 return HttpNotFound();
             }
-            ViewBag.DDANGID = new SelectList(db.DDANGs, "ID", "NAME", dMATHANG.DDANGID);
-            ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs, "ID", "NAME", dMATHANG.DNHOMHANGID);
-            ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs, "ID", "NAME", dMATHANG.DPHANLOAIID);
-            ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs, "ID", "NAME", dMATHANG.DTHOIGIANDATID);
+            ViewBag.DDANGID = new SelectList(db.DDANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DDANGID);
+            ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DNHOMHANGID);
+            ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DPHANLOAIID);
+            ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DTHOIGIANDATID);
             ViewBag.Sizes = db.DSIZEs.ToList();
             ViewBag.Maus = db.DMAUs.ToList();
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
@@ -158,10 +158,10 @@ namespace ShopOrder.Controllers.Model
                     ViewBag.errorMessage = error;
                 }
             }
-            ViewBag.DDANGID = new SelectList(db.DDANGs, "ID", "NAME", dMATHANG.DDANGID);
-            ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs, "ID", "NAME", dMATHANG.DNHOMHANGID);
-            ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs, "ID", "NAME", dMATHANG.DPHANLOAIID);
-            ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs, "ID", "NAME", dMATHANG.DTHOIGIANDATID);
+            ViewBag.DDANGID = new SelectList(db.DDANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DDANGID);
+            ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DNHOMHANGID);
+            ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DPHANLOAIID);
+            ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DTHOIGIANDATID);
             ViewBag.Sizes = db.DSIZEs.ToList();
             ViewBag.Maus = db.DMAUs.ToList();
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);

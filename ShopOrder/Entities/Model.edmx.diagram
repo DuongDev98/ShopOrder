@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3d462d6d2b8a4ba490db46b92c12f1e2" Name="Diagram1">
+        <EntityTypeShape EntityType="shoporderModel.DANH" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DDANG" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DKHACHHANG" Width="1.5" PointX="3.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DMATHANG" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DMAU" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DMAUCHITIET" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DNHANVIEN" Width="1.5" PointX="3.75" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DNHAXE" Width="1.5" PointX="1.5" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DNHOMHANG" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DNHOMKHACHHANG" Width="1.5" PointX="1.5" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DPHANLOAI" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DSIZE" Width="1.5" PointX="6" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DSIZECHITIET" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DTHOIGIANDAT" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.DTRANGTHAIDON" Width="1.5" PointX="3.75" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.SUSER" Width="1.5" PointX="6" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.TDONHANG" Width="1.5" PointX="6" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="shoporderModel.TDONHANGCHITIET" Width="3" PointX="8.25" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="shoporderModel.FK__DANH__DMATHANGID__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DMATHANG__DDANGI__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DKHACHHAN__DNHAX__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DKHACHHAN__DNHOM__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANG__DKHACH__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DMATHANG__DNHOMH__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DMATHANG__DPHANL__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DMATHANG__DTHOIG__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DMAUCHITI__DMATH__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DSIZECHIT__DMATH__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANGC__DMATH__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DMAUCHITI__DMAUI__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANGC__DMAUI__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__SUSER__DNHANVIEN__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANG__DNHANV__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANG__DNHAXE__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__DSIZECHIT__DSIZE__22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANGC__DSIZE__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANG__DTRANG__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANGC__TDONH__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="shoporderModel.FK__TDONHANGC__DKHAC__6E01572D" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

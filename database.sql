@@ -130,9 +130,10 @@ create table TDONHANG (
 	ID varchar(36) primary key,
 	NGAY datetime not null,
 	NAME nvarchar(255),
-	TIENHANG bigint,
-	PHIVANCUYEN nvarchar(255),
-	TONGCONG bigint,
+	TIENHANG bigint not null,
+	PHIVANCHUYEN bigint not null,
+	TONGCONG bigint not null,
+	DATHANHTOAN int not null,
 	TINHTHANH nvarchar(255),
 	QUANHUYEN nvarchar(255),
 	PHUONGXA nvarchar(255),
@@ -144,6 +145,7 @@ create table TDONHANG (
 	LABEL_GHTK nvarchar(255),
 	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
 	DTRANGTHAIDONID varchar(36) foreign key references DTRANGTHAIDON(ID),
+	TMPCODE varchar(36)
 );
 --18
 create table TDONHANGCHITIET (
@@ -152,11 +154,13 @@ create table TDONHANGCHITIET (
 	DSIZEID varchar(36) foreign key references DSIZE(ID),
 	DMAUID varchar(36) foreign key references DMAU(ID),
 	TDONHANGID varchar(36) foreign key references TDONHANG(ID),
-	DONGIA bigint,
-	SOLUONG bigint,
-	THANHTIEN bigint,
+	DKHACHHANGID varchar(36) foreign key references DKHACHHANG(ID),
+	DONGIA bigint not null,
+	SOLUONG bigint not null,
+	THANHTIEN bigint not null,
 	NOTE nvarchar(255),
 )
 
+--a
 insert into SUSER(ID, USERNAME, PASSWORD, ISADMIN)
 values ('anhduong-823d-4502-bea8-67068da44fff', 'admin', '019113EB7DF662AAB056F68E4382BF87', 30)

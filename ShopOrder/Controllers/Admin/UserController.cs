@@ -88,6 +88,12 @@ namespace ShopOrder.Controllers
                 }
                 else
                 {
+                    //tên đăng nhập phải viết liền không dấu
+                    if (username != PasswordUtils.RemoveUnicodeAndSpace(username))
+                    {
+                        error = "Tên đăng nhập phải viết liền không dấu";
+                    }
+                    else
                     //kiểm tra số điện thoại đúng định dạng
                     if (!NumberPhoneIsValid(phone))
                     {

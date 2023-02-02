@@ -134,6 +134,7 @@
     <Compile Include="Controllers\Admin\BaseController.cs" />
     <Compile Include="Controllers\Home\CartController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
+    <Compile Include="Controllers\Home\QuanLyDonHangController.cs" />
     <Compile Include="Controllers\Model\DangController.cs" />
     <Compile Include="Controllers\Model\KhachHangController.cs" />
     <Compile Include="Controllers\Model\MatHangController.cs" />
@@ -149,78 +150,77 @@
     <Compile Include="Controllers\Shop\ShopController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Entities\DANH.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DDANG.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DKHACHHANG.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DMATHANG.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DMAU.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DMAUCHITIET.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DNHANVIEN.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DNHAXE.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DNHOMHANG.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DNHOMKHACHHANG.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DPHANLOAI.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DSIZE.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DSIZECHITIET.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DTHOIGIANDAT.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DTRANGTHAIDON.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ShopOrder.Context.cs">
+    <Compile Include="Entities\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ShopOrder.Context.tt</DependentUpon>
+      <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ShopOrder.cs">
+    <Compile Include="Entities\Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ShopOrder.Designer.cs">
+    <Compile Include="Entities\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ShopOrder.edmx</DependentUpon>
+      <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\SUSER.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\TDONHANG.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\TDONHANGCHITIET.cs">
-      <DependentUpon>ShopOrder.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CookieUtils.cs" />
@@ -228,7 +228,6 @@
     <Compile Include="Utils\FileUploads.cs" />
     <Compile Include="Utils\FilterUser.cs" />
     <Compile Include="Utils\PasswordUtils.cs" />
-    <Compile Include="Utils\Uitils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\assets\images\avatar-1.jpg" />
@@ -780,18 +779,19 @@
     <Content Include="Content\Shop\vendor\slick\slick.js" />
     <Content Include="Content\Shop\vendor\slick\slick.min.js" />
     <Content Include="Content\Shop\vendor\sweetalert\sweetalert.min.js" />
-    <Content Include="Entities\ShopOrder.Context.tt">
+    <Content Include="Entities\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ShopOrder.edmx</DependentUpon>
-      <LastGenOutput>ShopOrder.Context.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entities\ShopOrder.tt">
+    <Content Include="Entities\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ShopOrder.edmx</DependentUpon>
-      <LastGenOutput>ShopOrder.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\QRcode\duong_vcb.png" />
     <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\lib.js" />
     <Content Include="Web.config" />
@@ -952,15 +952,15 @@
     <Content Include="Content\Shop\vendor\slick\slick-theme.scss" />
     <Content Include="Content\Shop\vendor\slick\slick.less" />
     <Content Include="Content\Shop\vendor\slick\slick.scss" />
-    <EntityDeploy Include="Entities\ShopOrder.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ShopOrder.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Entities\ShopOrder.edmx.diagram">
-      <DependentUpon>ShopOrder.edmx</DependentUpon>
-    </Content>
     <Content Include="..\.editorconfig">
       <Link>.editorconfig</Link>
+    </Content>
+    <EntityDeploy Include="Entities\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entities\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <Content Include="Views\Shop\Index.cshtml" />
@@ -1013,6 +1013,10 @@
     <Content Include="Views\KhachHang\Delete.cshtml" />
     <Content Include="Views\KhachHang\Edit.cshtml" />
     <Content Include="Views\KhachHang\Index.cshtml" />
+    <Content Include="Views\Cart\ThongTinDatHang.cshtml" />
+    <Content Include="Views\Cart\ThongTinThanhToan.cshtml" />
+    <Content Include="Views\QuanLyDonHang\Index.cshtml" />
+    <Content Include="Views\QuanLyDonHang\DanhSach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

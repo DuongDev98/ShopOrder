@@ -91,13 +91,22 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.DNHOMKHACHHANGID, "Nhóm khách", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("DNHOMKHACHHANGID", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.DNHOMKHACHHANGID, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                @{
+                    if (!ViewBag.IsCustomer)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DNHOMKHACHHANGID, "Nhóm khách", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("DNHOMKHACHHANGID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DNHOMKHACHHANGID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(model => model.DNHOMKHACHHANGID)
+                    }
+                }
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.LOAIVANCHUYEN, "Loại hình vận chuyển", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -109,7 +118,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DNHAXEID, "Nhà xe", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("DNHAXEID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("DNHAXEID", null, htmlAttributes: new { @class = "form-control ipDNHAXEID" })
                         @Html.ValidationMessageFor(model => model.DNHAXEID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -123,3 +132,22 @@
         }
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        AnHienNhaXe($('.ipLoaiVanChuyen'));
+    });
+
+    $('.ipLoaiVanChuyen').change(function () {
+        AnHienNhaXe($(this));
+    });
+
+    function AnHienNhaXe(item) {
+        let hidden = item.val() != "0";
+        if (hidden) {
+            $('.ipDNHAXEID').closest('.form-group').prop("hidden", true);
+        } else {
+            $('.ipDNHAXEID').closest('.form-group').prop("hidden", false);
+        }
+    }
+</script>

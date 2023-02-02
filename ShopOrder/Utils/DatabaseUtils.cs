@@ -176,8 +176,16 @@ namespace ShopOrder.Utils
             string code = "";
             if (table == "DMATHANG") code = "MH";
             else if (table == "DKHACHHANG") code = "KH";
-            else if (table == "TDONHANG") code = "DH";
-            else if (table == "TTHANHTOAN") code = "TT";
+            else if (table == "TDONHANG")
+            {
+                code = "DH" + DateTime.Now.ToString("yyMM");
+                maxLength = 12;
+            }
+            else if (table == "TTHANHTOAN")
+            {
+                code = "TT" + DateTime.Now.ToString("yyMM");
+                maxLength = 12;
+            }
 
             int stt = 0;
             string data = GetFirstFieldString(string.Format("SELECT MAX({0}) FROM {1}", field, table), null);

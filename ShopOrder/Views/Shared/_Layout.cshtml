@@ -20,10 +20,12 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Shop/css/main.css">
     <!--===============================================================================================-->
     <script src="~/Content/Shop/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    <script src="~/Scripts/lib.js"></script>
 </head>
 <body class="animsition">
 
-    @{ 
+    @{
         Html.RenderAction("Header", "Home");
     }
 
@@ -81,6 +83,16 @@
         </aside>*@
 
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @{
+                    if (ViewBag.errorMessage != null && ViewBag.errorMessage.Length > 0)
+                    {
+                        <div class="p-3 mb-2 bg-danger text-white">@ViewBag.errorMessage</div>
+                    }
+                }
+            </div>
+        </div>
         @RenderBody()
     </div>
 
@@ -269,36 +281,7 @@
     <!--===============================================================================================-->
     <script src="~/Content/Shop/vendor/isotope/isotope.pkgd.min.js"></script>
     <!--===============================================================================================-->
-    @*<script src="~/Content/Shop/vendor/sweetalert/sweetalert.min.js"></script>
-        <script>
-            $('.js-addwish-b2').on('click', function (e) {
-                e.preventDefault();
-            });
-
-            $('.js-addwish-b2').each(function () {
-                var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-                $(this).on('click', function () {
-                    swal(nameProduct, "is added to wishlist !", "success");
-
-                    $(this).addClass('js-addedwish-b2');
-                    $(this).off('click');
-                });
-            });
-
-            $('.js-addwish-detail').each(function () {
-                var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-                $(this).on('click', function () {
-                    swal(nameProduct, "is added to wishlist !", "success");
-
-                    $(this).addClass('js-addedwish-detail');
-                    $(this).off('click');
-                });
-            });
-
-            /*---------------------------------------------*/
-
-            </script>*@
+    <script src="~/Content/Shop/vendor/sweetalert/sweetalert.min.js"></script>
     <!--===============================================================================================-->
     <script src="~/Content/Shop/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script>

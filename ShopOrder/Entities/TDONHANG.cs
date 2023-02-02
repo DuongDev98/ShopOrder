@@ -23,9 +23,10 @@ namespace ShopOrder.Entities
         public string ID { get; set; }
         public System.DateTime NGAY { get; set; }
         public string NAME { get; set; }
-        public Nullable<long> TIENHANG { get; set; }
-        public string PHIVANCUYEN { get; set; }
-        public Nullable<long> TONGCONG { get; set; }
+        public long TIENHANG { get; set; }
+        public long PHIVANCHUYEN { get; set; }
+        public long TONGCONG { get; set; }
+        public int DATHANHTOAN { get; set; }
         public string TINHTHANH { get; set; }
         public string QUANHUYEN { get; set; }
         public string PHUONGXA { get; set; }
@@ -37,6 +38,7 @@ namespace ShopOrder.Entities
         public string LABEL_GHTK { get; set; }
         public string DNHANVIENID { get; set; }
         public string DTRANGTHAIDONID { get; set; }
+        public string TMPCODE { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DNHANVIEN DNHANVIEN { get; set; }
