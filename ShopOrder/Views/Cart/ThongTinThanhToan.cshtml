@@ -39,7 +39,7 @@
     });
 
     function KiemTraThanhToan() {
-        $.post("/Cart/KiemTraThanhToan/@tDONHANG.ID", null, function (data) {
+        $.post("/QuanLyDonHang/KiemTraThanhToan/@tDONHANG.ID", null, function (data) {
             if (data == 'ok') {
                 clearInterval(boDemThoiGian);
                 swal("", "Thanh toán thành công", "success").then(function () {

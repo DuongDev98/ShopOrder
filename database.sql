@@ -49,6 +49,10 @@ create table DMATHANG (
 	NOIBAT int,
 	HANGSALE int,
 	BANAMKHO int,
+	KHOILUONG decimal(18, 2),
+	DAI decimal(18, 2),
+	RONG decimal(18, 2),
+	CAO decimal(18, 2),
 	TIMECREATED datetime not null,
 );
 --8
@@ -158,6 +162,13 @@ create table TDONHANGCHITIET (
 	DONGIA bigint not null,
 	SOLUONG bigint not null,
 	THANHTIEN bigint not null,
+	NOTE nvarchar(255),
+)
+--19
+create table TLUUVET (
+	ID varchar(36) primary key,
+	TIMECREATED datetime not null,
+	TDONHANGID varchar(36) foreign key references TDONHANG(ID),
 	NOTE nvarchar(255),
 )
 

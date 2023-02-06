@@ -242,7 +242,7 @@ namespace ShopOrder.Controllers
         {
             UserModel userLogin = CookieUtils.UserLogin();
             if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
-            ViewBag.layout = "~/Views/Shared/" + (khachHang ? "_Layout.cshtml" : "_Admin.cshtml");
+            ViewBag.Layout = UiUtils.Layout(userLogin);
             ViewBag.ID = iD;
             ViewBag.KhachHang = khachHang;
             return View();
@@ -274,9 +274,9 @@ namespace ShopOrder.Controllers
         [HttpPost]
         public ActionResult DoiMatKhau(string iD, bool khachHang, string oldPassword, string password, string confirmPassword)
         {
+            UserModel userLogin = CookieUtils.UserLogin();
             if (ModelState.IsValid)
             {
-                UserModel userLogin = CookieUtils.UserLogin();
                 if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
 
                 string error = "";
@@ -322,7 +322,7 @@ namespace ShopOrder.Controllers
                 }
             }
 
-            ViewBag.layout = "~/Views/Shared/" + (khachHang ? "~/Views/Shared/_Layout.cshtml" : "~/Views/Shared/_Admin.cshtml");
+            ViewBag.Layout = UiUtils.Layout();
             ViewBag.ID = iD;
             ViewBag.KhachHang = khachHang;
             return View();

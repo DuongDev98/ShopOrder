@@ -44,6 +44,8 @@
         <AssociationConnector Association="shoporderModel.FK__TDONHANG__DTRANG__6754599E" ManuallyRouted="false" />
         <AssociationConnector Association="shoporderModel.FK__TDONHANGC__TDONH__6D0D32F4" ManuallyRouted="false" />
         <AssociationConnector Association="shoporderModel.FK__TDONHANGC__DKHAC__6E01572D" />
+        <EntityTypeShape EntityType="shoporderModel.TLUUVET" Width="1.5" PointX="8.25" PointY="19.875" />
+        <AssociationConnector Association="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

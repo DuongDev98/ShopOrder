@@ -42,6 +42,10 @@ namespace ShopOrder.Entities
         public Nullable<int> HANGSALE { get; set; }
         public Nullable<int> BANAMKHO { get; set; }
         public System.DateTime TIMECREATED { get; set; }
+        public Nullable<decimal> KHOILUONG { get; set; }
+        public Nullable<decimal> DAI { get; set; }
+        public Nullable<decimal> RONG { get; set; }
+        public Nullable<decimal> CAO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANH> DANHs { get; set; }

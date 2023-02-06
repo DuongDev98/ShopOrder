@@ -41,7 +41,7 @@ namespace ShopOrder.Controllers.Model
 
             UserModel userLogin = CookieUtils.UserLogin();
             ViewBag.Title = userLogin.IsCustomer ? "Thông tin cá nhân" : "Chỉnh sửa";
-            ViewBag.Layout = "~/Views/Shared/" + (userLogin.IsCustomer ? "_Layout.cshtml" : "_Admin.cshtml");
+            ViewBag.Layout = UiUtils.Layout(userLogin);
             ViewBag.IsCustomer = userLogin.IsCustomer;
             ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
             ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
@@ -84,7 +84,7 @@ namespace ShopOrder.Controllers.Model
             }
             UserModel userLogin = CookieUtils.UserLogin();
             ViewBag.Title = userLogin.IsCustomer ? "Thông tin cá nhân" : "Chỉnh sửa";
-            ViewBag.Layout = "~/Views/Shared/" + (userLogin.IsCustomer ? "_Layout.cshtml" : "_Admin.cshtml");
+            ViewBag.Layout = UiUtils.Layout(userLogin);
             ViewBag.IsCustomer = userLogin.IsCustomer;
             ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
             ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);

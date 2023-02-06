@@ -218,6 +218,9 @@
     <Compile Include="Entities\TDONHANGCHITIET.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TLUUVET.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,6 +231,7 @@
     <Compile Include="Utils\FileUploads.cs" />
     <Compile Include="Utils\FilterUser.cs" />
     <Compile Include="Utils\PasswordUtils.cs" />
+    <Compile Include="Utils\UiUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\assets\images\avatar-1.jpg" />

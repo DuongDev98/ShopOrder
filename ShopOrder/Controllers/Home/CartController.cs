@@ -29,6 +29,7 @@ namespace ShopOrder.Controllers.Home
                     db.SaveChanges();
                 }
             }
+
             return View(gioHangs);
         }
 
@@ -41,11 +42,14 @@ namespace ShopOrder.Controllers.Home
             }
             else
             {
+                UserModel userLogin = CookieUtils.UserLogin();
                 ViewBag.View = true;
                 ViewBag.Title = "Chi tiết đơn hàng";
                 TDONHANG dhRow = db.TDONHANGs.Where(x => x.ID == id).FirstOrDefault();
-                ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(dhRow.LOAIVANCHUYEN??0);
+                ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(dhRow.LOAIVANCHUYEN ?? 0);
                 ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dhRow.DNHAXEID);
+                ViewBag.Layout = UiUtils.Layout(userLogin);
+                ViewBag.IsCustomer = CookieUtils.UserLogin().IsCustomer;
                 return View(dhRow);
             }
         }
@@ -70,7 +74,8 @@ namespace ShopOrder.Controllers.Home
                 dhRow.PHIVANCHUYEN = 0;
                 dhRow.TONGCONG = dhRow.TIENHANG + dhRow.PHIVANCHUYEN;
                 ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(dhRow.DKHACHHANG.LOAIVANCHUYEN ?? 0);
-                ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x=>x.NAME).ToList(), "ID", "NAME", dhRow.DKHACHHANG.DNHAXEID);
+                ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dhRow.DKHACHHANG.DNHAXEID);
+                ViewBag.IsCustomer = CookieUtils.UserLogin().IsCustomer;
                 return View(dhRow);
             }
         }
@@ -115,6 +120,9 @@ namespace ShopOrder.Controllers.Home
                 db.TDONHANGs.Add(dhRow);
                 db.SaveChanges();
 
+                //log
+                DatabaseUtils.Log(dhRow.ID, "Tạo đơn");
+
                 foreach (var ctRow in lst)
                 {
                     ctRow.TDONHANGID = dhRow.ID;
@@ -123,18 +131,6 @@ namespace ShopOrder.Controllers.Home
                 db.SaveChanges();
                 return View(dhRow);
             }
-        }
-
-        [HttpPost]
-        public ActionResult KiemTraThanhToan(string id)
-        {
-            TDONHANG dhRow = db.TDONHANGs.Where(x => x.ID == id).FirstOrDefault();
-            if (dhRow != null && dhRow.DATHANHTOAN == 30)
-            {
-                return Content("ok");
-            }
-            //thực hiện truy vấn kiểm tra cú pháp tin nhắn có tồn tại không
-            return Content("error");
         }
 
         private string LayCodeChuyenKhoan(DKHACHHANG dKHACHHANG)

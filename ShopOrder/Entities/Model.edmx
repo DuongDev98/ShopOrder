@@ -61,6 +61,10 @@
           <Property Name="HANGSALE" Type="int" />
           <Property Name="BANAMKHO" Type="int" />
           <Property Name="TIMECREATED" Type="datetime" Nullable="false" />
+          <Property Name="KHOILUONG" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DAI" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RONG" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CAO" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="DMAU">
           <Key>
@@ -199,6 +203,15 @@
           <Property Name="THANHTIEN" Type="bigint" Nullable="false" />
           <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
           <Property Name="DKHACHHANGID" Type="varchar" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="TLUUVET">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="TIMECREATED" Type="datetime" Nullable="false" />
+          <Property Name="TDONHANGID" Type="varchar" MaxLength="36" />
+          <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK__DANH__DMATHANGID__29572725">
           <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
@@ -452,6 +465,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__TLUUVET__TDONHAN__70DDC3D8">
+          <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
+          <End Role="TLUUVET" Type="Self.TLUUVET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TDONHANG">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TLUUVET">
+              <PropertyRef Name="TDONHANGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="shoporderModelStoreContainer">
           <EntitySet Name="DANH" EntityType="Self.DANH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DDANG" EntityType="Self.DDANG" Schema="dbo" store:Type="Tables" />
@@ -471,6 +496,7 @@
           <EntitySet Name="SUSER" EntityType="Self.SUSER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TLUUVET" EntityType="Self.TLUUVET" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__DANH__DMATHANGID__29572725" Association="Self.FK__DANH__DMATHANGID__29572725">
             <End Role="DMATHANG" EntitySet="DMATHANG" />
             <End Role="DANH" EntitySet="DANH" />
@@ -555,6 +581,10 @@
             <End Role="TDONHANG" EntitySet="TDONHANG" />
             <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
           </AssociationSet>
+          <AssociationSet Name="FK__TLUUVET__TDONHAN__70DDC3D8" Association="Self.FK__TLUUVET__TDONHAN__70DDC3D8">
+            <End Role="TDONHANG" EntitySet="TDONHANG" />
+            <End Role="TLUUVET" EntitySet="TLUUVET" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -630,6 +660,10 @@
           <NavigationProperty Name="DMAUCHITIETs" Relationship="Self.FK__DMAUCHITI__DMATH__25869641" FromRole="DMATHANG" ToRole="DMAUCHITIET" />
           <NavigationProperty Name="DSIZECHITIETs" Relationship="Self.FK__DSIZECHIT__DMATH__21B6055D" FromRole="DMATHANG" ToRole="DSIZECHITIET" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__DMATH__6A30C649" FromRole="DMATHANG" ToRole="TDONHANGCHITIET" />
+          <Property Name="KHOILUONG" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DAI" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RONG" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CAO" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="DMAU">
           <Key>
@@ -776,6 +810,7 @@
           <NavigationProperty Name="DTRANGTHAIDON" Relationship="Self.FK__TDONHANG__DTRANG__6754599E" FromRole="TDONHANG" ToRole="DTRANGTHAIDON" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__TDONH__6D0D32F4" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
           <Property Name="TMPCODE" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TLUUVETs" Relationship="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8" FromRole="TDONHANG" ToRole="TLUUVET" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -1140,6 +1175,11 @@
             <End Role="DKHACHHANG" EntitySet="DKHACHHANGs" />
             <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIETs" />
           </AssociationSet>
+          <EntitySet Name="TLUUVETs" EntityType="shoporderModel.TLUUVET" />
+          <AssociationSet Name="FK__TLUUVET__TDONHAN__70DDC3D8" Association="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8">
+            <End Role="TDONHANG" EntitySet="TDONHANGs" />
+            <End Role="TLUUVET" EntitySet="TLUUVETs" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__TDONHANGC__DKHAC__6E01572D">
           <End Type="shoporderModel.DKHACHHANG" Role="DKHACHHANG" Multiplicity="0..1" />
@@ -1150,6 +1190,28 @@
             </Principal>
             <Dependent Role="TDONHANGCHITIET">
               <PropertyRef Name="DKHACHHANGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TLUUVET">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="TIMECREATED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TDONHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TDONHANG" Relationship="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8" FromRole="TLUUVET" ToRole="TDONHANG" />
+        </EntityType>
+        <Association Name="FK__TLUUVET__TDONHAN__70DDC3D8">
+          <End Type="shoporderModel.TDONHANG" Role="TDONHANG" Multiplicity="0..1" />
+          <End Type="shoporderModel.TLUUVET" Role="TLUUVET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TDONHANG">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TLUUVET">
+              <PropertyRef Name="TDONHANGID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1198,6 +1260,10 @@
           <EntitySetMapping Name="DMATHANGs">
             <EntityTypeMapping TypeName="shoporderModel.DMATHANG">
               <MappingFragment StoreEntitySet="DMATHANG">
+                <ScalarProperty Name="CAO" ColumnName="CAO" />
+                <ScalarProperty Name="RONG" ColumnName="RONG" />
+                <ScalarProperty Name="DAI" ColumnName="DAI" />
+                <ScalarProperty Name="KHOILUONG" ColumnName="KHOILUONG" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CODE" ColumnName="CODE" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -1369,6 +1435,16 @@
                 <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
                 <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
                 <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TLUUVETs">
+            <EntityTypeMapping TypeName="shoporderModel.TLUUVET">
+              <MappingFragment StoreEntitySet="TLUUVET">
+                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+                <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+                <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

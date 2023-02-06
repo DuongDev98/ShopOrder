@@ -70,6 +70,10 @@
     <NavigationProperty Name="DMAUCHITIETs" Relationship="Self.FK__DMAUCHITI__DMATH__25869641" FromRole="DMATHANG" ToRole="DMAUCHITIET" />
     <NavigationProperty Name="DSIZECHITIETs" Relationship="Self.FK__DSIZECHIT__DMATH__21B6055D" FromRole="DMATHANG" ToRole="DSIZECHITIET" />
     <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__DMATH__6A30C649" FromRole="DMATHANG" ToRole="TDONHANGCHITIET" />
+    <Property Name="KHOILUONG" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DAI" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="RONG" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CAO" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="DMAU">
     <Key>
@@ -216,6 +220,7 @@
     <NavigationProperty Name="DTRANGTHAIDON" Relationship="Self.FK__TDONHANG__DTRANG__6754599E" FromRole="TDONHANG" ToRole="DTRANGTHAIDON" />
     <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__TDONH__6D0D32F4" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
     <Property Name="TMPCODE" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TLUUVETs" Relationship="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8" FromRole="TDONHANG" ToRole="TLUUVET" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>
@@ -580,6 +585,11 @@
       <End Role="DKHACHHANG" EntitySet="DKHACHHANGs" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIETs" />
     </AssociationSet>
+    <EntitySet Name="TLUUVETs" EntityType="shoporderModel.TLUUVET" />
+    <AssociationSet Name="FK__TLUUVET__TDONHAN__70DDC3D8" Association="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8">
+      <End Role="TDONHANG" EntitySet="TDONHANGs" />
+      <End Role="TLUUVET" EntitySet="TLUUVETs" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK__TDONHANGC__DKHAC__6E01572D">
     <End Type="shoporderModel.DKHACHHANG" Role="DKHACHHANG" Multiplicity="0..1" />
@@ -590,6 +600,28 @@
       </Principal>
       <Dependent Role="TDONHANGCHITIET">
         <PropertyRef Name="DKHACHHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TLUUVET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="TIMECREATED" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TDONHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TDONHANG" Relationship="shoporderModel.FK__TLUUVET__TDONHAN__70DDC3D8" FromRole="TLUUVET" ToRole="TDONHANG" />
+  </EntityType>
+  <Association Name="FK__TLUUVET__TDONHAN__70DDC3D8">
+    <End Type="shoporderModel.TDONHANG" Role="TDONHANG" Multiplicity="0..1" />
+    <End Type="shoporderModel.TLUUVET" Role="TLUUVET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TDONHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TLUUVET">
+        <PropertyRef Name="TDONHANGID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

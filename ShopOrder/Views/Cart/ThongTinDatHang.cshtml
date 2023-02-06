@@ -1,7 +1,6 @@
 ﻿@model ShopOrder.Entities.TDONHANG
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
+    Layout = ViewBag.Layout;
     ShopOrder.Entities.TDONHANG tDONHANG = Model;
     if (tDONHANG == null || tDONHANG.TDONHANGCHITIETs == null || tDONHANG.TDONHANGCHITIETs.Count == 0)
     {
@@ -44,7 +43,16 @@
                                                     <div id="ipDONGIA" class="stext-105" data-value="@item.DONGIA">@(item.DONGIA.ToString("n0")) vnđ</div>
                                                     <div class="stext-105">Phân loại: @item.DSIZE.NAME (@item.DMAU.NAME)</div>
                                                     <div class="wrap-num-product flex-w m-r-20 m-tb-10 border-0">
-                                                        <input id="ipSOLUONG" class="mtext-104 cl3 txt-center num-product" type="number" name="SOLUONG" value="@item.SOLUONG" readonly>
+                                                        @{
+                                                            if (ViewBag.IsCustomer)
+                                                            {
+                                                                <input id="ipSOLUONG" class="mtext-104 cl3 txt-center num-product" type="number" name="SOLUONG" value="@item.SOLUONG" readonly>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>Số lượng: @item.SOLUONG</p>
+                                                            }
+                                                        }
                                                     </div>
                                                     <div class="stext-105" style="color:red;"><span id="ipTHANHTIEN">@((item.DONGIA * item.SOLUONG).ToString("n0"))</span> vnđ</div>
                                                 </div>
@@ -92,7 +100,7 @@
                             <div class="p-t-15">
                                 <div class="form-group">
                                     <label for="ipTINHTHANH">Tỉnh/Thành:</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tỉnh thành" id="ipTINHTHANH" name="TINHTHANH" value="@(tDONHANG.DKHACHHANG.TINHTHANH)" @(ViewBag.View?"disabled":"")>
+                                    <input type="text" class="form-control" placeholder="Nhập tỉnh thành" id="ipTINHTHANH" name="TINHTHANH" value="@(tDONHANG.DKHACHHANG.TINHTHANH)" @(ViewBag.View ? "disabled" : "")>
                                 </div>
                                 <div class="form-group">
                                     <label for="ipQUANHUYEN">Quận/Huyện:</label>

@@ -56,6 +56,10 @@
     <Property Name="HANGSALE" Type="int" />
     <Property Name="BANAMKHO" Type="int" />
     <Property Name="TIMECREATED" Type="datetime" Nullable="false" />
+    <Property Name="KHOILUONG" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DAI" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="RONG" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CAO" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="DMAU">
     <Key>
@@ -194,6 +198,15 @@
     <Property Name="THANHTIEN" Type="bigint" Nullable="false" />
     <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
     <Property Name="DKHACHHANGID" Type="varchar" MaxLength="36" />
+  </EntityType>
+  <EntityType Name="TLUUVET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="TIMECREATED" Type="datetime" Nullable="false" />
+    <Property Name="TDONHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <Association Name="FK__DANH__DMATHANGID__29572725">
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
@@ -447,6 +460,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TLUUVET__TDONHAN__70DDC3D8">
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
+    <End Role="TLUUVET" Type="Self.TLUUVET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TDONHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TLUUVET">
+        <PropertyRef Name="TDONHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="shoporderModelStoreContainer">
     <EntitySet Name="DANH" EntityType="Self.DANH" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DDANG" EntityType="Self.DDANG" Schema="dbo" store:Type="Tables" />
@@ -466,6 +491,7 @@
     <EntitySet Name="SUSER" EntityType="Self.SUSER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TLUUVET" EntityType="Self.TLUUVET" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__DANH__DMATHANGID__29572725" Association="Self.FK__DANH__DMATHANGID__29572725">
       <End Role="DMATHANG" EntitySet="DMATHANG" />
       <End Role="DANH" EntitySet="DANH" />
@@ -549,6 +575,10 @@
     <AssociationSet Name="FK__TDONHANGC__TDONH__6D0D32F4" Association="Self.FK__TDONHANGC__TDONH__6D0D32F4">
       <End Role="TDONHANG" EntitySet="TDONHANG" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TLUUVET__TDONHAN__70DDC3D8" Association="Self.FK__TLUUVET__TDONHAN__70DDC3D8">
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+      <End Role="TLUUVET" EntitySet="TLUUVET" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

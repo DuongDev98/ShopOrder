@@ -202,5 +202,17 @@ namespace ShopOrder.Utils
 
             return code;
         }
+
+        public static void Log(string TDONHANGID, string NOTE)
+        {
+            ShopOrderEntities db = new ShopOrderEntities();
+            TLUUVET t = new TLUUVET();
+            t.ID = Guid.NewGuid().ToString();
+            t.TIMECREATED = DateTime.Now;
+            t.TDONHANGID = TDONHANGID;
+            t.NOTE = NOTE;
+            db.TLUUVETs.Add(t);
+            db.SaveChanges();
+        }
     }
 }

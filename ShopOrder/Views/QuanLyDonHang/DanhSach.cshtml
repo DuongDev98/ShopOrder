@@ -4,10 +4,17 @@
 @{
     Layout = ViewBag.Layout;
 }
-
 <div class="modal-body no-padding">
     <div class="col"><h5>@ViewBag.Title</h5></div>
 </div>
+@{
+    if (!ViewBag.IsCustomer)
+    {
+        <div class="modal-body no-padding">
+            <a href="/QuanLyDonHang/CapTrangThaiThanhToan"><div class="btn btn-info">Kiểm tra thanh toán</div></a>
+        </div>
+    }
+}
 <div class="modal-body no-padding">
     <table id="dynamic-table" class="table table-striped table-bordered table-hover">
         <thead>
@@ -17,6 +24,12 @@
                 <th>Số HĐ</th>
                 <th>Tổng cộng</th>
                 <th>Loại vận chuyển</th>
+                @{
+                    if (!ViewBag.IsCustomer)
+                    {
+                        <th></th>
+                    }
+                }
             </tr>
         </thead>
         <tbody>
@@ -46,6 +59,21 @@
                                 }
                             }
                         </td>
+                        @{
+                            if (!ViewBag.IsCustomer)
+                            {
+                                <td>
+                                    @*hiển thị nút xác nhận đã thanh toán với đơn chưa thanh toán*@
+                                    @{
+                                        if (item.DATHANHTOAN != 30)
+                                        {
+                                            @*<a href="/Admin/QuanLyDonHang/DoiTrangThai"></a>*@
+                                            <div class="btnXacNhanTt btn btn-warning" data-id="@item.ID">Xác nhận t.toán</div>
+                                        }
+                                    }
+                                </td>
+                            }
+                        }
                     </tr>
                 }
             }
@@ -57,5 +85,22 @@
     $('table').find('tr').click(function () {
         let id = $(this).attr('data-id');
         window.location.href = "/Cart/ThongTinDatHang/" + id;
+    });
+
+    $('.btnXacNhanTt').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let btn = $(this);
+        swal({
+            title: "",
+            text: "Xác nhận đơn đã thanh toán",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                window.location.href = "/QuanLyDonHang/DoiTrangThai/" + btn.attr("data-id");
+            }
+        });
     });
 </script>

@@ -40,6 +40,10 @@
     <EntitySetMapping Name="DMATHANGs">
       <EntityTypeMapping TypeName="shoporderModel.DMATHANG">
         <MappingFragment StoreEntitySet="DMATHANG">
+          <ScalarProperty Name="CAO" ColumnName="CAO" />
+          <ScalarProperty Name="RONG" ColumnName="RONG" />
+          <ScalarProperty Name="DAI" ColumnName="DAI" />
+          <ScalarProperty Name="KHOILUONG" ColumnName="KHOILUONG" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -211,6 +215,16 @@
           <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
           <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
           <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TLUUVETs">
+      <EntityTypeMapping TypeName="shoporderModel.TLUUVET">
+        <MappingFragment StoreEntitySet="TLUUVET">
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -87,16 +87,16 @@
             <div class="col-12">
                 <div class="row p-l-25">
                     @*<div class="col-md-3">
-                            <input type="checkbox" class="form-check-input check-custom" id="chkHangSapVe" @(Model.HANGSAPVE > 0 ? "checked" : "")>
-                            <label class="form-check-label" for="chkHangSapVe">Hàng sắp về</label>
-                            <input type="number" name="HANGSAPVE" style="display: none;" value="@(Model.HANGSAPVE > 0 ? "30" : "")">
-                        </div>*@
+                        <input type="checkbox" class="form-check-input check-custom" id="chkHangSapVe" @(Model.HANGSAPVE > 0 ? "checked" : "")>
+                        <label class="form-check-label" for="chkHangSapVe">Hàng sắp về</label>
+                        <input type="number" name="HANGSAPVE" style="display: none;" value="@(Model.HANGSAPVE > 0 ? "30" : "")">
+                    </div>*@
 
                     @*<div class="col-md-3">
-                            <input type="checkbox" class="form-check-input check-custom" id="chkHangMoiVe" @(Model.HANGMOIVE > 0 ? "checked" : "")>
-                            <label class="form-check-label" for="chkHangMoiVe">Hàng mới về</label>
-                            <input type="number" name="HANGMOIVE" style="display: none;" value="@(Model.HANGMOIVE > 0 ? "30" : "")">
-                        </div>*@
+                        <input type="checkbox" class="form-check-input check-custom" id="chkHangMoiVe" @(Model.HANGMOIVE > 0 ? "checked" : "")>
+                        <label class="form-check-label" for="chkHangMoiVe">Hàng mới về</label>
+                        <input type="number" name="HANGMOIVE" style="display: none;" value="@(Model.HANGMOIVE > 0 ? "30" : "")">
+                    </div>*@
 
                     <div class="col-md-3">
                         <input type="checkbox" class="form-check-input check-custom" id="chkHangSale" @(Model.HANGSALE > 0 ? "checked" : "")>
@@ -140,36 +140,36 @@
         </div>
 
         @*<div class="form-group">
-                @Html.LabelFor(model => model.GIABAN5, "Giá bán 5", htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.GIABAN5, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN5, "", new { @class = "text-danger" })
-                </div>
+            @Html.LabelFor(model => model.GIABAN5, "Giá bán 5", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN5, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN5, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.GIABAN6, "Giá bán 6", htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.GIABAN6, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN6, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIABAN6, "Giá bán 6", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN6, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN6, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.GIABAN7, "Giá bán 7", htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.GIABAN7, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN7, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIABAN7, "Giá bán 7", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN7, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN7, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.GIABAN8, "Giá bán 8", htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.GIABAN8, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
-                    @Html.ValidationMessageFor(model => model.GIABAN8, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIABAN8, "Giá bán 8", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.GIABAN8, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.GIABAN8, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         @*anh san pham*@
 
@@ -217,6 +217,14 @@
             </div>
             <div class="col-md-8">
                 <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KHOILUONG, "Khối lượng (Kg)", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.KHOILUONG, new { htmlAttributes = new { @class = "form-control input-number-custom" } })
+                @Html.ValidationMessageFor(model => model.KHOILUONG, "", new { @class = "text-danger" })
             </div>
         </div>
 

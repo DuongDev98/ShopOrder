@@ -18,6 +18,7 @@ namespace ShopOrder.Entities
         public TDONHANG()
         {
             this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
+            this.TLUUVETs = new HashSet<TLUUVET>();
         }
     
         public string ID { get; set; }
@@ -46,5 +47,7 @@ namespace ShopOrder.Entities
         public virtual DTRANGTHAIDON DTRANGTHAIDON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TLUUVET> TLUUVETs { get; set; }
     }
 }
