@@ -22,11 +22,14 @@ namespace ShopOrder.Entities
         }
     
         public string ID { get; set; }
+        public System.DateTime TIMECREATED { get; set; }
+        public int LOAI { get; set; }
         public System.DateTime NGAY { get; set; }
         public string NAME { get; set; }
         public long TIENHANG { get; set; }
         public long PHIVANCHUYEN { get; set; }
         public long TONGCONG { get; set; }
+        public long TIENTHANHTOAN { get; set; }
         public int DATHANHTOAN { get; set; }
         public string TINHTHANH { get; set; }
         public string QUANHUYEN { get; set; }
@@ -36,15 +39,13 @@ namespace ShopOrder.Entities
         public Nullable<int> LOAIGIA { get; set; }
         public Nullable<int> LOAIVANCHUYEN { get; set; }
         public string DNHAXEID { get; set; }
-        public string LABEL_GHTK { get; set; }
         public string DNHANVIENID { get; set; }
-        public string DTRANGTHAIDONID { get; set; }
         public string TMPCODE { get; set; }
+        public string NOTE { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DNHANVIEN DNHANVIEN { get; set; }
         public virtual DNHAXE DNHAXE { get; set; }
-        public virtual DTRANGTHAIDON DTRANGTHAIDON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

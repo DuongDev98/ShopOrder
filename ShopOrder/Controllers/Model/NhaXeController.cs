@@ -22,16 +22,16 @@ namespace ShopOrder.Controllers.Model
             return View(db.DNHAXEs.OrderBy(x => x.NAME).ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DNHAXE model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DNHAXE();
             }
             else
             {
-                model = db.DNHAXEs.Find(ID);
+                model = db.DNHAXEs.Find(id);
             }
             if (model == null)
             {
@@ -73,13 +73,13 @@ namespace ShopOrder.Controllers.Model
             }
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DNHAXE model = db.DNHAXEs.Find(ID);
+            DNHAXE model = db.DNHAXEs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();

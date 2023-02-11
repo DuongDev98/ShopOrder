@@ -1,0 +1,45 @@
+﻿@using ShopOrder.Entities
+@model List<TDONHANGCHITIET>
+<div class="row m-t-20 dataform">
+    @{
+        if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-sm-12 col-md-4 m-t-10">
+                    <div class="card pointer" data-id="@item.ID">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4 col-sm-6 col-md-4 m-b-5">
+                                    <div class="form-check">
+                                        <input type="text" style="display: none;" value="@item.ID">
+                                        <input type="checkbox" class="form-check-input m-l-0" data-id="@item.ID">
+                                    </div>
+                                    <img src="~/Images/Items/@(item.DMATHANG.DANHs.ElementAt(0).NAME)" alt="IMG" style="width: 100% !important">
+                                </div>
+                                <div class="col-8 col-sm-6 col-md-8">
+                                    <div class="stext-101 lblNAME">@item.DMATHANG.NAME</div>
+                                    <div class="stext-105">@(item.DONGIA.ToString("n0")) vnđ</div>
+                                    <div class="stext-105">Phân loại: @item.DSIZE.NAME (@item.DMAU.NAME)</div>
+                                    <div class="stext-105">Số lượng: @item.SOLUONG</div>
+                                    <div class="stext-105" style="color:red;"><span id="ipTHANHTIEN">@((item.DONGIA * item.SOLUONG).ToString("n0"))</span> vnđ</div>
+                                    <div class="lblSOLUONG" style="display: none;">@item.SOLUONG</div>
+                                    <div class="lblDSIZEID" style="display: none;">@item.DSIZE.NAME</div>
+                                    <div class="lblDMAUID" style="display: none;">@item.DMAU.NAME</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<script>
+    $('.dataform').find('.card').each((iCard, eCard) => {
+        if ($('.table-detail').find('tr[data-id="' + $(eCard).attr("data-id") + '"]').length > 0) {
+            $(eCard).find('input[type="checkbox"]').prop("checked", true);
+        }
+    });
+</script>

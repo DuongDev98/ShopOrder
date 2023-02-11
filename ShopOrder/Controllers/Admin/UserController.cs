@@ -238,21 +238,21 @@ namespace ShopOrder.Controllers
             return RedirectToAction("DoiMatKhau", "User", new { ID = nvRow.SUSERs.ElementAt(0).ID, KhachHang = false });
         }
 
-        public ActionResult DoiMatKhau(string iD, bool khachHang)
+        public ActionResult DoiMatKhau(string id, bool khachHang)
         {
             UserModel userLogin = CookieUtils.UserLogin();
-            if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
+            if (!UserLoginIsValid(id, khachHang, userLogin)) return HttpNotFound();
             ViewBag.Layout = UiUtils.Layout(userLogin);
-            ViewBag.ID = iD;
+            ViewBag.ID = id;
             ViewBag.KhachHang = khachHang;
             return View();
         }
 
-        private bool UserLoginIsValid(string iD, bool khachHang, UserModel userLogin)
+        private bool UserLoginIsValid(string id, bool khachHang, UserModel userLogin)
         {
             if (khachHang)
             {
-                DKHACHHANG khRow = db.DKHACHHANGs.Find(iD);
+                DKHACHHANG khRow = db.DKHACHHANGs.Find(id);
                 if (khRow == null) return false;
 
                 //so sánh với tài khoản đăng nhập khách hàng
@@ -260,7 +260,7 @@ namespace ShopOrder.Controllers
             }
             else
             {
-                SUSER userRow = db.SUSERs.Find(iD);
+                SUSER userRow = db.SUSERs.Find(id);
                 if (userRow == null) return false;
                 if (!userLogin.IsAdmin)
                 {
@@ -272,19 +272,19 @@ namespace ShopOrder.Controllers
         }
 
         [HttpPost]
-        public ActionResult DoiMatKhau(string iD, bool khachHang, string oldPassword, string password, string confirmPassword)
+        public ActionResult DoiMatKhau(string id, bool khachHang, string oldPassword, string password, string confirmPassword)
         {
             UserModel userLogin = CookieUtils.UserLogin();
             if (ModelState.IsValid)
             {
-                if (!UserLoginIsValid(iD, khachHang, userLogin)) return HttpNotFound();
+                if (!UserLoginIsValid(id, khachHang, userLogin)) return HttpNotFound();
 
                 string error = "";
                 if (password != confirmPassword)
                 {
                     error = "Nhập lại mật khẩu không trùng khớp";
                 }
-                else if (((userLogin.IsAdmin && userLogin.sUSER.ID == iD) ||!userLogin.IsAdmin) && userLogin.PASSWORD != PasswordUtils.EncrytPass(oldPassword))
+                else if (((userLogin.IsAdmin && userLogin.sUSER.ID == id) ||!userLogin.IsAdmin) && userLogin.PASSWORD != PasswordUtils.EncrytPass(oldPassword))
                 {
                     error = "Mật khẩu cũ không đúng";
                 }
@@ -302,17 +302,17 @@ namespace ShopOrder.Controllers
                     string controller = "User";
                     if (khachHang)
                     {
-                        DKHACHHANG khRow = db.DKHACHHANGs.Find(iD);
+                        DKHACHHANG khRow = db.DKHACHHANGs.Find(id);
                         khRow.PASSWORD = PasswordUtils.EncrytPass(password);
                         db.Entry(khRow);
                     }
                     else
                     {
-                        SUSER userRow = db.SUSERs.Find(iD);
+                        SUSER userRow = db.SUSERs.Find(id);
                         userRow.PASSWORD = PasswordUtils.EncrytPass(password);
                         db.Entry(userRow);
 
-                        if (userLogin.IsAdmin && iD != userLogin.sUSER.ID)
+                        if (userLogin.IsAdmin && id != userLogin.sUSER.ID)
                         {
                             controller = "Nhanvien";
                         }
@@ -323,7 +323,7 @@ namespace ShopOrder.Controllers
             }
 
             ViewBag.Layout = UiUtils.Layout();
-            ViewBag.ID = iD;
+            ViewBag.ID = id;
             ViewBag.KhachHang = khachHang;
             return View();
         }

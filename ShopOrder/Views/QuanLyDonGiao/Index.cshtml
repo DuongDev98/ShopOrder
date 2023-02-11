@@ -1,0 +1,216 @@
+﻿@using ShopOrder.Entities
+@using ShopOrder.Controllers.Model
+@model List<TGIAOHANG>
+@{
+    ViewBag.Title = "Quản lý đơn giao";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .div-filter {
+        width: 200px;
+    }
+
+    .div-content {
+        margin-left: 20px;
+        width: calc(100% - 230px);
+    }
+
+    .div-button {
+        margin-bottom: 10px;
+    }
+</style>
+<div class="row div-button">
+    <div class="col-sm-6 col-md-10">
+        @Html.ActionLink("Thêm mới", "edit", null, new { @class = "btn btn-info" })
+    </div>
+    <div class="col-sm-4 col-md-2">
+        <div class="row justify-content-end m-r-30">
+            <h5>QUẢN LÝ ĐƠN GIAO</h5>
+        </div>
+    </div>
+</div>
+<div class="row p-lr-15">
+    <div class="div-filter card">
+        <div class="card-body">
+            <form method="post" action="">
+                @*tu ngay den ngay*@
+                <div class="form-group">
+                    <label for="email">Từ ngày - Đến ngày</label>
+                    <input type="text" class="form-control daterange" name="dtNgay" value="@ViewBag.dtNGAY" readonly />
+                </div>
+
+                @*khach hang*@
+                <div class="form-group">
+                    <label for="email">Khách hàng</label>
+                    @Html.DropDownList("DKHACHHANGID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                @*nhan vien*@
+                <div class="form-group">
+                    <label for="email">Nhân viên</label>
+                    @Html.DropDownList("DNHANVIENID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+                @*loại vận chuyển*@
+                <div class="form-group">
+                    <label for="email">Loại vận chuyển</label>
+                    @Html.DropDownList("LOAIVANCHUYEN", null, htmlAttributes: new { @class = "form-control ipLoaiVanChuyen" })
+                </div>
+
+                @*xe giao*@
+                <div class="form-group">
+                    <label for="email">Nhà xe</label>
+                    @Html.DropDownList("DNHAXEID", null, htmlAttributes: new { @class = "form-control ipDNHAXEID" })
+                </div>
+
+                <div class="row p-lr-15">
+                    <button type="submit" class="col-12 btn btn-outline-info">Tải dữ liệu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="div-content">
+        <div class="card">
+            <div class="card-body">
+                <table class="table-main table table-striped table-bordered table-hover dynamic-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ngày</th>
+                            <th>Số phiếu</th>
+                            <th>Khách hàng</th>
+                            <th>Nhân viên</th>
+                            <th>Loại vận chuyển</th>
+                            <th>Nhà xe</th>
+                            <th>Nhãn ghtk</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int count = 0;
+                            foreach (var item in Model)
+                            {
+                                count++;
+                                <tr class="pointer" data-id="@item.ID">
+                                    <td>@count</td>
+                                    <td>@item.NGAY.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.NAME</td>
+                                    <td>@(item.DKHACHHANG.NAME)</td>
+                                    <td>@(item.DNHANVIEN == null ? "" : item.DNHANVIEN.NAME)</td>
+                                    <td>
+                                        @{
+                                            if (item.LOAIVANCHUYEN == (int)LoaiVanChuyen.GuiXe)
+                                            {
+                                                <p>Gửi xe</p>
+                                            }
+                                            else if (item.LOAIVANCHUYEN == (int)LoaiVanChuyen.AnPhu)
+                                            {
+                                                <p>Gửi bay An Phú</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Giao hàng tiết kiệm</p>
+                                            }
+                                        }
+                                    </td>
+                                    <td>@(item.DNHAXE == null ? "" : item.DNHAXE.NAME)</td>
+                                    <td>@(item.LABEL_GHTK)</td>
+                                    <td>
+                                        @{
+                                            if ((LoaiVanChuyen)item.LOAIVANCHUYEN == LoaiVanChuyen.GiaoHangTietKiem && (item.LABEL_GHTK == null || item.LABEL_GHTK.Length == 0))
+                                            {
+                                                <div class="btn btn-danger btn-ghtk">Up GHTK</div>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table class="table-detail table table-striped table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Mặt hàng</th>
+                            <th>Số lượng</th>
+                            <th>Size</th>
+                            <th>Màu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let tableDetail = $('.table-detail');
+    let tableMain = $('.table-main');
+    $(document).ready(function () {
+        AnHienNhaXe($('.ipLoaiVanChuyen'));
+
+        //fix chiều cao
+        let height = window.innerHeight - 137;
+        $('.div-filter').height(height);
+
+        tableMain.closest(".card-body").height(height / 2 + 8);
+        tableDetail.closest(".card-body").height(height / 2 - 115);
+        tableDetail.closest(".card-body").css("overflow-y", "auto");
+        tableDetail.find("thead").css("position", "sticky").css("top", "-20px");
+    });
+
+    $('.ipLoaiVanChuyen').change(function () {
+        AnHienNhaXe($(this));
+    });
+
+    function AnHienNhaXe(item) {
+        let hidden = item.val() != "-1" && item.val() != "0";
+        if (hidden) {
+            $('.ipDNHAXEID').closest('.form-group').prop("hidden", true);
+        } else {
+            $('.ipDNHAXEID').closest('.form-group').prop("hidden", false);
+        }
+    }
+
+    tableMain.find("tbody").find("tr").click(function () {
+        let tdonhangid = $(this).attr("data-id");
+        $.post("/QuanLyDonGiao/DetailTbody?id=" + tdonhangid, null, function (dataTr) {
+            $('.table-detail').find("tbody").empty();
+            $('.table-detail').find("tbody").append(dataTr);
+        });
+    });
+
+    tableMain.find("tbody").find("tr").dblclick(function () {
+        let tdonhangid = $(this).attr("data-id");
+        window.location.href = "/QuanLyDonGiao/Edit/" + tdonhangid;
+    });
+
+    $('.btn-ghtk').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let tdonhangid = $(this).closest("tr").attr("data-id");
+        UiUtils.ShowForm("Xác nhận",
+            "Sau khi tải đơn lên giao hàng tiết kiệm, dữ liệu đơn giao sẽ ko thể chỉnh sửa, bạn có muốn tiếp tục?", function () {
+                $.post("/QuanLyDonGiao/TaiDonGiaoHangTk?id=" + tdonhangid, null, function (data) {
+                    if (data == "ok") {
+                        window.location.reload();
+                    } else {
+                        UiUtils.ShowError("", data);
+                    }
+                });
+        });
+    });
+</script>

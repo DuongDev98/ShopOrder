@@ -21,16 +21,16 @@ namespace ShopOrder.Controllers.Model
             return View(db.DMAUs.OrderBy(x => x.NAME).ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DMAU model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DMAU();
             }
             else
             {
-                model = db.DMAUs.Find(ID);
+                model = db.DMAUs.Find(id);
             }
             if (model == null)
             {
@@ -60,13 +60,13 @@ namespace ShopOrder.Controllers.Model
             return View(model);
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DMAU model = db.DMAUs.Find(ID);
+            DMAU model = db.DMAUs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -76,9 +76,9 @@ namespace ShopOrder.Controllers.Model
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ID)
+        public ActionResult DeleteConfirmed(string id)
         {
-            DMAU model = db.DMAUs.Find(ID);
+            DMAU model = db.DMAUs.Find(id);
             db.DMAUs.Remove(model);
             try
             {

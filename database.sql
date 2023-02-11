@@ -38,6 +38,7 @@ create table DMATHANG (
 	DPHANLOAIID varchar(36) foreign key references DPHANLOAI(ID),
 	DDANGID varchar(36) foreign key references DDANG(ID),
 	DTHOIGIANDATID varchar(36) foreign key references DTHOIGIANDAT(ID),
+	GIANHAP bigint,
 	GIABAN bigint,
 	GIABAN2 bigint,
 	GIABAN3 bigint,
@@ -132,11 +133,14 @@ create table DTRANGTHAIDON (
 --17
 create table TDONHANG (
 	ID varchar(36) primary key,
-	NGAY datetime not null,
+	TIMECREATED datetime not null,
+	LOAI int not null,
+	NGAY date not null,
 	NAME nvarchar(255),
 	TIENHANG bigint not null,
 	PHIVANCHUYEN bigint not null,
 	TONGCONG bigint not null,
+	TIENTHANHTOAN bigint not null,
 	DATHANHTOAN int not null,
 	TINHTHANH nvarchar(255),
 	QUANHUYEN nvarchar(255),
@@ -146,30 +150,50 @@ create table TDONHANG (
 	LOAIGIA int,
 	LOAIVANCHUYEN int,
 	DNHAXEID varchar(36) foreign key references DNHAXE(ID),
-	LABEL_GHTK nvarchar(255),
 	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
-	DTRANGTHAIDONID varchar(36) foreign key references DTRANGTHAIDON(ID),
-	TMPCODE varchar(36)
+	TMPCODE varchar(36),
+	NOTE nvarchar(max),
 );
 --18
+create table TGIAOHANG (
+	ID varchar(36) primary key,
+	TIMECREATED datetime not null,
+	NAME nvarchar(255),
+	NGAY date not null,
+	DKHACHHANGID varchar(36) foreign key references DKHACHHANG(ID),
+	DNHANVIENID varchar(36) foreign key references DNHANVIEN(ID),
+	TINHTHANH nvarchar(255),
+	QUANHUYEN nvarchar(255),
+	PHUONGXA nvarchar(255),
+	DIACHI nvarchar(255),
+	LOAIVANCHUYEN int,
+	DNHAXEID varchar(36) foreign key references DNHAXE(ID),
+	LABEL_GHTK nvarchar(255),
+	NOTE nvarchar(max),
+)
+--19
 create table TDONHANGCHITIET (
 	ID varchar(36) primary key,
 	DMATHANGID varchar(36) foreign key references DMATHANG(ID),
 	DSIZEID varchar(36) foreign key references DSIZE(ID),
 	DMAUID varchar(36) foreign key references DMAU(ID),
 	TDONHANGID varchar(36) foreign key references TDONHANG(ID),
+	TGIAOHANGID varchar(36) foreign key references TGIAOHANG(ID),
 	DKHACHHANGID varchar(36) foreign key references DKHACHHANG(ID),
+	DTRANGTHAIDONID varchar(36) foreign key references DTRANGTHAIDON(ID),
 	DONGIA bigint not null,
 	SOLUONG bigint not null,
 	THANHTIEN bigint not null,
-	NOTE nvarchar(255),
+	SLNHAN int,
+	NOTE nvarchar(max),
 )
---19
+--20
 create table TLUUVET (
 	ID varchar(36) primary key,
 	TIMECREATED datetime not null,
 	TDONHANGID varchar(36) foreign key references TDONHANG(ID),
-	NOTE nvarchar(255),
+	TDONHANGCHITIETID varchar(36) foreign key references TDONHANGCHITIET(ID),
+	NOTE nvarchar(max),
 )
 
 --a

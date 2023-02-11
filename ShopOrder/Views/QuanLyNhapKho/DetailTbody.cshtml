@@ -1,0 +1,20 @@
+﻿@using ShopOrder.Entities
+@model List<TDONHANGCHITIET>
+@{
+    if (Model != null)
+    {
+        foreach (TDONHANGCHITIET ctRow in Model)
+        {
+            <tr>
+                <td>@(Model.IndexOf(ctRow) + 1)</td>
+                <td>@ctRow.DMATHANG.CODE</td>
+                <td>@ctRow.DMATHANG.NAME</td>
+                <td>@(ctRow.DONGIA.ToString("n0"))</td>
+                <td>@(ctRow.SOLUONG.ToString("n0"))</td>
+                <td>@(ctRow.THANHTIEN.ToString("n0"))</td>
+                <td>@ctRow.DMAU.NAME</td>
+                <td>@ctRow.DSIZE.NAME</td>
+            </tr>
+        }
+    }
+}

@@ -130,11 +130,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Commons\ParamInfo.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\BaseController.cs" />
+    <Compile Include="Controllers\Admin\QuanLyDonGiaoController.cs" />
+    <Compile Include="Controllers\Admin\QuanLyNhapKhoController.cs" />
     <Compile Include="Controllers\Home\CartController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
-    <Compile Include="Controllers\Home\QuanLyDonHangController.cs" />
+    <Compile Include="Controllers\Admin\QuanLyDonHangController.cs" />
     <Compile Include="Controllers\Model\DangController.cs" />
     <Compile Include="Controllers\Model\KhachHangController.cs" />
     <Compile Include="Controllers\Model\MatHangController.cs" />
@@ -218,6 +221,9 @@
     <Compile Include="Entities\TDONHANGCHITIET.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TGIAOHANG.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\TLUUVET.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -230,6 +236,7 @@
     <Compile Include="Utils\DatabaseUtils.cs" />
     <Compile Include="Utils\FileUploads.cs" />
     <Compile Include="Utils\FilterUser.cs" />
+    <Compile Include="Utils\GiaoHangTietKiem.cs" />
     <Compile Include="Utils\PasswordUtils.cs" />
     <Compile Include="Utils\UiUtils.cs" />
   </ItemGroup>
@@ -318,6 +325,7 @@
     <Content Include="Content\Admin\assets\vendor\datepicker\tempusdominus-bootstrap-4.css" />
     <Content Include="Content\Admin\assets\vendor\datepicker\tempusdominus-bootstrap-4.js" />
     <Content Include="Content\Admin\assets\vendor\daterangepicker\daterangepicker.css" />
+    <Content Include="Content\Admin\assets\vendor\daterangepicker\daterangepicker.min.js" />
     <Content Include="Content\Admin\assets\vendor\dropzone\dropzone.js" />
     <Content Include="Content\Admin\assets\vendor\fonts\circular-std\style.css" />
     <Content Include="Content\Admin\assets\vendor\fonts\flag-icon-css\flag-icon.min.css" />
@@ -734,6 +742,8 @@
     <Content Include="Content\Shop\vendor\countdowntime\countdowntime.js" />
     <Content Include="Content\Shop\vendor\css-hamburgers\hamburgers.css" />
     <Content Include="Content\Shop\vendor\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\Shop\vendor\datatables\jquery.dataTables.min.css" />
+    <Content Include="Content\Shop\vendor\datatables\jquery.dataTables.min.js" />
     <Content Include="Content\Shop\vendor\daterangepicker\daterangepicker.css" />
     <Content Include="Content\Shop\vendor\daterangepicker\daterangepicker.js" />
     <Content Include="Content\Shop\vendor\daterangepicker\moment.js" />
@@ -795,8 +805,6 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Images\QRcode\duong_vcb.png" />
-    <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\lib.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1020,7 +1028,16 @@
     <Content Include="Views\Cart\ThongTinDatHang.cshtml" />
     <Content Include="Views\Cart\ThongTinThanhToan.cshtml" />
     <Content Include="Views\QuanLyDonHang\Index.cshtml" />
-    <Content Include="Views\QuanLyDonHang\DanhSach.cshtml" />
+    <Content Include="Views\QuanLyDonHang\DanhSachChuaThanhToan.cshtml" />
+    <Content Include="Views\QuanLyDonHang\DanhSachChiTiet.cshtml" />
+    <Content Include="Views\QuanLyDonGiao\Index.cshtml" />
+    <Content Include="Views\QuanLyNhapKho\Index.cshtml" />
+    <Content Include="Views\QuanLyNhapKho\Edit.cshtml" />
+    <Content Include="Views\QuanLyNhapKho\FormThemMatHang.cshtml" />
+    <Content Include="Views\QuanLyNhapKho\DetailTbody.cshtml" />
+    <Content Include="Views\QuanLyDonGiao\Edit.cshtml" />
+    <Content Include="Views\QuanLyDonGiao\FormThemChiTiet.cshtml" />
+    <Content Include="Views\QuanLyDonGiao\DetailTbody.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

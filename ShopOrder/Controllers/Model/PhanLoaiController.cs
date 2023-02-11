@@ -21,16 +21,16 @@ namespace ShopOrder.Controllers.Model
             return View(db.DPHANLOAIs.OrderBy(x => x.NAME).ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DPHANLOAI model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DPHANLOAI();
             }
             else
             {
-                model = db.DPHANLOAIs.Find(ID);
+                model = db.DPHANLOAIs.Find(id);
             }
             if (model == null)
             {
@@ -60,13 +60,13 @@ namespace ShopOrder.Controllers.Model
             return View(model);
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DPHANLOAI model = db.DPHANLOAIs.Find(ID);
+            DPHANLOAI model = db.DPHANLOAIs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -76,9 +76,9 @@ namespace ShopOrder.Controllers.Model
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ID)
+        public ActionResult DeleteConfirmed(string id)
         {
-            DPHANLOAI model = db.DPHANLOAIs.Find(ID);
+            DPHANLOAI model = db.DPHANLOAIs.Find(id);
             db.DPHANLOAIs.Remove(model);
             try
             {

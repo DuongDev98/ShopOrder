@@ -1,4 +1,4 @@
-
+﻿
 jQuery(document).ready(function($) {
     'use strict';
 
@@ -97,36 +97,24 @@ jQuery(document).ready(function($) {
 
 
         });
-    }
+        }
+
+    $('.daterange').daterangepicker({
+        opens: 'left',
+        ranges: {
+            'Hôm nay': [moment(), moment()],
+            'Hôm qua': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '7 ngày gần nhất': [moment().subtract(6, 'days'), moment()],
+            '30 ngày gần nhất': [moment().subtract(29, 'days'), moment()],
+            'Tháng này': [moment().startOf('month'), moment().endOf('month')],
+            'Tháng trước': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    });
+
+    $('.dynamic-table').DataTable();
+
     // ============================================================== 
     // dropzone script
     // ============================================================== 
 
- //     if ($('.dz-clickable').length) {
- //            $(".dz-clickable").dropzone({ url: "/file/post" });
- // }
-
 }); // AND OF JQUERY
-
-
-// $(function() {
-//     "use strict";
-
-
-    
-
-   // var monkeyList = new List('test-list', {
-    //    valueNames: ['name']
-
-     // });
-  // var monkeyList = new List('test-list-2', {
-    //    valueNames: ['name']
-
-   // });
-
-
-
-   
-   
-
-// });

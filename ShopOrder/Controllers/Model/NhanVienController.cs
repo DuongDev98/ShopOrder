@@ -22,16 +22,16 @@ namespace ShopOrder.Controllers.Model
             return View(db.DNHANVIENs.OrderBy(x => x.NAME).ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DNHANVIEN model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DNHANVIEN();
             }
             else
             {
-                model = db.DNHANVIENs.Find(ID);
+                model = db.DNHANVIENs.Find(id);
             }
             if (model == null)
             {
@@ -75,13 +75,13 @@ namespace ShopOrder.Controllers.Model
             return new SelectList(lst, "ID", "NAME", model.LOAITAIKHOAN);
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DNHANVIEN model = db.DNHANVIENs.Find(ID);
+            DNHANVIEN model = db.DNHANVIENs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -91,9 +91,9 @@ namespace ShopOrder.Controllers.Model
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ID)
+        public ActionResult DeleteConfirmed(string id)
         {
-            DNHANVIEN model = db.DNHANVIENs.Find(ID);
+            DNHANVIEN model = db.DNHANVIENs.Find(id);
             db.DNHANVIENs.Remove(model);
             try
             {

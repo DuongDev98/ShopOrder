@@ -43,6 +43,7 @@ namespace ShopOrder.Entities
         public virtual DbSet<SUSER> SUSERs { get; set; }
         public virtual DbSet<TDONHANG> TDONHANGs { get; set; }
         public virtual DbSet<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        public virtual DbSet<TGIAOHANG> TGIAOHANGs { get; set; }
         public virtual DbSet<TLUUVET> TLUUVETs { get; set; }
     }
 }

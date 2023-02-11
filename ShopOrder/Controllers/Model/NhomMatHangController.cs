@@ -21,16 +21,16 @@ namespace ShopOrder.Controllers.Model
             return View(db.DNHOMHANGs.OrderBy(x => x.NAME).ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DNHOMHANG model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DNHOMHANG();
             }
             else
             {
-                model = db.DNHOMHANGs.Find(ID);
+                model = db.DNHOMHANGs.Find(id);
             }
             if (model == null)
             {
@@ -60,13 +60,13 @@ namespace ShopOrder.Controllers.Model
             return View(model);
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DNHOMHANG model = db.DNHOMHANGs.Find(ID);
+            DNHOMHANG model = db.DNHOMHANGs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();

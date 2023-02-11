@@ -20,7 +20,7 @@ namespace ShopOrder.Controllers
         public ActionResult Header()
         {
             UserModel userModel = CookieUtils.UserLogin();
-            ViewBag.Id = userModel.dKHACHHANG.ID;
+            ViewBag.ID = userModel.dKHACHHANG.ID;
             return PartialView();
         }
 

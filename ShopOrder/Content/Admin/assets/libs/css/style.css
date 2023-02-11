@@ -1,4 +1,17 @@
 @charset "UTF-8";
+
+.div-hidden {
+    display: none;
+}
+
+tr {
+    cursor: pointer !important;
+}
+
+select[readonly] {
+    pointer-events: none;
+}
+
 /**
  * Summary:
  *
@@ -156,7 +169,7 @@
    ========================================================================== */
 
 body {
-    font-family: 'Circular Std Book';
+    font-family: 'Times New Roman' !important;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -173,7 +186,7 @@ h5,
 h6 {
     color: #3d405c;
     margin: 0px 0px 15px 0px;
-    font-family: 'Circular Std Medium';
+    font-family: 'Times New Roman';
 }
 
 h1 {
@@ -4513,7 +4526,7 @@ Pills vertical
 .table thead th,
 .table th {
     color: #3d405c;
-    font-family: 'Circular Std Medium';
+    font-family: 'Times New Roman';
 }
 
 .table-bordered {
@@ -6970,9 +6983,6 @@ Media Query
 .simple-card .nav.nav-tabs .nav-item .nav-link {
     padding: 17px 29px;}
 }
-
-
-
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width:320px) {}

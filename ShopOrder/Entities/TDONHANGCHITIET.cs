@@ -14,21 +14,34 @@ namespace ShopOrder.Entities
     
     public partial class TDONHANGCHITIET
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TDONHANGCHITIET()
+        {
+            this.TLUUVETs = new HashSet<TLUUVET>();
+        }
+    
         public string ID { get; set; }
         public string DMATHANGID { get; set; }
         public string DSIZEID { get; set; }
         public string DMAUID { get; set; }
         public string TDONHANGID { get; set; }
+        public string TGIAOHANGID { get; set; }
+        public string DKHACHHANGID { get; set; }
+        public string DTRANGTHAIDONID { get; set; }
         public long DONGIA { get; set; }
         public long SOLUONG { get; set; }
         public long THANHTIEN { get; set; }
+        public Nullable<int> SLNHAN { get; set; }
         public string NOTE { get; set; }
-        public string DKHACHHANGID { get; set; }
     
+        public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DMATHANG DMATHANG { get; set; }
         public virtual DMAU DMAU { get; set; }
         public virtual DSIZE DSIZE { get; set; }
+        public virtual DTRANGTHAIDON DTRANGTHAIDON { get; set; }
         public virtual TDONHANG TDONHANG { get; set; }
-        public virtual DKHACHHANG DKHACHHANG { get; set; }
+        public virtual TGIAOHANG TGIAOHANG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TLUUVET> TLUUVETs { get; set; }
     }
 }

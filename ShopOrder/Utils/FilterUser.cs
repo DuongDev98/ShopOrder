@@ -19,7 +19,7 @@ namespace ShopOrder.Utils
             string controller = filterContext.RouteData.Values["Controller"].ToString().ToLower();
             string action = filterContext.RouteData.Values["Action"].ToString().ToLower();
 
-            if (!(controller == "User".ToLower() && (action == "Login".ToLower() || action == "Register".ToLower())))
+            if (!(controller == "user" && (action == "login" || action == "register")))
             {
                 UserModel userLogin = CookieUtils.UserLogin();
                 if (userLogin == null || userLogin.sUSER == null && userLogin.dKHACHHANG == null)
@@ -29,17 +29,23 @@ namespace ShopOrder.Utils
                 }
                 else
                 {
+                    bool noError = false;
                     //khách hàng không được vào admin
                     if (userLogin.IsCustomer)
                     {
-                        bool noError = false;
-                        if (controller == "User".ToLower() && (action == "DoiMatKhau".ToLower() || action == "ThongTinCaNhan".ToLower())) noError = true;
-                        if (controller == "Khachhang".ToLower() && action == "Edit".ToLower()) noError = true;
-                        if (controller == "Home".ToLower() || controller == "Cart".ToLower()) noError = true;
-                        if (!noError)
-                        {
-                            filterContext.Result = new HttpUnauthorizedResult();
-                        }
+                        if (controller == "user" && (action == "doimatkhau" || action == "thongtincanhan")) noError = true;
+                        if (controller == "khachhang" && action == "edit") noError = true;
+                        if (controller == "home" || controller == "cart") noError = true;
+                        if (controller == "quanlydonhang") noError = true;
+                    }
+                    else
+                    {
+                        noError = true;
+                        if ((controller == "home" && action != "index") || (controller == "cart" && action == "index")) noError = false;
+                    }
+                    if (!noError)
+                    {
+                        filterContext.Result = new HttpUnauthorizedResult();
                     }
                 }
             }
@@ -47,19 +53,17 @@ namespace ShopOrder.Utils
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
         {
-            //string controller = filterContext.RouteData.Values["Controller"].ToString();
-            //string action = filterContext.RouteData.Values["Action"].ToString();
+            string controller = filterContext.RouteData.Values["Controller"].ToString().ToLower();
+            string action = filterContext.RouteData.Values["Action"].ToString().ToLower();
 
-            //if (controller == "Admin")
-            //{
-            //    controller = "Home";
-            //    action = "Index";
-            //}
-            //else
-            //{
-            //    controller = "User";
-            //    action = "Login";
-            //}
+            if (controller == "home" && action == "index")
+            {
+                UserModel userLogin = CookieUtils.UserLogin();
+                if (userLogin != null && !userLogin.IsCustomer)
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Admin" }, { "action", "Index" } });
+                }
+            }
 
             if (filterContext.Result == null || filterContext.Result is HttpUnauthorizedResult)
             {

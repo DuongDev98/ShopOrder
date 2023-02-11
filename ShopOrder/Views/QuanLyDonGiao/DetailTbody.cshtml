@@ -1,0 +1,20 @@
+﻿@using ShopOrder.Entities
+@model List<TDONHANGCHITIET>
+@{
+    if (Model != null)
+    {
+        int stt = 0;
+        foreach (TDONHANGCHITIET ctRow in Model)
+        {
+            stt++;
+            <tr>
+                <td>@stt</td>
+                <td><img src="~/Images/Items/@ctRow.DMATHANG.DANHs.ElementAt(0).NAME" width="50" height="50"/></td>
+                <td>@ctRow.DMATHANG.NAME</td>
+                <td>@ctRow.SOLUONG</td>
+                <td>@ctRow.DSIZE.NAME</td>
+                <td>@ctRow.DMAU.NAME</td>
+            </tr>
+        }
+    }
+}

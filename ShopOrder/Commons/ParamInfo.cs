@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ShopOrder.Commons
+{
+    public class ParamInfo
+    {
+        public string dtNGAY { set; get; }
+        public string DKHACHHANGID { set; get; }
+        public string DNHANVIENID { set; get; }
+        public int LOAIVANCHUYEN { set; get; }
+        public string DNHAXEID { set; get; }
+        public string DMATHANGID { set; get; }
+
+        public ParamInfo()
+        {
+            DateTime toDay = DateTime.Now.Date;
+            LOAIVANCHUYEN = -1;
+            dtNGAY = toDay.AddDays(-30).ToString("MM/dd/yyyy") + " - " + toDay.ToString("MM/dd/yyyy");
+        }
+    }
+}

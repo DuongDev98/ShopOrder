@@ -17,8 +17,10 @@ namespace ShopOrder.Entities
         public string ID { get; set; }
         public System.DateTime TIMECREATED { get; set; }
         public string TDONHANGID { get; set; }
+        public string TDONHANGCHITIETID { get; set; }
         public string NOTE { get; set; }
     
         public virtual TDONHANG TDONHANG { get; set; }
+        public virtual TDONHANGCHITIET TDONHANGCHITIET { get; set; }
     }
 }

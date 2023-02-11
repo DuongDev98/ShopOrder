@@ -40,10 +40,6 @@
     <EntitySetMapping Name="DMATHANGs">
       <EntityTypeMapping TypeName="shoporderModel.DMATHANG">
         <MappingFragment StoreEntitySet="DMATHANG">
-          <ScalarProperty Name="CAO" ColumnName="CAO" />
-          <ScalarProperty Name="RONG" ColumnName="RONG" />
-          <ScalarProperty Name="DAI" ColumnName="DAI" />
-          <ScalarProperty Name="KHOILUONG" ColumnName="KHOILUONG" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -63,6 +59,11 @@
           <ScalarProperty Name="HANGSALE" ColumnName="HANGSALE" />
           <ScalarProperty Name="BANAMKHO" ColumnName="BANAMKHO" />
           <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="KHOILUONG" ColumnName="KHOILUONG" />
+          <ScalarProperty Name="DAI" ColumnName="DAI" />
+          <ScalarProperty Name="RONG" ColumnName="RONG" />
+          <ScalarProperty Name="CAO" ColumnName="CAO" />
+          <ScalarProperty Name="GIANHAP" ColumnName="GIANHAP" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -180,13 +181,15 @@
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="shoporderModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
-          <ScalarProperty Name="TMPCODE" ColumnName="TMPCODE" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
           <ScalarProperty Name="NGAY" ColumnName="NGAY" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="TIENHANG" ColumnName="TIENHANG" />
           <ScalarProperty Name="PHIVANCHUYEN" ColumnName="PHIVANCHUYEN" />
           <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
+          <ScalarProperty Name="TIENTHANHTOAN" ColumnName="TIENTHANHTOAN" />
           <ScalarProperty Name="DATHANHTOAN" ColumnName="DATHANHTOAN" />
           <ScalarProperty Name="TINHTHANH" ColumnName="TINHTHANH" />
           <ScalarProperty Name="QUANHUYEN" ColumnName="QUANHUYEN" />
@@ -196,24 +199,47 @@
           <ScalarProperty Name="LOAIGIA" ColumnName="LOAIGIA" />
           <ScalarProperty Name="LOAIVANCHUYEN" ColumnName="LOAIVANCHUYEN" />
           <ScalarProperty Name="DNHAXEID" ColumnName="DNHAXEID" />
-          <ScalarProperty Name="LABEL_GHTK" ColumnName="LABEL_GHTK" />
           <ScalarProperty Name="DNHANVIENID" ColumnName="DNHANVIENID" />
-          <ScalarProperty Name="DTRANGTHAIDONID" ColumnName="DTRANGTHAIDONID" />
+          <ScalarProperty Name="TMPCODE" ColumnName="TMPCODE" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDONHANGCHITIETs">
       <EntityTypeMapping TypeName="shoporderModel.TDONHANGCHITIET">
         <MappingFragment StoreEntitySet="TDONHANGCHITIET">
-          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
           <ScalarProperty Name="DSIZEID" ColumnName="DSIZEID" />
           <ScalarProperty Name="DMAUID" ColumnName="DMAUID" />
           <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="TGIAOHANGID" ColumnName="TGIAOHANGID" />
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
+          <ScalarProperty Name="DTRANGTHAIDONID" ColumnName="DTRANGTHAIDONID" />
           <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />
           <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
           <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+          <ScalarProperty Name="SLNHAN" ColumnName="SLNHAN" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TGIAOHANGs">
+      <EntityTypeMapping TypeName="shoporderModel.TGIAOHANG">
+        <MappingFragment StoreEntitySet="TGIAOHANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
+          <ScalarProperty Name="DNHANVIENID" ColumnName="DNHANVIENID" />
+          <ScalarProperty Name="TINHTHANH" ColumnName="TINHTHANH" />
+          <ScalarProperty Name="QUANHUYEN" ColumnName="QUANHUYEN" />
+          <ScalarProperty Name="PHUONGXA" ColumnName="PHUONGXA" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="LOAIVANCHUYEN" ColumnName="LOAIVANCHUYEN" />
+          <ScalarProperty Name="DNHAXEID" ColumnName="DNHAXEID" />
+          <ScalarProperty Name="LABEL_GHTK" ColumnName="LABEL_GHTK" />
           <ScalarProperty Name="NOTE" ColumnName="NOTE" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -221,10 +247,11 @@
     <EntitySetMapping Name="TLUUVETs">
       <EntityTypeMapping TypeName="shoporderModel.TLUUVET">
         <MappingFragment StoreEntitySet="TLUUVET">
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
-          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="TDONHANGCHITIETID" ColumnName="TDONHANGCHITIETID" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

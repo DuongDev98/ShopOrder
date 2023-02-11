@@ -23,16 +23,16 @@ namespace ShopOrder.Controllers.Model
             return View(dKHACHHANGs.ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DKHACHHANG model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DKHACHHANG();
             }
             else
             {
-                model = db.DKHACHHANGs.Find(ID);
+                model = db.DKHACHHANGs.Find(id);
             }
             if (model == null)
             {
@@ -45,7 +45,7 @@ namespace ShopOrder.Controllers.Model
             ViewBag.IsCustomer = userLogin.IsCustomer;
             ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
             ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
-            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(model.LOAIVANCHUYEN ?? 0);
+            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(false, model.LOAIVANCHUYEN ?? 0);
             return View(model);
         }
 
@@ -88,26 +88,30 @@ namespace ShopOrder.Controllers.Model
             ViewBag.IsCustomer = userLogin.IsCustomer;
             ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
             ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
-            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(model.LOAIVANCHUYEN ?? 0);
+            ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(false, model.LOAIVANCHUYEN ?? 0);
             return View(khRow);
         }
 
-        public static SelectList LayLoaiVanChuyen(int loai)
+        public static SelectList LayLoaiVanChuyen(bool filter, int loai)
         {
             List<object> lst = new List<object>();
+            if (filter)
+            {
+                lst.Add(new { ID = -1, NAME = "" });
+            }
             lst.Add(new { ID = (int)LoaiVanChuyen.GuiXe, NAME = "Gửi xe" });
             lst.Add(new { ID = (int)LoaiVanChuyen.AnPhu, NAME = "Gửi bay An Phú" });
             lst.Add(new { ID = (int)LoaiVanChuyen.GiaoHangTietKiem, NAME = "Giao hàng tiết kiệm" });
             return new SelectList(lst, "ID", "NAME", loai);
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DKHACHHANG model = db.DKHACHHANGs.Find(ID);
+            DKHACHHANG model = db.DKHACHHANGs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -117,9 +121,9 @@ namespace ShopOrder.Controllers.Model
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ID)
+        public ActionResult DeleteConfirmed(string id)
         {
-            DKHACHHANG model = db.DKHACHHANGs.Find(ID);
+            DKHACHHANG model = db.DKHACHHANGs.Find(id);
             db.DKHACHHANGs.Remove(model);
             try
             {

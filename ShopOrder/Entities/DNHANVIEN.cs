@@ -19,6 +19,7 @@ namespace ShopOrder.Entities
         {
             this.SUSERs = new HashSet<SUSER>();
             this.TDONHANGs = new HashSet<TDONHANG>();
+            this.TGIAOHANGs = new HashSet<TGIAOHANG>();
         }
     
         public string ID { get; set; }
@@ -32,5 +33,7 @@ namespace ShopOrder.Entities
         public virtual ICollection<SUSER> SUSERs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANG> TDONHANGs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TGIAOHANG> TGIAOHANGs { get; set; }
     }
 }

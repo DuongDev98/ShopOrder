@@ -46,7 +46,8 @@ namespace ShopOrder.Controllers.Home
                 ViewBag.View = true;
                 ViewBag.Title = "Chi tiết đơn hàng";
                 TDONHANG dhRow = db.TDONHANGs.Where(x => x.ID == id).FirstOrDefault();
-                ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(dhRow.LOAIVANCHUYEN ?? 0);
+                if (dhRow == null || dhRow.DATHANHTOAN == 30) return HttpNotFound();
+                ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(false, dhRow.LOAIVANCHUYEN ?? 0);
                 ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dhRow.DNHAXEID);
                 ViewBag.Layout = UiUtils.Layout(userLogin);
                 ViewBag.IsCustomer = CookieUtils.UserLogin().IsCustomer;
@@ -73,17 +74,40 @@ namespace ShopOrder.Controllers.Home
                 dhRow.TIENHANG = lst.Sum(x => x.THANHTIEN);
                 dhRow.PHIVANCHUYEN = 0;
                 dhRow.TONGCONG = dhRow.TIENHANG + dhRow.PHIVANCHUYEN;
-                ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(dhRow.DKHACHHANG.LOAIVANCHUYEN ?? 0);
+                ViewBag.LOAIVANCHUYEN = KhachHangController.LayLoaiVanChuyen(false, dhRow.DKHACHHANG.LOAIVANCHUYEN ?? 0);
                 ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dhRow.DKHACHHANG.DNHAXEID);
                 ViewBag.IsCustomer = CookieUtils.UserLogin().IsCustomer;
+                ViewBag.Layout = UiUtils.Layout();
                 return View(dhRow);
             }
+        }
+
+        [HttpGet]
+        public ActionResult HuyDatHang(string id)
+        {
+            TDONHANG dhRow = db.TDONHANGs.Find(id);
+            if (dhRow == null || dhRow.DATHANHTOAN == 30) return HttpNotFound();
+            //Xóa lưu vết
+            db.TLUUVETs.RemoveRange(db.TLUUVETs.Where(x => x.TDONHANGID == dhRow.ID).ToList());
+            db.SaveChanges();
+
+            //Xóa chi tiết
+            db.TDONHANGCHITIETs.RemoveRange(db.TDONHANGCHITIETs.Where(x => x.TDONHANGID == dhRow.ID).ToList());
+            db.SaveChanges();
+
+            //Xoá đơn hàng
+            db.TDONHANGs.RemoveRange(db.TDONHANGs.Where(x => x.ID == dhRow.ID).ToList());
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Cart");
         }
 
         [HttpGet]
         public ActionResult ThongTinThanhToan(string id)
         {
             TDONHANG dhRow = db.TDONHANGs.Where(x => x.DATHANHTOAN != 30 && x.ID == id).FirstOrDefault();
+            if (dhRow == null || dhRow.DATHANHTOAN == 30) return HttpNotFound();
+            dhRow.TMPCODE = UiUtils.ImageQrCode(dhRow);
             return View(dhRow);
         }
 
@@ -100,7 +124,9 @@ namespace ShopOrder.Controllers.Home
                 List<TDONHANGCHITIET> lst = db.TDONHANGCHITIETs.Where(x => data.Contains(x.ID)).ToList();
                 TDONHANG dhRow = new TDONHANG();
                 dhRow.ID = Guid.NewGuid().ToString();
-                dhRow.NGAY = DateTime.Now;
+                dhRow.LOAI = 0;
+                dhRow.TIMECREATED = DateTime.Now;
+                dhRow.NGAY = DateTime.Now.Date;
                 dhRow.NAME = DatabaseUtils.GenCode("NAME", "TDONHANG");
                 dhRow.TINHTHANH = tmp.TINHTHANH;
                 dhRow.QUANHUYEN = tmp.QUANHUYEN;
@@ -116,12 +142,12 @@ namespace ShopOrder.Controllers.Home
                 dhRow.TIENHANG = lst.Sum(x => x.THANHTIEN);
                 dhRow.PHIVANCHUYEN = 0;
                 dhRow.TONGCONG = dhRow.TIENHANG + dhRow.PHIVANCHUYEN;
-                dhRow.TMPCODE = LayCodeChuyenKhoan(dhRow.DKHACHHANG);
+                dhRow.TMPCODE = LayCodeChuyenKhoan(dhRow.DKHACHHANGID);
                 db.TDONHANGs.Add(dhRow);
                 db.SaveChanges();
 
                 //log
-                DatabaseUtils.Log(dhRow.ID, "Tạo đơn");
+                DatabaseUtils.Log(dhRow, "Tạo đơn");
 
                 foreach (var ctRow in lst)
                 {
@@ -129,14 +155,16 @@ namespace ShopOrder.Controllers.Home
                     db.Entry(ctRow);
                 }
                 db.SaveChanges();
-                return View(dhRow);
+                dhRow.TMPCODE = UiUtils.ImageQrCode(dhRow);
+                return RedirectToAction("ThongTinThanhToan", "Cart", new { id = dhRow.ID });
             }
         }
 
-        private string LayCodeChuyenKhoan(DKHACHHANG dKHACHHANG)
+        private string LayCodeChuyenKhoan(string DKHACHHANGID)
         {
+            DKHACHHANG dKHACHHANG = db.DKHACHHANGs.Find(DKHACHHANGID);
             string code = PasswordUtils.RemoveUnicodeAndSpace(dKHACHHANG.USERNAME.Trim());
-            code += DateTime.Now.ToString("-yyMMdd-HHmmss");
+            code += DateTime.Now.ToString("yyMMddHHmmss");
             return code;
         }
 
@@ -210,7 +238,6 @@ namespace ShopOrder.Controllers.Home
             ctRow.THANHTIEN = ctRow.DONGIA * ctRow.SOLUONG;
             db.Entry(ctRow);
             db.SaveChanges();
-            //CapNhatTongCong(ctRow.TDONHANGID);
             return Content("ok");
         }
     }

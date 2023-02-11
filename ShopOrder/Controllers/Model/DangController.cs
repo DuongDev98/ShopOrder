@@ -22,16 +22,16 @@ namespace ShopOrder.Controllers.Model
             return View(db.DDANGs.OrderBy(x=>x.NAME).ToList());
         }
 
-        public ActionResult Edit(string ID)
+        public ActionResult Edit(string id)
         {
             DDANG model;
-            if (ID == null)
+            if (id == null)
             {
                 model = new DDANG();
             }
             else
             {
-                model = db.DDANGs.Find(ID);
+                model = db.DDANGs.Find(id);
             }
             if (model == null)
             {
@@ -61,13 +61,13 @@ namespace ShopOrder.Controllers.Model
             return View(model);
         }
 
-        public ActionResult Delete(string ID)
+        public ActionResult Delete(string id)
         {
-            if (ID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DDANG model = db.DDANGs.Find(ID);
+            DDANG model = db.DDANGs.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -77,9 +77,9 @@ namespace ShopOrder.Controllers.Model
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ID)
+        public ActionResult DeleteConfirmed(string id)
         {
-            DDANG model = db.DDANGs.Find(ID);
+            DDANG model = db.DDANGs.Find(id);
             db.DDANGs.Remove(model);
             try
             {

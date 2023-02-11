@@ -170,7 +170,7 @@ namespace ShopOrder.Utils
             }
         }
 
-        public static string GenCode(string field, string table)
+        public static string GenCode(string field, string table, int loai = 0)
         {
             int maxLength = 8;
             string code = "";
@@ -178,7 +178,10 @@ namespace ShopOrder.Utils
             else if (table == "DKHACHHANG") code = "KH";
             else if (table == "TDONHANG")
             {
-                code = "DH" + DateTime.Now.ToString("yyMM");
+                if (loai == 0) code = "DH";
+                else if (loai == 1) code = "PN";
+
+                code += DateTime.Now.ToString("yyMM");
                 maxLength = 12;
             }
             else if (table == "TTHANHTOAN")
@@ -186,9 +189,19 @@ namespace ShopOrder.Utils
                 code = "TT" + DateTime.Now.ToString("yyMM");
                 maxLength = 12;
             }
+            else if (table == "TGIAOHANG")
+            {
+                code = "GH" + DateTime.Now.ToString("yyMM");
+                maxLength = 12;
+            }
 
             int stt = 0;
-            string data = GetFirstFieldString(string.Format("SELECT MAX({0}) FROM {1}", field, table), null);
+            string query = "SELECT MAX({0}) FROM {1}";
+            if (table == "TDONHANG")
+            {
+                query += " WHERE LOAI = " + loai;
+            }
+            string data = GetFirstFieldString(string.Format(query, field, table), null);
             if (data != null && data.Length > 0)
             {
                 data = data.Replace(code, "");
@@ -203,13 +216,25 @@ namespace ShopOrder.Utils
             return code;
         }
 
-        public static void Log(string TDONHANGID, string NOTE)
+        public static void Log(TDONHANG dhRow, string NOTE)
         {
             ShopOrderEntities db = new ShopOrderEntities();
             TLUUVET t = new TLUUVET();
             t.ID = Guid.NewGuid().ToString();
             t.TIMECREATED = DateTime.Now;
-            t.TDONHANGID = TDONHANGID;
+            t.TDONHANGID = dhRow.ID;
+            t.NOTE = NOTE;
+            db.TLUUVETs.Add(t);
+            db.SaveChanges();
+        }
+
+        public static void Log(TDONHANGCHITIET ctRow, string NOTE)
+        {
+            ShopOrderEntities db = new ShopOrderEntities();
+            TLUUVET t = new TLUUVET();
+            t.ID = Guid.NewGuid().ToString();
+            t.TIMECREATED = DateTime.Now;
+            t.TDONHANGCHITIETID = ctRow.ID;
             t.NOTE = NOTE;
             db.TLUUVETs.Add(t);
             db.SaveChanges();

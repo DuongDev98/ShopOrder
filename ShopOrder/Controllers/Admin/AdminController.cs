@@ -28,7 +28,7 @@ namespace ShopOrder.Controllers
                 name = user.sUSER.DNHANVIEN.NAME;
                 username = user.sUSER.USERNAME;
             }
-            ViewBag.Id = user.sUSER.ID;
+            ViewBag.ID = user.sUSER.ID;
             ViewBag.Name = name;
             ViewBag.Username = username;
             return PartialView("NavbarAdminUi");

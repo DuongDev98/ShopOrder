@@ -1,0 +1,95 @@
+﻿@using ShopOrder.Entities
+@using ShopOrder.Controllers.Model
+@model List<TDONHANG>
+@{
+    Layout = ViewBag.Layout;
+}
+<div class="row">
+    <div class="col"><h5>@ViewBag.Title</h5></div>
+</div>
+@{
+    if (!ViewBag.IsCustomer)
+    {
+        <div class="modal-body no-padding">
+            <a href="/QuanLyDonHang/CapTrangThaiThanhToan"><div class="btn btn-info">Kiểm tra thanh toán</div></a>
+        </div>
+    }
+}
+
+<table class="table table-striped table-bordered table-hover dynamic-table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Ngày</th>
+            <th>Số HĐ</th>
+            <th>Tổng cộng</th>
+            <th>Loại vận chuyển</th>
+            @{
+                if (!ViewBag.IsCustomer)
+                {
+                    <th></th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr class="pointer" data-id="@item.ID">
+                    <td>@count</td>
+                    <td>@item.NGAY.ToString("dd/MM/yyyy")</td>
+                    <td>@item.NAME</td>
+                    <td>@(item.TONGCONG.ToString("n0"))</td>
+                    <td>
+                        @{
+                            if (item.LOAIVANCHUYEN == (int)LoaiVanChuyen.GuiXe)
+                            {
+                                <p>Gửi xe</p>
+                            }
+                            else if (item.LOAIVANCHUYEN == (int)LoaiVanChuyen.AnPhu)
+                            {
+                                <p>Gửi bay An Phú</p>
+                            }
+                            else
+                            {
+                                <p>Giao hàng tiết kiệm</p>
+                            }
+                        }
+                    </td>
+                    @{
+                        if (!ViewBag.IsCustomer)
+                        {
+                            <td>
+                                @*hiển thị nút xác nhận đã thanh toán với đơn chưa thanh toán*@
+                                @{
+                                    if (item.DATHANHTOAN != 30)
+                                    {
+                                        <div class="btnXacNhanTt btn btn-warning" data-id="@item.ID">Xác nhận t.toán</div>
+                                    }
+                                }
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script>
+    $('table').find('tr').click(function () {
+        let id = $(this).attr('data-id');
+        window.location.href = "/Cart/ThongTinDatHang/" + id;
+    });
+
+    $('.btnXacNhanTt').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let btn = $(this);
+        UiUtils.ShowForm("", "Xác nhận đơn đã thanh toán", function () {
+            window.location.href = "/QuanLyDonHang/DoiTrangThai/" + btn.attr("data-id");
+        });
+    });
+</script>

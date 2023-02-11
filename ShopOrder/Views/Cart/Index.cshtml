@@ -20,61 +20,59 @@
 
 <!-- Shoping Cart -->
 <div class="p-t-75 p-b-85">
-    <div class="container-fluid">
-        <form class="row" method="post" action="/Cart/ThongTinDatHang" enctype="multipart/form-data">
-            <div class="col-12 m-lr-auto m-b-50">
-                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-                    <h4 class="mtext-109 cl2 p-b-30 bor12">
-                        Chi tiết đặt hàng
-                    </h4>
+    <form class="row" method="post" action="/Cart/ThongTinDatHang" enctype="multipart/form-data">
+        <div class="col-12 m-lr-auto m-b-50">
+            <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                <h4 class="mtext-109 cl2 p-b-30 bor12">
+                    Chi tiết đặt hàng
+                </h4>
 
-                    <div class="row m-t-20">
-                        @{
-                            foreach (var item in Model)
-                            {
-                                <div class="col-sm-12 col-md-4 m-t-10">
-                                    <div class="card pointer" data-id="@item.ID">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-4 col-sm-6 col-md-4 m-b-5">
-                                                    <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input m-l-0" data-id="@item.ID">
-                                                        <input type="text" style="display: none;" value="@item.ID">
-                                                    </div>
-                                                    <img src="/Images/Items/@(item.DMATHANG.DANHs.ElementAt(0).NAME)" alt="IMG" style="width: 100% !important">
+                <div class="row m-t-20">
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <div class="col-sm-12 col-md-3 m-t-10">
+                                <div class="card pointer" data-id="@item.ID">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4 col-sm-6 col-md-4 m-b-5">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input m-l-0" data-id="@item.ID">
+                                                    <input type="text" style="display: none;" value="@item.ID">
                                                 </div>
-                                                <div class="col-8 col-sm-6 col-md-8">
-                                                    <div class="stext-101">@item.DMATHANG.NAME</div>
-                                                    <div id="ipDONGIA" class="stext-105" data-value="@item.DONGIA">@(item.DONGIA.ToString("n0")) vnđ</div>
-                                                    <div class="stext-105">Phân loại: @item.DSIZE.NAME (@item.DMAU.NAME)</div>
-                                                    <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                                        </div>
-                                                        <input id="ipSOLUONG" class="mtext-104 cl3 txt-center num-product" type="number" name="SOLUONG" value="@item.SOLUONG" disabled>
-                                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                            <i class="fs-16 zmdi zmdi-plus"></i>
-                                                        </div>
+                                                <img src="~/Images/Items/@(item.DMATHANG.DANHs.ElementAt(0).NAME)" alt="IMG" style="width: 100% !important">
+                                            </div>
+                                            <div class="col-8 col-sm-6 col-md-8">
+                                                <div class="stext-101">@item.DMATHANG.NAME</div>
+                                                <div id="ipDONGIA" class="stext-105" data-value="@item.DONGIA">@(item.DONGIA.ToString("n0")) vnđ</div>
+                                                <div class="stext-105">Phân loại: @item.DSIZE.NAME (@item.DMAU.NAME)</div>
+                                                <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <i class="fs-16 zmdi zmdi-minus"></i>
                                                     </div>
-                                                    <div class="stext-105" style="color:red;"><span id="ipTHANHTIEN">@((item.DONGIA * item.SOLUONG).ToString("n0"))</span> vnđ</div>
+                                                    <input id="ipSOLUONG" class="mtext-104 cl3 txt-center num-product" type="number" name="SOLUONG" value="@item.SOLUONG" disabled>
+                                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <i class="fs-16 zmdi zmdi-plus"></i>
+                                                    </div>
                                                 </div>
+                                                <div class="stext-105" style="color:red;"><span id="ipTHANHTIEN">@((item.DONGIA * item.SOLUONG).ToString("n0"))</span> vnđ</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         }
-                    </div>
+                    }
+                </div>
 
-                    <div class="row m-t-20 p-all-10">
-                        <button type="button" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" id="btnThanhToan">
-                            Thanh toán
-                        </button>
-                    </div>
+                <div class="row m-t-20 p-all-10">
+                    <button type="button" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" id="btnThanhToan">
+                        Thanh toán
+                    </button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 <script>
 
@@ -151,7 +149,7 @@
                 card.find('#ipTHANHTIEN').text(UiUtils.FormatNumber(thanhTien));
                 editTextThanhToan();
             } else {
-                swal("", success, "error");
+                UiUtils.ShowError("", success);
             }
         });
     }

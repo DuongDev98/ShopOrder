@@ -10,10 +10,13 @@
     <link href="~/Content/Admin/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/Admin/assets/libs/css/style.css">
     <link rel="stylesheet" href="~/Content/Admin/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link href="~/Content/Admin/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="~/Content/Shop/vendor/datatables/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Content/Shop/css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Shop/css/util.css">
+
     <script src="~/Content/Admin/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="~/Content/Shop/vendor/sweetalert/sweetalert.min.js"></script>
-    <script src="~/Scripts/utils.js"></script>
     <script src="~/Scripts/lib.js"></script>
 </head>
 <body>
@@ -75,7 +78,10 @@
                                             <a class="nav-link" href="/trangthaidonhang">Danh mục trạng thái đơn</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/QuanLyDonHang">Quản lý đặt hàng</a>
+                                            <a class="nav-link" href="/quanlydonhang">Quản lý đặt hàng</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/quanlydongiao">Quản lý đơn giao</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -108,7 +114,7 @@
                                 <div id="submenu-6" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/nhapkho">Phiếu nhập kho</a>
+                                            <a class="nav-link" href="/quanlynhapkho">Phiếu nhập kho</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Tồn kho</a>
@@ -124,7 +130,7 @@
         <!-- end left sidebar -->
         <!-- wrapper  -->
         <div class="dashboard-wrapper">
-            <div class="container-fluid dashboard-content">
+            <div class="modal-body no-padding">
                 <div class="row">
                     <div class="col-12">
                         @{
@@ -135,7 +141,9 @@
                         }
                     </div>
                 </div>
+
                 @RenderBody()
+
                 <!-- footer -->
                 @*<div class="footer">
                         <div class="container-fluid">
@@ -162,6 +170,9 @@
     @*<script src="~/Content/Admin/assets/vendor/jquery/jquery-3.3.1.min.js"></script>*@
     <script src="~/Content/Admin/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/Content/Admin/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <script src="~/Content/Admin/assets/vendor/datepicker/moment.js"></script>
+    <script src="~/Content/Admin/assets/vendor/daterangepicker/daterangepicker.min.js"></script>
+    <script src="~/Content/Shop/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/Content/Admin/assets/libs/js/main-js.js"></script>
 </body>
 </html>

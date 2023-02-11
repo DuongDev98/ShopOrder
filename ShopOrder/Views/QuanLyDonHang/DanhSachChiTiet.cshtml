@@ -1,0 +1,44 @@
+﻿@using ShopOrder.Entities
+@using System.Collections.Generic
+@model List<TDONHANGCHITIET>
+@{
+    ViewBag.Title = "DanhSachChiTiet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    @{
+        foreach (var item in Model)
+        {
+            <div class="col-sm-12 col-md-6 m-t-10">
+                <div class="card pointer" data-id="@item.ID">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 col-sm-6 col-md-4 m-b-5">
+                                <img src="~/Images/Items/@(item.DMATHANG.DANHs.ElementAt(0).NAME)" alt="IMG" style="width: 100% !important">
+                                <input type="text" style="display: none;" name="ids[]" value="@item.ID">
+                            </div>
+                            <div class="col-8 col-sm-6 col-md-8">
+                                <div class="stext-101">@item.DMATHANG.NAME</div>
+                                <div id="ipDONGIA" class="stext-105" data-value="@item.DONGIA">@(item.DONGIA.ToString("n0")) vnđ</div>
+                                <div class="stext-105">Phân loại: @item.DSIZE.NAME (@item.DMAU.NAME)</div>
+                                <div class="wrap-num-product flex-w m-r-20 m-tb-10 border-0">
+                                    @{
+                                        if (ViewBag.IsCustomer)
+                                        {
+                                            <input id="ipSOLUONG" class="mtext-104 cl3 txt-center num-product" type="number" name="SOLUONG" value="@item.SOLUONG" readonly>
+                                        }
+                                        else
+                                        {
+                                            <p>Số lượng: @item.SOLUONG</p>
+                                        }
+                                    }
+                                </div>
+                                <div class="stext-105" style="color:red;"><span id="ipTHANHTIEN">@((item.DONGIA * item.SOLUONG).ToString("n0"))</span> vnđ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

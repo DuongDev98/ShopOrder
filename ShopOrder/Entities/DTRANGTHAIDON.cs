@@ -17,13 +17,13 @@ namespace ShopOrder.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DTRANGTHAIDON()
         {
-            this.TDONHANGs = new HashSet<TDONHANG>();
+            this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
         }
     
         public string ID { get; set; }
         public string NAME { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TDONHANG> TDONHANGs { get; set; }
+        public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
     }
 }

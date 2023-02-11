@@ -1,8 +1,9 @@
-﻿@model ShopOrder.Entities.TDONHANG
+﻿@using ShopOrder.Entities
+@model TDONHANG
 @{
     ViewBag.Title = "Thông tin thanh toán";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ShopOrder.Entities.TDONHANG tDONHANG = Model;
+    TDONHANG tDONHANG = Model;
     if (tDONHANG == null)
     {
         return;
@@ -19,14 +20,7 @@
 
         <div class="card-body">
             <div class="row justify-content-center">
-                <h4>Số tiền: <span style="color: red;">@tDONHANG.TONGCONG.ToString("n0") VNĐ</span></h4>
-            </div>
-            <div class="row justify-content-center">
-                <h4>Nội dung CK: <span style="color: blue;">@tDONHANG.TMPCODE</span></h4>
-            </div>
-            <hr />
-            <div class="row justify-content-center">
-                <img src="~/Images/QRcode/duong_vcb.png" width="250" height="300" />
+                <img src="@tDONHANG.TMPCODE" height="600" width="500"/>
             </div>
         </div>
     </div>
@@ -42,7 +36,7 @@
         $.post("/QuanLyDonHang/KiemTraThanhToan/@tDONHANG.ID", null, function (data) {
             if (data == 'ok') {
                 clearInterval(boDemThoiGian);
-                swal("", "Thanh toán thành công", "success").then(function () {
+                UiUtils.ShowSuccess("", "Thanh toán thành công", function () {
                     window.location.href = "/Cart";
                 });
             } else { }
