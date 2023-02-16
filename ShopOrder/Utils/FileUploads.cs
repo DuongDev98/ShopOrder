@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopOrder.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,62 @@ namespace ShopOrder.Utils
 {
     public class FileUploads
     {
+        public static void uploadAnh(ShopOrderEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, DMATHANG dMATHANG, TGIAOHANG tGIAOHANG)
+        {
+            //Lấy danh sách ảnh trong database cái nào không còn trong olds thì xóa.
+            List<DANH> lstAnhs = null;
+
+            if (dMATHANG != null)
+            {
+                lstAnhs = db.DANHs.Where(x => x.DMATHANGID == dMATHANG.ID).ToList();
+            }
+            else if (tGIAOHANG != null)
+            {
+                lstAnhs = db.DANHs.Where(x => x.TGIAOHANGID == tGIAOHANG.ID).ToList();
+            }
+
+            if (lstAnhs != null && lstAnhs.Count > 0)
+            {
+                foreach (DANH itemAnh in lstAnhs)
+                {
+                    if (olds == null || !olds.Contains(itemAnh.ID))
+                    {
+                        if (dMATHANG != null)
+                        {
+                            FileUploads.DeleteMatHang(httpServer, itemAnh.NAME);
+                        }
+                        else if (tGIAOHANG != null)
+                        {
+                            FileUploads.DeleteDonHang(httpServer, itemAnh.NAME);
+                        }
+                        db.DANHs.Remove(itemAnh);
+                    }
+                }
+            }
+            //Thêm ảnh từ file
+            if (files != null && files.Count > 0)
+            {
+                foreach (HttpPostedFileBase fileItem in files)
+                {
+                    if (fileItem.ContentLength == 0) continue;
+                    string file = FileUploads.UploadMatHang(httpServer, fileItem);
+                    DANH itemAnh = new DANH();
+                    itemAnh.ID = Guid.NewGuid().ToString();
+                    if (dMATHANG != null)
+                    {
+                        itemAnh.DMATHANGID = dMATHANG.ID;
+                    }
+                    else if (tGIAOHANG != null)
+                    {
+                        itemAnh.TGIAOHANGID = tGIAOHANG.ID;
+                    }
+                    itemAnh.NAME = file;
+                    db.DANHs.Add(itemAnh);
+                }
+            }
+            db.SaveChanges();
+        }
+
         public static string UploadMatHang(HttpServerUtilityBase server, HttpPostedFileBase file)
         {
             return Upload(server, file, FileFolders.MatHang);
@@ -17,15 +74,7 @@ namespace ShopOrder.Utils
         {
             Delete(server, fileName, FileFolders.MatHang);
         }
-        public static string UploadKhachHang(HttpServerUtilityBase server, HttpPostedFileBase file)
-        {
-            return Upload(server, file, FileFolders.KhachHang);
-        }
 
-        public static void DeleteKhachHang(HttpServerUtilityBase server, string fileName)
-        {
-            Delete(server, fileName, FileFolders.KhachHang);
-        }
         public static string UploadDonHang(HttpServerUtilityBase server, HttpPostedFileBase file)
         {
             return Upload(server, file, FileFolders.DonHang);
@@ -80,7 +129,6 @@ namespace ShopOrder.Utils
 
     public class FileFolders {
         public const string MatHang = "Items";
-        public const string KhachHang = "Customers";
         public const string DonHang = "Invoices";
     }
 }

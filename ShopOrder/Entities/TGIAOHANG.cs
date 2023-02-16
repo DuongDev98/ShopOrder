@@ -18,6 +18,7 @@ namespace ShopOrder.Entities
         public TGIAOHANG()
         {
             this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
+            this.DANHs = new HashSet<DANH>();
         }
     
         public string ID { get; set; }
@@ -34,11 +35,14 @@ namespace ShopOrder.Entities
         public string DNHAXEID { get; set; }
         public string LABEL_GHTK { get; set; }
         public string NOTE { get; set; }
+        public Nullable<long> PHIVANCHUYEN { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DNHANVIEN DNHANVIEN { get; set; }
         public virtual DNHAXE DNHAXE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DANH> DANHs { get; set; }
     }
 }

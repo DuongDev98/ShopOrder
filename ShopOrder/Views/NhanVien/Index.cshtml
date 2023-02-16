@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ShopOrder.Entities.DNHANVIEN>
-
+@using ShopOrder.Controllers.Model
 @{
     ViewBag.Title = "Danh sách nhân viên";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -23,38 +23,45 @@
         <th>
             Ghi chú
         </th>
+        <th>
+            Loại tài khoản
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DIENTHOAI)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DIACHI)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NOTE)
-        </td>
-        <td>
-            @{
-                if (item.SUSERs != null && item.SUSERs.Count > 0)
-                {
-                    @Html.ActionLink("Đổi mật khẩu", "DoiMatKhauNv", "User", new { DNHANVIENID = item.ID }, new { @class = "btn btn-info" })
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIENTHOAI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIACHI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NOTE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => NhanVienController.TextLoaiTaiKhoan((LoaiTaiKhoan)item.LOAITAIKHOAN))
+            </td>
+            <td>
+                @{
+                    if (item.SUSERs != null && item.SUSERs.Count > 0)
+                    {
+                        @Html.ActionLink("Đổi mật khẩu", "DoiMatKhauNv", "User", new { DNHANVIENID = item.ID }, new { @class = "btn btn-info" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Tạo tài khoản", "TaoTaiKhoan", "User", new { DNHANVIENID = item.ID }, new { @class = "btn btn-primary" })
+                    }
                 }
-                else
-                {
-                    @Html.ActionLink("Tạo tài khoản", "TaoTaiKhoan", "User", new { DNHANVIENID = item.ID }, new { @class = "btn btn-primary" })
-                }
-            }
-            @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
-            @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-}
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { ID = item.ID }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>

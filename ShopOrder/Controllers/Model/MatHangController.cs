@@ -1,35 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.DynamicData.ModelProviders;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using ShopOrder.Entities;
+using ShopOrder.Models;
 using ShopOrder.Utils;
 
 namespace ShopOrder.Controllers.Model
 {
-    
     public class MatHangController : BaseController
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 
         public ActionResult Index()
         {
+            UserModel userModel = CookieUtils.UserLogin();
             var dMATHANGs = db.DMATHANGs.Include(d => d.DDANG).Include(d => d.DNHOMHANG).Include(d => d.DPHANLOAI).Include(d => d.DTHOIGIANDAT);
+            if (userModel.sUSER.DNHANVIEN != null && userModel.sUSER.DNHANVIEN.LOAITAIKHOAN == (int)LoaiTaiKhoan.CuaHang)
+            {
+                dMATHANGs = dMATHANGs.Where(x => x.DNHANVIENID == userModel.sUSER.DNHANVIENID);
+            }
             return View(dMATHANGs.OrderBy(x=>x.CODE).ToList());
         }
 
         public ActionResult Edit(string id)
         {
             DMATHANG dMATHANG;
+            UserModel userModel = CookieUtils.UserLogin();
             if (id == null)
             {
                 dMATHANG = new DMATHANG();
+                if (userModel.sUSER.DNHANVIEN != null && userModel.sUSER.DNHANVIEN.LOAITAIKHOAN == (int)LoaiTaiKhoan.CuaHang)
+                {
+                    dMATHANG.DNHANVIENID = userModel.sUSER.DNHANVIENID;
+                }
             }
             else
             {
@@ -43,11 +55,17 @@ namespace ShopOrder.Controllers.Model
             ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DNHOMHANGID);
             ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DPHANLOAIID);
             ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DTHOIGIANDATID);
+
+            List<DNHANVIEN> listCuaHang = db.DNHANVIENs.Where(x => x.LOAITAIKHOAN == (int)LoaiTaiKhoan.CuaHang).OrderBy(x => x.NAME).ToList();
+            listCuaHang.Insert(0, new DNHANVIEN() { ID = "", NAME = "" });
+            ViewBag.DNHANVIENID = new SelectList(listCuaHang, "ID", "NAME", dMATHANG.DNHANVIENID);
+
             ViewBag.Sizes = db.DSIZEs.ToList();
             ViewBag.Maus = db.DMAUs.ToList();
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
             ViewBag.SizeSelect = LayDanhSachSizeDangChon(dMATHANG);
             ViewBag.MauSelect = LayDanhSachMauDangChon(dMATHANG);
+            ViewBag.View = userModel.sUSER.DNHANVIEN != null && userModel.sUSER.DNHANVIEN.LOAITAIKHOAN == (int)LoaiTaiKhoan.CuaHang;
             return View(dMATHANG);
         }
 
@@ -66,6 +84,7 @@ namespace ShopOrder.Controllers.Model
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DMATHANG dMATHANG)
         {
+            UserModel userModel = CookieUtils.UserLogin();
             if (ModelState.IsValid)
             {
                 //kiểm tra xem up ảnh hay chưa
@@ -149,7 +168,7 @@ namespace ShopOrder.Controllers.Model
                     }
 
                     //upload anh
-                    uploadAnhMatHang(db, Server, preloaded, files, dMATHANG);
+                    FileUploads.uploadAnh(db, Server, preloaded, files, dMATHANG, null);
 
                     return RedirectToAction("Index");
                 }
@@ -162,11 +181,17 @@ namespace ShopOrder.Controllers.Model
             ViewBag.DNHOMHANGID = new SelectList(db.DNHOMHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DNHOMHANGID);
             ViewBag.DPHANLOAIID = new SelectList(db.DPHANLOAIs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DPHANLOAIID);
             ViewBag.DTHOIGIANDATID = new SelectList(db.DTHOIGIANDATs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", dMATHANG.DTHOIGIANDATID);
+
+            List<DNHANVIEN> listCuaHang = db.DNHANVIENs.Where(x => x.LOAITAIKHOAN == (int)LoaiTaiKhoan.CuaHang).OrderBy(x => x.NAME).ToList();
+            listCuaHang.Insert(0, new DNHANVIEN() { ID = "", NAME = "" });
+            ViewBag.DNHANVIENID = new SelectList(listCuaHang, "ID", "NAME", dMATHANG.DNHANVIENID);
+
             ViewBag.Sizes = db.DSIZEs.ToList();
             ViewBag.Maus = db.DMAUs.ToList();
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
             ViewBag.SizeSelect = LayDanhSachSizeDangChon(dMATHANG);
             ViewBag.MauSelect = LayDanhSachMauDangChon(dMATHANG);
+            ViewBag.View = userModel.sUSER.DNHANVIEN != null && userModel.sUSER.DNHANVIEN.LOAITAIKHOAN == (int)LoaiTaiKhoan.CuaHang;
             return View(dMATHANG);
         }
 
@@ -190,38 +215,6 @@ namespace ShopOrder.Controllers.Model
                 rs.Add(x.DSIZE);
             }
             return rs;
-        }
-
-        private void uploadAnhMatHang(ShopOrderEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, DMATHANG item)
-        {
-            //Lấy danh sách ảnh trong database cái nào không còn trong olds thì xóa.
-            List<DANH> lstAnhs = db.DANHs.Where(x => x.DMATHANGID == item.ID).ToList();
-            if (lstAnhs != null && lstAnhs.Count > 0)
-            {
-                foreach (DANH itemAnh in lstAnhs)
-                {
-                    if (olds == null || !olds.Contains(itemAnh.ID))
-                    {
-                        FileUploads.DeleteMatHang(httpServer, itemAnh.NAME);
-                        db.DANHs.Remove(itemAnh);
-                    }
-                }
-            }
-            //Thêm ảnh từ file
-            if (files != null && files.Count > 0)
-            {
-                foreach (HttpPostedFileBase fileItem in files)
-                {
-                    if (fileItem.ContentLength == 0) continue;
-                    string file = FileUploads.UploadMatHang(httpServer, fileItem);
-                    DANH itemAnh = new DANH();
-                    itemAnh.ID = Guid.NewGuid().ToString();
-                    itemAnh.DMATHANGID = item.ID;
-                    itemAnh.NAME = file;
-                    db.DANHs.Add(itemAnh);
-                }
-            }
-            db.SaveChanges();
         }
 
         public ActionResult Delete(string id)

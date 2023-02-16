@@ -170,11 +170,19 @@ namespace ShopOrder.Utils
             }
         }
 
-        public static string GenCode(string field, string table, int loai = 0)
+        public static string GenCode(string field, string table, DNHANVIEN dNHANVIEN = null, int loai = 0)
         {
             int maxLength = 8;
             string code = "";
-            if (table == "DMATHANG") code = "MH";
+            if (table == "DMATHANG")
+            {
+                code = "MH";
+                if (dNHANVIEN != null && dNHANVIEN.CODEMATHANG != null && dNHANVIEN.CODEMATHANG.Length > 0)
+                {
+                    code = dNHANVIEN.CODEMATHANG;
+                    maxLength += code.Length - 2;
+                }
+            }
             else if (table == "DKHACHHANG") code = "KH";
             else if (table == "TDONHANG")
             {

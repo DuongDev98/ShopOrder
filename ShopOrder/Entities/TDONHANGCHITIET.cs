@@ -33,6 +33,7 @@ namespace ShopOrder.Entities
         public long THANHTIEN { get; set; }
         public Nullable<int> SLNHAN { get; set; }
         public string NOTE { get; set; }
+        public string DNHANVIENID { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DMATHANG DMATHANG { get; set; }
@@ -43,5 +44,6 @@ namespace ShopOrder.Entities
         public virtual TGIAOHANG TGIAOHANG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TLUUVET> TLUUVETs { get; set; }
+        public virtual DNHANVIEN DNHANVIEN { get; set; }
     }
 }

@@ -17,7 +17,9 @@ namespace ShopOrder.Entities
         public string ID { get; set; }
         public string NAME { get; set; }
         public string DMATHANGID { get; set; }
+        public string TGIAOHANGID { get; set; }
     
         public virtual DMATHANG DMATHANG { get; set; }
+        public virtual TGIAOHANG TGIAOHANG { get; set; }
     }
 }

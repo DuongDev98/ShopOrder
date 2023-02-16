@@ -17,10 +17,11 @@ namespace ShopOrder.Controllers.Home
         {
             UserModel userLogin = CookieUtils.UserLogin();
             Dictionary<DTRANGTHAIDON, int> dic = new Dictionary<DTRANGTHAIDON, int>();
-            IQueryable<TDONHANG> donHangs = db.TDONHANGs.Where(x=>x.LOAI == 0);
+            IQueryable<TDONHANG> donHangs = db.TDONHANGs.Where(x => x.LOAI == 0);
             //khách hàng chỉ hiện thị đơn của nó
             if (userLogin.IsCustomer) donHangs = donHangs.Where(x => x.DKHACHHANGID == userLogin.dKHACHHANG.ID);
-            dic.Add(new DTRANGTHAIDON() { ID = "", NAME = "Chờ thanh toán" }, donHangs.Count(x=>x.DATHANHTOAN != 30));
+
+            dic.Add(new DTRANGTHAIDON() { ID = "", NAME = "Chờ thanh toán" }, donHangs.Count(x => x.DATHANHTOAN != 30));
 
             IQueryable<TDONHANGCHITIET> donHangChiTiets = db.TDONHANGCHITIETs;
             if (userLogin.IsCustomer) donHangChiTiets = donHangChiTiets.Where(x => x.DKHACHHANGID == userLogin.dKHACHHANG.ID);
@@ -39,7 +40,7 @@ namespace ShopOrder.Controllers.Home
         {
             if (id != null && id.Length > 0)
             {
-                
+
             }
             return RedirectToAction("DanhSachChuaThanhToan", "QuanLyDonHang");
         }
@@ -65,7 +66,7 @@ namespace ShopOrder.Controllers.Home
             IQueryable<TDONHANG> result = db.TDONHANGs.Where(x => x.LOAI == 0 && x.DATHANHTOAN != 30);
             if (userLogin.IsCustomer)
             {
-                result = result.Where(x=>x.DKHACHHANGID == userLogin.dKHACHHANG.ID);
+                result = result.Where(x => x.DKHACHHANGID == userLogin.dKHACHHANG.ID);
             }
             ViewBag.IsCustomer = userLogin.IsCustomer;
             ViewBag.Title = "Danh sách chưa thanh toán";
@@ -100,6 +101,39 @@ namespace ShopOrder.Controllers.Home
             }
             //thực hiện truy vấn kiểm tra cú pháp tin nhắn có tồn tại không
             return Content("error");
+        }
+
+        [HttpPost]
+        public ActionResult DichVuChuyenTien(ThueApiModel model)
+        {
+            bool kq = false;
+            //kiểm tra token xem được gửi từ thue api ko
+            if (Request.Headers.AllKeys.Contains("x-thueapi"))
+            {
+                string tokenReceive = Request.Headers.Get("x-thueapi");
+                if (tokenReceive == "YCI3sLMtTgWmUnWsRDdfoOwK447IzXDECCDodZvgqEdISqV4j6")
+                {
+                    kq = true;
+                }
+            }
+            if (!kq)
+            {
+                return Content("error");
+            }
+            if (model == null || model.txn_id == null) return Content("error");
+            TDONHANG dhRow = db.TDONHANGs.Where(x => model.content.Contains(x.TMPCODE)).FirstOrDefault();
+            if (dhRow == null) return Content("error");
+            else
+            {
+                dhRow.TIENTHANHTOAN = (long)Convert.ToDecimal(model.money);
+                //if (dhRow.TIENTHANHTOAN >= dhRow.TONGCONG)
+                //{
+                    dhRow.DATHANHTOAN = 30;
+                //}
+                db.Entry(dhRow);
+                db.SaveChanges();
+                return Content("ok");
+            }
         }
 
         public ActionResult CapTrangThaiThanhToan()

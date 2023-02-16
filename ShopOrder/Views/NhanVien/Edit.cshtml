@@ -55,7 +55,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LOAITAIKHOAN, "Loại tài khoản", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("LOAITAIKHOAN", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("LOAITAIKHOAN", null, htmlAttributes: new { @class = "form-control lueLOAITAIKHOAN" })
+            </div>
+        </div>
+
+        <div class="form-group divCodeMH">
+            @Html.LabelFor(model => model.CODEMATHANG, "Ký tự bắt đầu(Mặt hàng)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CODEMATHANG, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
@@ -74,3 +81,17 @@
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+        SetUi();
+    });
+
+    $('.lueLOAITAIKHOAN').change(function () {
+        SetUi();
+    });
+
+    function SetUi() {
+        $('.divCodeMH').css("display", ConvertToJs.Int($('.lueLOAITAIKHOAN').val()) == 3 ? "unset" : "none");
+    }
+</script>

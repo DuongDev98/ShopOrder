@@ -19,6 +19,8 @@
         min-width: 800px;
     }
 </style>
+<link href="~/Content/image-uploader/src/image-uploader.css" rel="stylesheet" />
+
 <div class="card divContent">
     <div class="card-body">
         <form action="/QuanLyDonGiao/Edit/@Model.ID" method="post" enctype="multipart/form-data">
@@ -60,41 +62,53 @@
                 <div class="btn btn-success btnAdd">Thêm</div>
             </div>
             <div class="row">
-                <div class="card-body">
-                    <table class="table-detail table table-striped table-bordered table-hover dynamic-table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>STT</th>
-                                <th>Ảnh</th>
-                                <th>Mặt hàng</th>
-                                <th>Số lượng</th>
-                                <th>Màu</th>
-                                <th>Size</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                if (Model.TDONHANGCHITIETs != null)
-                                {
-                                    int stt = 1;
-                                    foreach (TDONHANGCHITIET ctRow in Model.TDONHANGCHITIETs)
+
+                <div class="col-8">
+                    <div class="card-body">
+                        <table class="table-detail table table-striped table-bordered table-hover dynamic-table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Ảnh</th>
+                                    <th>Mặt hàng</th>
+                                    <th>Số lượng</th>
+                                    <th>Màu</th>
+                                    <th>Size</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (Model.TDONHANGCHITIETs != null)
                                     {
-                                        <tr data-id="@ctRow.ID">
-                                            <td>@stt</td>
-                                            <td><img src="~/Images/Items/@ctRow.DMATHANG.DANHs.ElementAt(0).NAME" width="50" height="50" /></td>
-                                            <td>@ctRow.DMATHANG.NAME</td>
-                                            <td>@(ctRow.SOLUONG.ToString("n0"))</td>
-                                            <td>@ctRow.DMAU.NAME</td>
-                                            <td>@ctRow.DSIZE.NAME</td>
-                                            <td><div class="btn btn-danger btnRemove">-</div></td>
-                                        </tr>
-                                        stt++;
+                                        int stt = 1;
+                                        foreach (TDONHANGCHITIET ctRow in Model.TDONHANGCHITIETs)
+                                        {
+                                            <tr data-id="@ctRow.ID">
+                                                <td>@stt</td>
+                                                <td><img src="~/Images/Items/@ctRow.DMATHANG.DANHs.ElementAt(0).NAME" width="50" height="50" /></td>
+                                                <td>@ctRow.DMATHANG.NAME</td>
+                                                <td>@(ctRow.SOLUONG.ToString("n0"))</td>
+                                                <td>@ctRow.DMAU.NAME</td>
+                                                <td>@ctRow.DSIZE.NAME</td>
+                                                <td><div class="btn btn-danger btnRemove">-</div></td>
+                                            </tr>
+                                            stt++;
+                                        }
                                     }
                                 }
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <div class="control-label">
+                            Ảnh
+                        </div>
+                        <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+                    </div>
                 </div>
             </div>
 
@@ -106,6 +120,8 @@
         </form>
     </div>
 </div>
+
+<script src="~/Content/image-uploader/src/image-uploader.js"></script>
 <script>
     let height = window.innerHeight - 80;
     let tableDetail = $('.table-detail');
@@ -229,4 +245,19 @@
         divHidden.closest("form").submit();
     });
 
+        let preloaded = [];
+        @{
+            if (ViewBag.imgs != null)
+            {
+                Dictionary<string, string> dic = ViewBag.imgs;
+                foreach (string key in dic.Keys)
+                {
+                    <Text>preloaded.push({ id: '@key', src: '@dic[key]' });</Text>
+                }
+            }
+        }
+
+        $('.input-images').imageUploader({
+            preloaded: preloaded
+        });
 </script>

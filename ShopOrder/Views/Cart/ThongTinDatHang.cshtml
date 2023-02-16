@@ -26,7 +26,8 @@
                         Chi tiết đặt hàng
                     </h4>
                     <div class="m-l-20 p-b-30">
-                        <a href="/Cart/HuyDatHang/@tDONHANG.ID" class="btn btn-danger">Hủy đơn</a>
+                        @*<a href="/Cart/HuyDatHang/@tDONHANG.ID" class="btn btn-danger">Hủy đơn</a>*@
+                        <div class="btn btn-danger btnHuyDon">Hủy đơn</div>
                     </div>
                 </div>
 
@@ -163,14 +164,17 @@
                         </span>
                     </div>
                 </div>
-                @{
+                @*@{
                     if (!ViewBag.View)
                     {
                         <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                             Thanh toán
                         </button>
                     }
-                }
+                }*@
+                <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                    Thanh toán
+                </button>
             </div>
         </div>
     </form>
@@ -192,4 +196,10 @@
             $('.ipDNHAXEID').closest('.form-group').prop("hidden", false);
         }
     }
+
+    $('.btnHuyDon').click(function () {
+        UiUtils.ShowForm("", "Xác nhận hủy", () => {
+            window.location.href = "/Cart/HuyDatHang/@tDONHANG.ID";
+        });
+    });
 </script>

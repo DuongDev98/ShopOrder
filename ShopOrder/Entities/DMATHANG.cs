@@ -47,6 +47,7 @@ namespace ShopOrder.Entities
         public Nullable<decimal> RONG { get; set; }
         public Nullable<decimal> CAO { get; set; }
         public Nullable<long> GIANHAP { get; set; }
+        public string DNHANVIENID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANH> DANHs { get; set; }
@@ -60,5 +61,6 @@ namespace ShopOrder.Entities
         public virtual ICollection<DSIZECHITIET> DSIZECHITIETs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        public virtual DNHANVIEN DNHANVIEN { get; set; }
     }
 }

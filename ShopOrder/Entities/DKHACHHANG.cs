@@ -35,6 +35,7 @@ namespace ShopOrder.Entities
         public string DNHOMKHACHHANGID { get; set; }
         public Nullable<int> LOAIVANCHUYEN { get; set; }
         public string DNHAXEID { get; set; }
+        public string EMAIL { get; set; }
     
         public virtual DNHAXE DNHAXE { get; set; }
         public virtual DNHOMKHACHHANG DNHOMKHACHHANG { get; set; }

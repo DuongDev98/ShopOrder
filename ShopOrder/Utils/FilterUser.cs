@@ -18,8 +18,8 @@ namespace ShopOrder.Utils
         {
             string controller = filterContext.RouteData.Values["Controller"].ToString().ToLower();
             string action = filterContext.RouteData.Values["Action"].ToString().ToLower();
-
-            if (!(controller == "user" && (action == "login" || action == "register")))
+            if (!(controller == "user" && (action == "login" || action == "register"))
+                && !(controller == "quanlydonhang" && action == "dichvuchuyentien"))
             {
                 UserModel userLogin = CookieUtils.UserLogin();
                 if (userLogin == null || userLogin.sUSER == null && userLogin.dKHACHHANG == null)

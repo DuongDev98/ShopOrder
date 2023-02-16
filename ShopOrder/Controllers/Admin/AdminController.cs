@@ -11,7 +11,6 @@ namespace ShopOrder.Controllers
 
         public ActionResult Index()
         {
-            //DatabaseUtils.GetTable("");
             return View();
         }
 

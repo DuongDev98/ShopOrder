@@ -77,6 +77,8 @@ namespace ShopOrder.Controllers.Admin
                 return HttpNotFound();
             }
 
+            ViewBag.imgs = GetDicAnhs(db, model);
+
             List<DKHACHHANG> lstKhachHang = db.DKHACHHANGs.OrderBy(x => x.NAME).ToList();
             lstKhachHang.Insert(0, new DKHACHHANG() { ID = "", NAME = "" });
             ViewBag.DKHACHHANGID = new SelectList(lstKhachHang, "ID", "NAME", model.DKHACHHANGID);
@@ -106,11 +108,15 @@ namespace ShopOrder.Controllers.Admin
             TGIAOHANG dhRow = new TGIAOHANG();
             if (ModelState.IsValid)
             {
+                List<HttpPostedFileBase> files = new List<HttpPostedFileBase>();
+                files.AddRange(Request.Files.GetMultiple("images[]"));
+                string[] preloaded = Request.Params.GetValues("preloaded[]");
+
                 if (tmp.ID == null)
                 {
                     dhRow.ID = Guid.NewGuid().ToString();
                     dhRow.TIMECREATED = DateTime.Now;
-                    dhRow.NAME = DatabaseUtils.GenCode("NAME", "TGIAOHANG", 1);
+                    dhRow.NAME = DatabaseUtils.GenCode("NAME", "TGIAOHANG", null, 1);
                     if (tmp.DNHANVIENID != null) dhRow.DNHANVIENID = tmp.DNHANVIENID;
                     dhRow.DKHACHHANGID = tmp.DKHACHHANGID;
                     db.TGIAOHANGs.Add(dhRow);
@@ -164,6 +170,9 @@ namespace ShopOrder.Controllers.Admin
                     }
                     db.SaveChanges();
 
+                    //upload anh
+                    FileUploads.uploadAnh(db, Server, preloaded, files, null, dhRow);
+
                     return RedirectToAction("Index");
                 }
             }
@@ -172,6 +181,9 @@ namespace ShopOrder.Controllers.Admin
                 dhRow = tmp;
             }
             end:
+
+            ViewBag.imgs = GetDicAnhs(db, dhRow);
+
             List<DKHACHHANG> lstKhachHang = db.DKHACHHANGs.OrderBy(x => x.NAME).ToList();
             lstKhachHang.Insert(0, new DKHACHHANG() { ID = "", NAME = "" });
             ViewBag.DKHACHHANGID = new SelectList(lstKhachHang, "ID", "NAME", dhRow.DKHACHHANGID);
@@ -214,6 +226,17 @@ namespace ShopOrder.Controllers.Admin
             return PartialView(dhRow.TDONHANGCHITIETs.ToList());
         }
 
+        private Dictionary<string, string> GetDicAnhs(ShopOrderEntities db, TGIAOHANG giaoHang)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            List<DANH> lstAnhs = db.DANHs.Where(x => x.TGIAOHANGID == giaoHang.ID).ToList();
+            foreach (DANH anh in lstAnhs)
+            {
+                dic.Add(anh.ID, string.Format("/Images/{0}/", FileFolders.DonHang) + anh.NAME);
+            }
+            return dic;
+        }
+
         public ActionResult TaiDonGiaoHangTk(string id)
         {
             TGIAOHANG giaoHangRow = db.TGIAOHANGs.Find(id);
@@ -250,8 +273,8 @@ namespace ShopOrder.Controllers.Admin
             order.district = giaoHangRow.QUANHUYEN;
             order.ward = giaoHangRow.PHUONGXA;
             order.hamlet = "Khác";
-            order.tel = "";
-            order.email = "";
+            order.tel = giaoHangRow.DKHACHHANG.DIENTHOAI;
+            order.email = giaoHangRow.DKHACHHANG.EMAIL;
             //
             order.return_name = order.pick_name;
             order.return_address = order.pick_address;
@@ -269,13 +292,15 @@ namespace ShopOrder.Controllers.Admin
             ResponseGhtk responseGhtk = tools.orderAdd(orderRequest);
             if (responseGhtk == null)
             {
-                return Content("error: Giao hàng tiết kiệm ko phản hồi");
+                return Content("error: Giao hàng tiết kiệm không phản hồi");
             }
             else
             {
                 if (responseGhtk.success)
                 {
                     giaoHangRow.LABEL_GHTK = responseGhtk.order.label;
+                    //lưu phí vận chuyển
+                    giaoHangRow.PHIVANCHUYEN = 0;
                     db.Entry(giaoHangRow);
                     db.SaveChanges();
                 }

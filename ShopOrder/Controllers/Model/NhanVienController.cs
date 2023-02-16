@@ -37,7 +37,7 @@ namespace ShopOrder.Controllers.Model
             {
                 return HttpNotFound();
             }
-            ViewBag.LOAITAIKHOAN = LoaiTaiKhoan(model);
+            ViewBag.LOAITAIKHOAN = ListLoaiTaiKhoan(model);
             return View(model);
         }
 
@@ -59,20 +59,32 @@ namespace ShopOrder.Controllers.Model
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.LOAITAIKHOAN = LoaiTaiKhoan(model);
+            ViewBag.LOAITAIKHOAN = ListLoaiTaiKhoan(model);
             return View(model);
         }
 
-        private SelectList LoaiTaiKhoan(DNHANVIEN model)
+        private SelectList ListLoaiTaiKhoan(DNHANVIEN model)
         {
             List<object> lst = new List<object>();
-            object item = new { ID = 0, NAME = "Nhân viên sắp hàng" };
+            object item = new { ID = (int)LoaiTaiKhoan.NhanVienSapHang, NAME = TextLoaiTaiKhoan(LoaiTaiKhoan.NhanVienSapHang) };
             lst.Add(item);
-            item = new { ID = 1, NAME = "Nhân viên kho" };
+            item = new { ID = (int)LoaiTaiKhoan.NhanVienKho, NAME = TextLoaiTaiKhoan(LoaiTaiKhoan.NhanVienKho) };
             lst.Add(item);
-            item = new { ID = 2, NAME = "Shipper" };
+            item = new { ID = (int)LoaiTaiKhoan.Shipper, NAME = TextLoaiTaiKhoan(LoaiTaiKhoan.Shipper) };
+            lst.Add(item);
+            item = new { ID = (int)LoaiTaiKhoan.CuaHang, NAME = TextLoaiTaiKhoan(LoaiTaiKhoan.CuaHang) };
             lst.Add(item);
             return new SelectList(lst, "ID", "NAME", model.LOAITAIKHOAN);
+        }
+
+        public static string TextLoaiTaiKhoan(LoaiTaiKhoan loai)
+        {
+            string kq = "";
+            if (loai == LoaiTaiKhoan.NhanVienSapHang) kq = "Nhân viên sắp hàng";
+            else if (loai == LoaiTaiKhoan.NhanVienKho) kq = "Nhân viên kho";
+            else if (loai == LoaiTaiKhoan.Shipper) kq = "Shipper";
+            else if (loai == LoaiTaiKhoan.CuaHang) kq = "Cửa hàng";
+            return kq;
         }
 
         public ActionResult Delete(string id)
@@ -124,5 +136,13 @@ namespace ShopOrder.Controllers.Model
             }
             base.Dispose(disposing);
         }
+    }
+
+    public enum LoaiTaiKhoan
+    {
+        NhanVienSapHang = 0,
+        NhanVienKho = 1,
+        Shipper = 2,
+        CuaHang = 3
     }
 }

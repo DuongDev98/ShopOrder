@@ -16,70 +16,43 @@
     }
 }
 
-<table class="table table-striped table-bordered table-hover dynamic-table">
-    <thead>
-        <tr>
-            <th>STT</th>
-            <th>Ngày</th>
-            <th>Số HĐ</th>
-            <th>Tổng cộng</th>
-            <th>Loại vận chuyển</th>
-            @{
-                if (!ViewBag.IsCustomer)
-                {
-                    <th></th>
-                }
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            int count = 0;
-            foreach (var item in Model)
-            {
-                count++;
-                <tr class="pointer" data-id="@item.ID">
-                    <td>@count</td>
-                    <td>@item.NGAY.ToString("dd/MM/yyyy")</td>
-                    <td>@item.NAME</td>
-                    <td>@(item.TONGCONG.ToString("n0"))</td>
-                    <td>
+<div class="row p-lr-15">
+    @{
+        foreach (TDONHANG item in Model)
+        {
+            <div class="card col-12 col-md-3 hov-btn2 pointer" data-id="@item.ID" style="background-color: antiquewhite;">
+                <div class="card-body row justify-content-center">
+                    <div class="col">
+                        <div class="row">
+                            <h4>@item.NGAY.ToString("dd/MM/yyyy")</h4>
+                        </div>
+                        <div class="row">
+                            <h4 class="font-bold">@item.DKHACHHANG.NAME</h4>
+                        </div>
+                        @*Danh sách mặt hàng: Tên đg, sl , phân loại => thành tiền*@
                         @{
-                            if (item.LOAIVANCHUYEN == (int)LoaiVanChuyen.GuiXe)
+                            int stt = 1;
+                            foreach (TDONHANGCHITIET ctRow in item.TDONHANGCHITIETs)
                             {
-                                <p>Gửi xe</p>
-                            }
-                            else if (item.LOAIVANCHUYEN == (int)LoaiVanChuyen.AnPhu)
-                            {
-                                <p>Gửi bay An Phú</p>
-                            }
-                            else
-                            {
-                                <p>Giao hàng tiết kiệm</p>
+                                <div class="row">
+                                    <p>@stt. @(ctRow.DMATHANG.NAME) (@ctRow.DMAU.NAME - @ctRow.DSIZE.NAME): @ctRow.DONGIA.ToString("n0") x @ctRow.SOLUONG.ToString("n0")</p>
+                                </div>
+                                stt++;
                             }
                         }
-                    </td>
-                    @{
-                        if (!ViewBag.IsCustomer)
-                        {
-                            <td>
-                                @*hiển thị nút xác nhận đã thanh toán với đơn chưa thanh toán*@
-                                @{
-                                    if (item.DATHANHTOAN != 30)
-                                    {
-                                        <div class="btnXacNhanTt btn btn-warning" data-id="@item.ID">Xác nhận t.toán</div>
-                                    }
-                                }
-                            </td>
-                        }
-                    }
-                </tr>
-            }
+                        @*Tổng cộng*@
+                        <div class="row" style="justify-content: space-between">
+                            <h5>TỔNG CỘNG:</h5><h5 class="font-bold">@item.TONGCONG.ToString("n0")</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    }
+</div>
+
 <script>
-    $('table').find('tr').click(function () {
+    $('.card').click(function () {
         let id = $(this).attr('data-id');
         window.location.href = "/Cart/ThongTinDatHang/" + id;
     });
@@ -89,7 +62,8 @@
         e.stopPropagation();
         let btn = $(this);
         UiUtils.ShowForm("", "Xác nhận đơn đã thanh toán", function () {
-            window.location.href = "/QuanLyDonHang/DoiTrangThai/" + btn.attr("data-id");
+            window.location.href = "/QuanLyDonHang/DoiTrangThai/"
+                + btn.attr("data-id");
         });
     });
 </script>

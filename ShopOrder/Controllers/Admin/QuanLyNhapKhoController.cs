@@ -86,7 +86,7 @@ namespace ShopOrder.Controllers.Admin
                     dhRow.ID = Guid.NewGuid().ToString();
                     dhRow.LOAI = 1;
                     dhRow.TIMECREATED = DateTime.Now;
-                    dhRow.NAME = DatabaseUtils.GenCode("NAME", "TDONHANG", 1);
+                    dhRow.NAME = DatabaseUtils.GenCode("NAME", "TDONHANG", null, 1);
                     dhRow.DATHANHTOAN = 30;
                     db.TDONHANGs.Add(dhRow);
                     db.SaveChanges();
