@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Cấu hình cuối trang";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<script src="~/Content/Admin/assets/vendor/ckeditor/ckeditor.js"></script>
+<h4>Dữ liệu cuối trang</h4>
+<form method="post" action="/admin/cauhinhcuoitrang">
+    <textarea name="NOIDUNGCHANTRAN" editorName="editor" id="editor">@ViewBag.data</textarea>
+    <button type="submit" class="btn btn-success m-t-10">Lưu dữ liệu</button>
+</form>
+<script>
+    CKEDITOR.replace('editor', {
+        htmlEncodeOutput: true
+    });
+</script>

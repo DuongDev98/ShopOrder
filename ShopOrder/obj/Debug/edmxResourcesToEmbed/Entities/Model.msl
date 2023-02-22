@@ -261,5 +261,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SCONFIGs">
+      <EntityTypeMapping TypeName="shoporderModel.SCONFIG">
+        <MappingFragment StoreEntitySet="SCONFIG">
+          <ScalarProperty Name="TTXACNHANDANHANID" ColumnName="TTXACNHANDANHANID" />
+          <ScalarProperty Name="PICK_EMAIL" ColumnName="PICK_EMAIL" />
+          <ScalarProperty Name="PICK_TEL" ColumnName="PICK_TEL" />
+          <ScalarProperty Name="PICK_ADDRESS" ColumnName="PICK_ADDRESS" />
+          <ScalarProperty Name="PICK_WARD" ColumnName="PICK_WARD" />
+          <ScalarProperty Name="PICK_DISTRICT" ColumnName="PICK_DISTRICT" />
+          <ScalarProperty Name="PICK_PROVINCE" ColumnName="PICK_PROVINCE" />
+          <ScalarProperty Name="PICK_NAME" ColumnName="PICK_NAME" />
+          <ScalarProperty Name="TTDANHANID" ColumnName="TTDANHANID" />
+          <ScalarProperty Name="TTTAODIEUPHOIID" ColumnName="TTTAODIEUPHOIID" />
+          <ScalarProperty Name="TTSAUTHANHTOANID" ColumnName="TTSAUTHANHTOANID" />
+          <ScalarProperty Name="THONGTIN" ColumnName="THONGTIN" />
+          <ScalarProperty Name="NOIDUNGCHANTRAN" ColumnName="NOIDUNGCHANTRAN" />
+          <ScalarProperty Name="THONGBAO" ColumnName="THONGBAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

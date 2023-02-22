@@ -155,6 +155,26 @@
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="NAME" Type="nvarchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="SCONFIG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="THONGBAO" Type="nvarchar(max)" />
+    <Property Name="NOIDUNGCHANTRAN" Type="nvarchar(max)" />
+    <Property Name="THONGTIN" Type="nvarchar(max)" />
+    <Property Name="TTSAUTHANHTOANID" Type="varchar" MaxLength="36" />
+    <Property Name="TTTAODIEUPHOIID" Type="varchar" MaxLength="36" />
+    <Property Name="TTDANHANID" Type="varchar" MaxLength="36" />
+    <Property Name="PICK_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="PICK_PROVINCE" Type="nvarchar" MaxLength="255" />
+    <Property Name="PICK_DISTRICT" Type="nvarchar" MaxLength="255" />
+    <Property Name="PICK_WARD" Type="nvarchar" MaxLength="255" />
+    <Property Name="PICK_ADDRESS" Type="nvarchar" MaxLength="255" />
+    <Property Name="PICK_TEL" Type="nvarchar" MaxLength="255" />
+    <Property Name="PICK_EMAIL" Type="nvarchar" MaxLength="255" />
+    <Property Name="TTXACNHANDANHANID" Type="varchar" MaxLength="36" />
+  </EntityType>
   <EntityType Name="SUSER">
     <Key>
       <PropertyRef Name="ID" />
@@ -396,6 +416,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__SCONFIG__TTDANHA__6FB49575">
+    <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+    <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTRANGTHAIDON">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SCONFIG">
+        <PropertyRef Name="TTDANHANID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCONFIG__TTSAUTH__6DCC4D03">
+    <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+    <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTRANGTHAIDON">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SCONFIG">
+        <PropertyRef Name="TTSAUTHANHTOANID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCONFIG__TTTAODI__6EC0713C">
+    <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+    <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTRANGTHAIDON">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SCONFIG">
+        <PropertyRef Name="TTTAODIEUPHOIID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCONFIG__TTXACNH__70A8B9AE">
+    <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+    <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTRANGTHAIDON">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SCONFIG">
+        <PropertyRef Name="TTXACNHANDANHANID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__SUSER__DNHANVIEN__2E1BDC42">
     <End Role="DNHANVIEN" Type="Self.DNHANVIEN" Multiplicity="0..1" />
     <End Role="SUSER" Type="Self.SUSER" Multiplicity="*" />
@@ -616,6 +684,7 @@
     <EntitySet Name="DSIZECHITIET" EntityType="Self.DSIZECHITIET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DTHOIGIANDAT" EntityType="Self.DTHOIGIANDAT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DTRANGTHAIDON" EntityType="Self.DTRANGTHAIDON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SCONFIG" EntityType="Self.SCONFIG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SUSER" EntityType="Self.SUSER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
@@ -672,6 +741,22 @@
     <AssociationSet Name="FK__DSIZECHIT__DSIZE__22AA2996" Association="Self.FK__DSIZECHIT__DSIZE__22AA2996">
       <End Role="DSIZE" EntitySet="DSIZE" />
       <End Role="DSIZECHITIET" EntitySet="DSIZECHITIET" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCONFIG__TTDANHA__6FB49575" Association="Self.FK__SCONFIG__TTDANHA__6FB49575">
+      <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+      <End Role="SCONFIG" EntitySet="SCONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCONFIG__TTSAUTH__6DCC4D03" Association="Self.FK__SCONFIG__TTSAUTH__6DCC4D03">
+      <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+      <End Role="SCONFIG" EntitySet="SCONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCONFIG__TTTAODI__6EC0713C" Association="Self.FK__SCONFIG__TTTAODI__6EC0713C">
+      <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+      <End Role="SCONFIG" EntitySet="SCONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCONFIG__TTXACNH__70A8B9AE" Association="Self.FK__SCONFIG__TTXACNH__70A8B9AE">
+      <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+      <End Role="SCONFIG" EntitySet="SCONFIG" />
     </AssociationSet>
     <AssociationSet Name="FK__SUSER__DNHANVIEN__2E1BDC42" Association="Self.FK__SUSER__DNHANVIEN__2E1BDC42">
       <End Role="DNHANVIEN" EntitySet="DNHANVIEN" />

@@ -202,7 +202,33 @@ create table TLUUVET (
 	TDONHANGCHITIETID varchar(36) foreign key references TDONHANGCHITIET(ID),
 	NOTE nvarchar(max),
 )
+--21
+create table SCONFIG (
+	ID varchar(36) primary key,
+	THONGBAO nvarchar(max),
+	NOIDUNGCHANTRAN nvarchar(max),
+	THONGTIN nvarchar(max),
+	TTSAUTHANHTOANID varchar(36) foreign key references DTRANGTHAIDON(ID),
+	TTTAODIEUPHOIID varchar(36) foreign key references DTRANGTHAIDON(ID),
+	TTXACNHANDANHANID varchar(36) foreign key references DTRANGTHAIDON(ID),
+	TTDANHANID varchar(36) foreign key references DTRANGTHAIDON(ID),
+	PICK_NAME nvarchar(255),
+	PICK_PROVINCE nvarchar(255),
+	PICK_DISTRICT nvarchar(255),
+	PICK_WARD nvarchar(255),
+	PICK_ADDRESS nvarchar(255),
+	PICK_TEL nvarchar(255),
+	PICK_EMAIL nvarchar(255),
+)
 
---a
 insert into SUSER(ID, USERNAME, PASSWORD, ISADMIN)
 values ('anhduong-823d-4502-bea8-67068da44fff', 'admin', '019113EB7DF662AAB056F68E4382BF87', 30)
+
+delete from TLUUVET
+delete from TDONHANGCHITIET
+delete from TDONHANG
+delete from DANH where coalesce(TGIAOHANGID, '') <> ''
+delete from TGIAOHANG
+
+delete from TLUUVET where not exists (select * from TDONHANGCHITIET where TDONHANGCHITIET.TDONHANGID = TLUUVET.TDONHANGID)
+delete from tdonhang where not exists (select * from TDONHANGCHITIET where TDONHANGID = TDONHANG.ID)

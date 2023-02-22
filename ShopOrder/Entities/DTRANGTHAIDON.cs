@@ -18,6 +18,10 @@ namespace ShopOrder.Entities
         public DTRANGTHAIDON()
         {
             this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
+            this.SCONFIGs = new HashSet<SCONFIG>();
+            this.SCONFIGs1 = new HashSet<SCONFIG>();
+            this.SCONFIGs2 = new HashSet<SCONFIG>();
+            this.SCONFIGs3 = new HashSet<SCONFIG>();
         }
     
         public string ID { get; set; }
@@ -25,5 +29,13 @@ namespace ShopOrder.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SCONFIG> SCONFIGs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SCONFIG> SCONFIGs1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SCONFIG> SCONFIGs2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SCONFIG> SCONFIGs3 { get; set; }
     }
 }

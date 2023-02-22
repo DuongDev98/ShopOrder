@@ -4,31 +4,36 @@
 @{
     Layout = ViewBag.Layout;
 }
-<div class="row">
+<div class="row m-t-10">
     <div class="col"><h5>@ViewBag.Title</h5></div>
 </div>
-@{
+@*@{
     if (!ViewBag.IsCustomer)
     {
         <div class="modal-body no-padding">
             <a href="/QuanLyDonHang/CapTrangThaiThanhToan"><div class="btn btn-info">Kiểm tra thanh toán</div></a>
         </div>
     }
-}
+}*@
 
 <div class="row p-lr-15">
     @{
         foreach (TDONHANG item in Model)
         {
-            <div class="card col-12 col-md-3 hov-btn2 pointer" data-id="@item.ID" style="background-color: antiquewhite;">
+            <div class="card col-12 col-md-3 hov-btn2 pointer m-t-15 m-r-15 m-b-15" data-id="@item.ID" style="background-color: antiquewhite;">
                 <div class="card-body row justify-content-center">
                     <div class="col">
                         <div class="row">
                             <h4>@item.NGAY.ToString("dd/MM/yyyy")</h4>
                         </div>
-                        <div class="row">
-                            <h4 class="font-bold">@item.DKHACHHANG.NAME</h4>
-                        </div>
+                        @{
+                            if (!ViewBag.IsCustomer)
+                            {
+                                <div class="row">
+                                    <h4 class="font-bold">@item.DKHACHHANG.NAME</h4>
+                                </div>
+                            }
+                        }
                         @*Danh sách mặt hàng: Tên đg, sl , phân loại => thành tiền*@
                         @{
                             int stt = 1;
@@ -62,8 +67,7 @@
         e.stopPropagation();
         let btn = $(this);
         UiUtils.ShowForm("", "Xác nhận đơn đã thanh toán", function () {
-            window.location.href = "/QuanLyDonHang/DoiTrangThai/"
-                + btn.attr("data-id");
+            window.location.href = "/QuanLyDonHang/DoiTrangThaiThanhToan/" + btn.attr("data-id");
         });
     });
 </script>

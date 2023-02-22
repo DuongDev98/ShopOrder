@@ -31,11 +31,11 @@ namespace ShopOrder.Utils
                     {
                         if (dMATHANG != null)
                         {
-                            FileUploads.DeleteMatHang(httpServer, itemAnh.NAME);
+                            DeleteMatHang(httpServer, itemAnh.NAME);
                         }
                         else if (tGIAOHANG != null)
                         {
-                            FileUploads.DeleteDonHang(httpServer, itemAnh.NAME);
+                            DeleteDonHang(httpServer, itemAnh.NAME);
                         }
                         db.DANHs.Remove(itemAnh);
                     }
@@ -47,17 +47,13 @@ namespace ShopOrder.Utils
                 foreach (HttpPostedFileBase fileItem in files)
                 {
                     if (fileItem.ContentLength == 0) continue;
-                    string file = FileUploads.UploadMatHang(httpServer, fileItem);
+                    string file = "";
+                    if (dMATHANG != null) file = UploadMatHang(httpServer, fileItem);
+                    else if (tGIAOHANG != null) file = UploadDonHang(httpServer, fileItem);
                     DANH itemAnh = new DANH();
                     itemAnh.ID = Guid.NewGuid().ToString();
-                    if (dMATHANG != null)
-                    {
-                        itemAnh.DMATHANGID = dMATHANG.ID;
-                    }
-                    else if (tGIAOHANG != null)
-                    {
-                        itemAnh.TGIAOHANGID = tGIAOHANG.ID;
-                    }
+                    if (dMATHANG != null) itemAnh.DMATHANGID = dMATHANG.ID;
+                    else if (tGIAOHANG != null) itemAnh.TGIAOHANGID = tGIAOHANG.ID;
                     itemAnh.NAME = file;
                     db.DANHs.Add(itemAnh);
                 }
@@ -106,9 +102,7 @@ namespace ShopOrder.Utils
                 fileName = fileName + ".jpg";
             }
 
-            string path = string.Format("~/Images/{0}/{1}", folders, fileName);
-            //path = Path.Combine(path);
-            path = server.MapPath(path);
+            string path = server.MapPath(string.Format("~/Images/{0}/{1}", folders, fileName));
             if (File.Exists(path)) File.Delete(path);
 
             file.SaveAs(path);
@@ -119,7 +113,7 @@ namespace ShopOrder.Utils
         private static void Delete(HttpServerUtilityBase server, string fileName, string folders)
         {
             if (fileName.ToLower().Contains("noimage.jpg") || fileName.ToLower().Contains("no-image.jpg")) return;
-            string path = Path.Combine(string.Format("~/Images/{0}/{1}", folders, fileName));
+            string path = server.MapPath(string.Format("~/Images/{0}/{1}", folders, fileName));
             if (File.Exists(path))
             {
                 File.Delete(path);

@@ -160,6 +160,26 @@
           <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
           <Property Name="NAME" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="SCONFIG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="THONGBAO" Type="nvarchar(max)" />
+          <Property Name="NOIDUNGCHANTRAN" Type="nvarchar(max)" />
+          <Property Name="THONGTIN" Type="nvarchar(max)" />
+          <Property Name="TTSAUTHANHTOANID" Type="varchar" MaxLength="36" />
+          <Property Name="TTTAODIEUPHOIID" Type="varchar" MaxLength="36" />
+          <Property Name="TTDANHANID" Type="varchar" MaxLength="36" />
+          <Property Name="PICK_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="PICK_PROVINCE" Type="nvarchar" MaxLength="255" />
+          <Property Name="PICK_DISTRICT" Type="nvarchar" MaxLength="255" />
+          <Property Name="PICK_WARD" Type="nvarchar" MaxLength="255" />
+          <Property Name="PICK_ADDRESS" Type="nvarchar" MaxLength="255" />
+          <Property Name="PICK_TEL" Type="nvarchar" MaxLength="255" />
+          <Property Name="PICK_EMAIL" Type="nvarchar" MaxLength="255" />
+          <Property Name="TTXACNHANDANHANID" Type="varchar" MaxLength="36" />
+        </EntityType>
         <EntityType Name="SUSER">
           <Key>
             <PropertyRef Name="ID" />
@@ -401,6 +421,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SCONFIG__TTDANHA__6FB49575">
+          <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTDANHANID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SCONFIG__TTSAUTH__6DCC4D03">
+          <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTSAUTHANHTOANID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SCONFIG__TTTAODI__6EC0713C">
+          <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTTAODIEUPHOIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SCONFIG__TTXACNH__70A8B9AE">
+          <End Role="DTRANGTHAIDON" Type="Self.DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Role="SCONFIG" Type="Self.SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTXACNHANDANHANID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SUSER__DNHANVIEN__2E1BDC42">
           <End Role="DNHANVIEN" Type="Self.DNHANVIEN" Multiplicity="0..1" />
           <End Role="SUSER" Type="Self.SUSER" Multiplicity="*" />
@@ -621,6 +689,7 @@
           <EntitySet Name="DSIZECHITIET" EntityType="Self.DSIZECHITIET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DTHOIGIANDAT" EntityType="Self.DTHOIGIANDAT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DTRANGTHAIDON" EntityType="Self.DTRANGTHAIDON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SCONFIG" EntityType="Self.SCONFIG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUSER" EntityType="Self.SUSER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
@@ -677,6 +746,22 @@
           <AssociationSet Name="FK__DSIZECHIT__DSIZE__22AA2996" Association="Self.FK__DSIZECHIT__DSIZE__22AA2996">
             <End Role="DSIZE" EntitySet="DSIZE" />
             <End Role="DSIZECHITIET" EntitySet="DSIZECHITIET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTDANHA__6FB49575" Association="Self.FK__SCONFIG__TTDANHA__6FB49575">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+            <End Role="SCONFIG" EntitySet="SCONFIG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTSAUTH__6DCC4D03" Association="Self.FK__SCONFIG__TTSAUTH__6DCC4D03">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+            <End Role="SCONFIG" EntitySet="SCONFIG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTTAODI__6EC0713C" Association="Self.FK__SCONFIG__TTTAODI__6EC0713C">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+            <End Role="SCONFIG" EntitySet="SCONFIG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTXACNH__70A8B9AE" Association="Self.FK__SCONFIG__TTXACNH__70A8B9AE">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDON" />
+            <End Role="SCONFIG" EntitySet="SCONFIG" />
           </AssociationSet>
           <AssociationSet Name="FK__SUSER__DNHANVIEN__2E1BDC42" Association="Self.FK__SUSER__DNHANVIEN__2E1BDC42">
             <End Role="DNHANVIEN" EntitySet="DNHANVIEN" />
@@ -943,6 +1028,10 @@
           <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__DTRAN__43D61337" FromRole="DTRANGTHAIDON" ToRole="TDONHANGCHITIET" />
+          <NavigationProperty Name="SCONFIGs" Relationship="shoporderModel.FK__SCONFIG__TTDANHA__6AEFE058" FromRole="DTRANGTHAIDON" ToRole="SCONFIG" />
+          <NavigationProperty Name="SCONFIGs1" Relationship="shoporderModel.FK__SCONFIG__TTSAUTH__690797E6" FromRole="DTRANGTHAIDON" ToRole="SCONFIG" />
+          <NavigationProperty Name="SCONFIGs2" Relationship="shoporderModel.FK__SCONFIG__TTTAODI__69FBBC1F" FromRole="DTRANGTHAIDON" ToRole="SCONFIG" />
+          <NavigationProperty Name="SCONFIGs3" Relationship="shoporderModel.FK__SCONFIG__TTXACNH__70A8B9AE" FromRole="DTRANGTHAIDON" ToRole="SCONFIG" />
         </EntityType>
         <EntityType Name="SUSER">
           <Key>
@@ -1516,6 +1605,23 @@
             <End Role="TGIAOHANG" EntitySet="TGIAOHANGs" />
             <End Role="DANH" EntitySet="DANHs" />
           </AssociationSet>
+          <EntitySet Name="SCONFIGs" EntityType="shoporderModel.SCONFIG" />
+          <AssociationSet Name="FK__SCONFIG__TTDANHA__6AEFE058" Association="shoporderModel.FK__SCONFIG__TTDANHA__6AEFE058">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDONs" />
+            <End Role="SCONFIG" EntitySet="SCONFIGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTSAUTH__690797E6" Association="shoporderModel.FK__SCONFIG__TTSAUTH__690797E6">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDONs" />
+            <End Role="SCONFIG" EntitySet="SCONFIGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTTAODI__69FBBC1F" Association="shoporderModel.FK__SCONFIG__TTTAODI__69FBBC1F">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDONs" />
+            <End Role="SCONFIG" EntitySet="SCONFIGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SCONFIG__TTXACNH__70A8B9AE" Association="shoporderModel.FK__SCONFIG__TTXACNH__70A8B9AE">
+            <End Role="DTRANGTHAIDON" EntitySet="DTRANGTHAIDONs" />
+            <End Role="SCONFIG" EntitySet="SCONFIGs" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__DMATHANG__DNHANV__4D5F7D71">
           <End Type="shoporderModel.DNHANVIEN" Role="DNHANVIEN" Multiplicity="0..1" />
@@ -1550,6 +1656,78 @@
             </Principal>
             <Dependent Role="DANH">
               <PropertyRef Name="TGIAOHANGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SCONFIG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="THONGBAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NOIDUNGCHANTRAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="THONGTIN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TTSAUTHANHTOANID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="TTTAODIEUPHOIID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="TTDANHANID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DTRANGTHAIDON" Relationship="shoporderModel.FK__SCONFIG__TTDANHA__6AEFE058" FromRole="SCONFIG" ToRole="DTRANGTHAIDON" />
+          <NavigationProperty Name="DTRANGTHAIDON1" Relationship="shoporderModel.FK__SCONFIG__TTSAUTH__690797E6" FromRole="SCONFIG" ToRole="DTRANGTHAIDON" />
+          <NavigationProperty Name="DTRANGTHAIDON2" Relationship="shoporderModel.FK__SCONFIG__TTTAODI__69FBBC1F" FromRole="SCONFIG" ToRole="DTRANGTHAIDON" />
+          <Property Name="PICK_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PICK_PROVINCE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PICK_DISTRICT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PICK_WARD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PICK_ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PICK_TEL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PICK_EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TTXACNHANDANHANID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DTRANGTHAIDON3" Relationship="shoporderModel.FK__SCONFIG__TTXACNH__70A8B9AE" FromRole="SCONFIG" ToRole="DTRANGTHAIDON" />
+        </EntityType>
+        <Association Name="FK__SCONFIG__TTDANHA__6AEFE058">
+          <End Type="shoporderModel.DTRANGTHAIDON" Role="DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Type="shoporderModel.SCONFIG" Role="SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTDANHANID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SCONFIG__TTSAUTH__690797E6">
+          <End Type="shoporderModel.DTRANGTHAIDON" Role="DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Type="shoporderModel.SCONFIG" Role="SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTSAUTHANHTOANID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SCONFIG__TTTAODI__69FBBC1F">
+          <End Type="shoporderModel.DTRANGTHAIDON" Role="DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Type="shoporderModel.SCONFIG" Role="SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTTAODIEUPHOIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SCONFIG__TTXACNH__70A8B9AE">
+          <End Type="shoporderModel.DTRANGTHAIDON" Role="DTRANGTHAIDON" Multiplicity="0..1" />
+          <End Type="shoporderModel.SCONFIG" Role="SCONFIG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DTRANGTHAIDON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCONFIG">
+              <PropertyRef Name="TTXACNHANDANHANID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1816,6 +1994,27 @@
                 <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
                 <ScalarProperty Name="TDONHANGCHITIETID" ColumnName="TDONHANGCHITIETID" />
                 <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SCONFIGs">
+            <EntityTypeMapping TypeName="shoporderModel.SCONFIG">
+              <MappingFragment StoreEntitySet="SCONFIG">
+                <ScalarProperty Name="TTXACNHANDANHANID" ColumnName="TTXACNHANDANHANID" />
+                <ScalarProperty Name="PICK_EMAIL" ColumnName="PICK_EMAIL" />
+                <ScalarProperty Name="PICK_TEL" ColumnName="PICK_TEL" />
+                <ScalarProperty Name="PICK_ADDRESS" ColumnName="PICK_ADDRESS" />
+                <ScalarProperty Name="PICK_WARD" ColumnName="PICK_WARD" />
+                <ScalarProperty Name="PICK_DISTRICT" ColumnName="PICK_DISTRICT" />
+                <ScalarProperty Name="PICK_PROVINCE" ColumnName="PICK_PROVINCE" />
+                <ScalarProperty Name="PICK_NAME" ColumnName="PICK_NAME" />
+                <ScalarProperty Name="TTDANHANID" ColumnName="TTDANHANID" />
+                <ScalarProperty Name="TTTAODIEUPHOIID" ColumnName="TTTAODIEUPHOIID" />
+                <ScalarProperty Name="TTSAUTHANHTOANID" ColumnName="TTSAUTHANHTOANID" />
+                <ScalarProperty Name="THONGTIN" ColumnName="THONGTIN" />
+                <ScalarProperty Name="NOIDUNGCHANTRAN" ColumnName="NOIDUNGCHANTRAN" />
+                <ScalarProperty Name="THONGBAO" ColumnName="THONGBAO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

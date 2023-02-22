@@ -1,0 +1,62 @@
+﻿@model ShopOrder.Entities.SCONFIG
+@{
+    ViewBag.Title = "Cấu hình trạng thái đơn";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<h4>Dữ liệu cấu hình trạng thái</h4>
+<form method="post" action="/admin/cauhinhghtk">
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_NAME, "Họ tên", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_NAME, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_PROVINCE, "Tỉnh/Thành", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_PROVINCE, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_DISTRICT, "Quận/Huyện", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_DISTRICT, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_WARD, "Phường/Xã", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_WARD, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_ADDRESS, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_ADDRESS, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_TEL, "Điện thoại", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_TEL, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICK_EMAIL, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICK_EMAIL, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-success m-t-10">Lưu dữ liệu</button>
+</form>

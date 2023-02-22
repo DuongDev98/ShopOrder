@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,6 +19,7 @@ namespace ShopOrder.Controllers.Home
             UserModel userLogin = CookieUtils.UserLogin();
             Dictionary<DTRANGTHAIDON, int> dic = new Dictionary<DTRANGTHAIDON, int>();
             IQueryable<TDONHANG> donHangs = db.TDONHANGs.Where(x => x.LOAI == 0);
+
             //khách hàng chỉ hiện thị đơn của nó
             if (userLogin.IsCustomer) donHangs = donHangs.Where(x => x.DKHACHHANGID == userLogin.dKHACHHANG.ID);
 
@@ -38,11 +40,35 @@ namespace ShopOrder.Controllers.Home
 
         public ActionResult DanhSach(string id)
         {
+            ViewBag.Title = "Danh sách chi tiết";
             if (id != null && id.Length > 0)
             {
+                UserModel userLogin = CookieUtils.UserLogin();
+                DTRANGTHAIDON tRANGTHAIDON = db.DTRANGTHAIDONs.Find(id);
+                if (tRANGTHAIDON == null) return HttpNotFound();
+                IQueryable<TDONHANGCHITIET> donHangChiTiets = db.TDONHANGCHITIETs;
+                if (userLogin.IsCustomer) donHangChiTiets = donHangChiTiets.Where(x => x.DKHACHHANGID == userLogin.dKHACHHANG.ID);
+                donHangChiTiets = donHangChiTiets.Where(x => x.DTRANGTHAIDONID == id);
+                List<TDONHANGCHITIET> lst = donHangChiTiets.ToList();
 
+                ViewBag.Title = "Danh sách " + tRANGTHAIDON.NAME;
+                ViewBag.Layout = UiUtils.Layout(userLogin);
+
+                if (lst.Count == 0)
+                {
+                    return RedirectToAction("Index", "QuanLyDonHang");
+                }
+                else
+                {
+                    ViewBag.IsCustomer = userLogin.IsCustomer;
+                    ViewBag.ViewDaNhan = Config.DATA.TTXACNHANDANHANID == id;
+                    return View("DanhSachChiTiet", lst.ToList());
+                }
             }
-            return RedirectToAction("DanhSachChuaThanhToan", "QuanLyDonHang");
+            else
+            {
+                return RedirectToAction("DanhSachChuaThanhToan", "QuanLyDonHang");
+            }
         }
 
         public ActionResult DanhSachChiTiet(string id)
@@ -57,6 +83,7 @@ namespace ShopOrder.Controllers.Home
             ViewBag.IsCustomer = userLogin.IsCustomer;
             ViewBag.Title = title;
             ViewBag.Layout = UiUtils.Layout(userLogin);
+            ViewBag.ViewDaNhan = Config.DATA.TTXACNHANDANHANID == id;
             return View(result.ToList());
         }
 
@@ -74,7 +101,7 @@ namespace ShopOrder.Controllers.Home
             return View(result.ToList());
         }
 
-        public ActionResult DoiTrangThai(string id)
+        public ActionResult DoiTrangThaiThanhToan(string id)
         {
             TDONHANG dhRow = db.TDONHANGs.Find(id);
             if (dhRow == null) return HttpNotFound();
@@ -84,11 +111,30 @@ namespace ShopOrder.Controllers.Home
                 dhRow.DATHANHTOAN = 30;
                 db.Entry(dhRow);
                 db.SaveChanges();
-
+                DoiTrangThaiSauThanhToan(id);
                 //log
                 DatabaseUtils.Log(dhRow, "Đã thanh toán");
             }
             return RedirectToAction("DanhSach", "QuanLyDonHang");
+        }
+
+        public ActionResult DoiTrangThaiDaNhan(string id)
+        {
+            TDONHANGCHITIET ctRow = db.TDONHANGCHITIETs.Find(id);
+            if (ctRow == null) return HttpNotFound();
+            SCONFIG sconfig = Config.DATA;
+
+            string lastId = "";
+            if (sconfig != null && sconfig.TTXACNHANDANHANID != null && sconfig.TTXACNHANDANHANID.Length > 0)
+            {
+                if (lastId.Length == 0) lastId = ctRow.DTRANGTHAIDONID;
+                ctRow.DTRANGTHAIDONID = sconfig.TTDANHANID;
+                db.Entry(ctRow);
+                db.SaveChanges();
+                //log
+                DatabaseUtils.Log(ctRow, "Đã nhận hàng");
+            }
+            return RedirectToAction("DanhSach", "QuanLyDonHang", new { id = lastId });
         }
 
         [HttpPost]
@@ -126,34 +172,55 @@ namespace ShopOrder.Controllers.Home
             else
             {
                 dhRow.TIENTHANHTOAN = (long)Convert.ToDecimal(model.money);
-                //if (dhRow.TIENTHANHTOAN >= dhRow.TONGCONG)
-                //{
-                    dhRow.DATHANHTOAN = 30;
-                //}
-                db.Entry(dhRow);
-                db.SaveChanges();
-                return Content("ok");
-            }
-        }
-
-        public ActionResult CapTrangThaiThanhToan()
-        {
-            List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DATHANHTOAN != 30).ToList();
-            foreach (TDONHANG item in lst)
-            {
-                //thực hiện truy vấn kiểm tra cú pháp tin nhắn có tồn tại không
-                bool kq = false;
-                if (kq)
+                if (dhRow.TIENTHANHTOAN >= dhRow.TONGCONG)
                 {
-                    item.DATHANHTOAN = 30;
-                    db.Entry(item);
+                    dhRow.DATHANHTOAN = 30;
+                    db.Entry(dhRow);
                     db.SaveChanges();
-
+                    DoiTrangThaiSauThanhToan(dhRow.ID);
                     //log
-                    DatabaseUtils.Log(item, "Đã thanh toán");
+                    DatabaseUtils.Log(dhRow, "Đã thanh toán");
+                    return Content("ok");
+                }
+                else
+                {
+                    return Content("error");
                 }
             }
-            return RedirectToAction("DanhSach", "QuanLyDonHang");
         }
+
+        private void DoiTrangThaiSauThanhToan(string iD)
+        {
+            SCONFIG sCONFIG = Config.DATA;
+            if (sCONFIG != null && sCONFIG.TTSAUTHANHTOANID != null && sCONFIG.TTSAUTHANHTOANID.Length > 0)
+            {
+                List<TDONHANGCHITIET> chiTiets = db.TDONHANGCHITIETs.Where(x => x.TDONHANGID == iD).ToList();
+                foreach (TDONHANGCHITIET ctRow in chiTiets)
+                {
+                    ctRow.DTRANGTHAIDONID = sCONFIG.TTSAUTHANHTOANID;
+                    db.Entry(ctRow);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        //public ActionResult CapTrangThaiThanhToan()
+        //{
+        //    List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DATHANHTOAN != 30).ToList();
+        //    foreach (TDONHANG item in lst)
+        //    {
+        //        //thực hiện truy vấn kiểm tra cú pháp tin nhắn có tồn tại không
+        //        bool kq = false;
+        //        if (kq)
+        //        {
+        //            item.DATHANHTOAN = 30;
+        //            db.Entry(item);
+        //            db.SaveChanges();
+        //            //log
+        //            DatabaseUtils.Log(item, "Đã thanh toán");
+        //        }
+        //    }
+        //    return RedirectToAction("DanhSachChiTiet", "QuanLyDonHang");
+        //}
     }
 }

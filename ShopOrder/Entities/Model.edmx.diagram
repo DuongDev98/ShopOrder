@@ -55,6 +55,11 @@
         <AssociationConnector Association="shoporderModel.FK__DMATHANG__DNHANV__4D5F7D71" />
         <AssociationConnector Association="shoporderModel.FK__TDONHANGC__DNHAN__4E53A1AA" />
         <AssociationConnector Association="shoporderModel.FK__DANH__TGIAOHANGI__4F47C5E3" />
+        <EntityTypeShape EntityType="shoporderModel.SCONFIG" Width="1.5" PointX="10.5" PointY="24.75" />
+        <AssociationConnector Association="shoporderModel.FK__SCONFIG__TTDANHA__6AEFE058" />
+        <AssociationConnector Association="shoporderModel.FK__SCONFIG__TTSAUTH__690797E6" />
+        <AssociationConnector Association="shoporderModel.FK__SCONFIG__TTTAODI__69FBBC1F" />
+        <AssociationConnector Association="shoporderModel.FK__SCONFIG__TTXACNH__70A8B9AE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

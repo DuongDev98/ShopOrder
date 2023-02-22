@@ -121,40 +121,48 @@ namespace ShopOrder.Controllers.Home
             }
             else
             {
-                List<TDONHANGCHITIET> lst = db.TDONHANGCHITIETs.Where(x => data.Contains(x.ID)).ToList();
-                TDONHANG dhRow = new TDONHANG();
-                dhRow.ID = Guid.NewGuid().ToString();
-                dhRow.LOAI = 0;
-                dhRow.TIMECREATED = DateTime.Now;
-                dhRow.NGAY = DateTime.Now.Date;
-                dhRow.NAME = DatabaseUtils.GenCode("NAME", "TDONHANG");
-                dhRow.TINHTHANH = tmp.TINHTHANH;
-                dhRow.QUANHUYEN = tmp.QUANHUYEN;
-                dhRow.PHUONGXA = tmp.PHUONGXA;
-                dhRow.DIACHI = tmp.DIACHI;
-                dhRow.DATHANHTOAN = 0;
-                dhRow.LOAIVANCHUYEN = tmp.LOAIVANCHUYEN;
-                if ((dhRow.LOAIVANCHUYEN ?? 0) == (int)LoaiVanChuyen.GuiXe)
+                TDONHANG dhRow;
+                if (tmp.ID == null)
                 {
-                    dhRow.DNHAXEID = tmp.DNHAXEID;
+                    dhRow = new TDONHANG();
+                    List<TDONHANGCHITIET> lst = db.TDONHANGCHITIETs.Where(x => data.Contains(x.ID)).ToList();
+                    dhRow.ID = Guid.NewGuid().ToString();
+                    dhRow.LOAI = 0;
+                    dhRow.TIMECREATED = DateTime.Now;
+                    dhRow.NGAY = DateTime.Now.Date;
+                    dhRow.NAME = DatabaseUtils.GenCode("NAME", "TDONHANG");
+                    dhRow.TINHTHANH = tmp.TINHTHANH;
+                    dhRow.QUANHUYEN = tmp.QUANHUYEN;
+                    dhRow.PHUONGXA = tmp.PHUONGXA;
+                    dhRow.DIACHI = tmp.DIACHI;
+                    dhRow.DATHANHTOAN = 0;
+                    dhRow.LOAIVANCHUYEN = tmp.LOAIVANCHUYEN;
+                    if ((dhRow.LOAIVANCHUYEN ?? 0) == (int)LoaiVanChuyen.GuiXe)
+                    {
+                        dhRow.DNHAXEID = tmp.DNHAXEID;
+                    }
+                    dhRow.DKHACHHANGID = lst[0].DKHACHHANGID;
+                    dhRow.TIENHANG = lst.Sum(x => x.THANHTIEN);
+                    dhRow.PHIVANCHUYEN = 0;
+                    dhRow.TONGCONG = dhRow.TIENHANG + dhRow.PHIVANCHUYEN;
+                    dhRow.TMPCODE = LayCodeChuyenKhoan(dhRow.DKHACHHANGID);
+                    db.TDONHANGs.Add(dhRow);
+                    db.SaveChanges();
+
+                    //log
+                    DatabaseUtils.Log(dhRow, "Tạo đơn");
+
+                    foreach (var ctRow in lst)
+                    {
+                        ctRow.TDONHANGID = dhRow.ID;
+                        db.Entry(ctRow);
+                    }
+                    db.SaveChanges();
                 }
-                dhRow.DKHACHHANGID = lst[0].DKHACHHANGID;
-                dhRow.TIENHANG = lst.Sum(x => x.THANHTIEN);
-                dhRow.PHIVANCHUYEN = 0;
-                dhRow.TONGCONG = dhRow.TIENHANG + dhRow.PHIVANCHUYEN;
-                dhRow.TMPCODE = LayCodeChuyenKhoan(dhRow.DKHACHHANGID);
-                db.TDONHANGs.Add(dhRow);
-                db.SaveChanges();
-
-                //log
-                DatabaseUtils.Log(dhRow, "Tạo đơn");
-
-                foreach (var ctRow in lst)
+                else
                 {
-                    ctRow.TDONHANGID = dhRow.ID;
-                    db.Entry(ctRow);
+                    dhRow = db.TDONHANGs.Find(tmp.ID);
                 }
-                db.SaveChanges();
                 dhRow.TMPCODE = UiUtils.ImageQrCode(dhRow);
                 return RedirectToAction("ThongTinThanhToan", "Cart", new { id = dhRow.ID });
             }

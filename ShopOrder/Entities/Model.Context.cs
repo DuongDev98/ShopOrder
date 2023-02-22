@@ -45,5 +45,6 @@ namespace ShopOrder.Entities
         public virtual DbSet<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
         public virtual DbSet<TGIAOHANG> TGIAOHANGs { get; set; }
         public virtual DbSet<TLUUVET> TLUUVETs { get; set; }
+        public virtual DbSet<SCONFIG> SCONFIGs { get; set; }
     }
 }

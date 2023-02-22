@@ -72,7 +72,7 @@ namespace ShopOrder.Controllers.Model
         private Dictionary<string, string> GetDicAnhs(ShopOrderEntities db, DMATHANG mhRow)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            List<DANH> lstAnhs = db.DANHs.Where(x => x.DMATHANGID == mhRow.ID).ToList();
+            List<DANH> lstAnhs = db.DANHs.Where(x => x.DMATHANGID != null && x.DMATHANGID == mhRow.ID).ToList();
             foreach (DANH anh in lstAnhs)
             {
                 dic.Add(anh.ID, string.Format("/Images/{0}/", FileFolders.MatHang) + anh.NAME);

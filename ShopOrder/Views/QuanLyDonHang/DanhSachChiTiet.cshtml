@@ -2,14 +2,14 @@
 @using System.Collections.Generic
 @model List<TDONHANGCHITIET>
 @{
-    ViewBag.Title = "DanhSachChiTiet";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row p-all-10 p-l-15"><h5>@ViewBag.Title</h5></div>
+<div class="row p-b-15">
     @{
         foreach (var item in Model)
         {
-            <div class="col-sm-12 col-md-6 m-t-10">
+            <div class="col-sm-12 col-md-3 m-t-10">
                 <div class="card pointer" data-id="@item.ID">
                     <div class="card-body">
                         <div class="row">
@@ -34,6 +34,13 @@
                                     }
                                 </div>
                                 <div class="stext-105" style="color:red;"><span id="ipTHANHTIEN">@((item.DONGIA * item.SOLUONG).ToString("n0"))</span> vnđ</div>
+                                <hr />
+                                @{
+                                    if (ViewBag.ViewDaNhan)
+                                    {
+                                        <a href="/QuanLyDonHang/DoiTrangThaiDaNhan/@item.ID"><div class="btn btn-success">Đã nhận hàng</div></a>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

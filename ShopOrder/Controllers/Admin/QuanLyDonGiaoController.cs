@@ -150,22 +150,32 @@ namespace ShopOrder.Controllers.Admin
                     db.Entry(dhRow);
                     db.SaveChanges();
 
+                    SCONFIG sconfig = Config.DATA;
+                    List<TDONHANGCHITIET> lstTmp = dhRow.TDONHANGCHITIETs.ToList();
                     if (dhRow.TDONHANGCHITIETs != null)
                     {
-                        foreach (TDONHANGCHITIET tmpCt in dhRow.TDONHANGCHITIETs)
+                        foreach (TDONHANGCHITIET tmpCt in lstTmp)
                         {
                             TDONHANGCHITIET updateRow = db.TDONHANGCHITIETs.Find(tmpCt.ID);
-                            updateRow.TGIAOHANGID = dhRow.ID;
+                            updateRow.TGIAOHANGID = null;
                             db.Entry(updateRow);
                         }
                         db.SaveChanges();
                     }
 
                     //lưu chi tiết
-                    foreach (TDONHANGCHITIET tmpCt in tmp.TDONHANGCHITIETs)
+                    lstTmp = tmp.TDONHANGCHITIETs.ToList();
+                    foreach (TDONHANGCHITIET tmpCt in lstTmp)
                     {
                         TDONHANGCHITIET updateRow = db.TDONHANGCHITIETs.Find(tmpCt.ID);
                         updateRow.TGIAOHANGID = dhRow.ID;
+                        //lưu trạng thái
+                        if (sconfig.TTTAODIEUPHOIID != null && sconfig.TTTAODIEUPHOIID.Length > 0)
+                        {
+                            updateRow.DTRANGTHAIDONID = sconfig.TTTAODIEUPHOIID;
+                            //log
+                            DatabaseUtils.Log(updateRow, db.DTRANGTHAIDONs.Find(updateRow.DTRANGTHAIDONID).NAME);
+                        }
                         db.Entry(updateRow);
                     }
                     db.SaveChanges();
@@ -229,7 +239,7 @@ namespace ShopOrder.Controllers.Admin
         private Dictionary<string, string> GetDicAnhs(ShopOrderEntities db, TGIAOHANG giaoHang)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            List<DANH> lstAnhs = db.DANHs.Where(x => x.TGIAOHANGID == giaoHang.ID).ToList();
+            List<DANH> lstAnhs = db.DANHs.Where(x => x.TGIAOHANGID != null && x.TGIAOHANGID == giaoHang.ID).ToList();
             foreach (DANH anh in lstAnhs)
             {
                 dic.Add(anh.ID, string.Format("/Images/{0}/", FileFolders.DonHang) + anh.NAME);
@@ -258,14 +268,14 @@ namespace ShopOrder.Controllers.Admin
             //order
             Order order = new Order();
             order.id = giaoHangRow.ID;
-            order.pick_name = "Bùi Kim Phượng";
+            order.pick_name = Config.DATA.PICK_NAME;
             order.pick_money = 0;
-            order.pick_province = "Hà Nội";
-            order.pick_district = "Gia Lâm";
-            order.pick_ward = "Ninh Hiệp";
-            order.pick_address = "Xóm";
-            order.pick_tel = "0357192939";
-            order.pick_email = "0357192939";
+            order.pick_province = Config.DATA.PICK_PROVINCE;
+            order.pick_district = Config.DATA.PICK_DISTRICT;
+            order.pick_ward = Config.DATA.PICK_WARD;
+            order.pick_address = Config.DATA.PICK_ADDRESS;
+            order.pick_tel = Config.DATA.PICK_TEL;
+            order.pick_email = Config.DATA.PICK_EMAIL;
             //
             order.name = giaoHangRow.DKHACHHANG.NAME;
             order.address = giaoHangRow.DIACHI;
