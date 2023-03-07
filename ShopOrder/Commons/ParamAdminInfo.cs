@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ShopOrder.Commons
 {
-    public class ParamInfo
+    public class ParamAdminInfo
     {
         public string dtNGAY { set; get; }
         public string DKHACHHANGID { set; get; }
@@ -14,7 +14,7 @@ namespace ShopOrder.Commons
         public string DNHAXEID { set; get; }
         public string DMATHANGID { set; get; }
 
-        public ParamInfo()
+        public ParamAdminInfo()
         {
             DateTime toDay = DateTime.Now.Date;
             LOAIVANCHUYEN = -1;

@@ -130,7 +130,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Commons\ParamInfo.cs" />
+    <Compile Include="Commons\ParamAdminInfo.cs" />
+    <Compile Include="Commons\ParamMatHangInfo.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\BaseController.cs" />
     <Compile Include="Controllers\Admin\QuanLyDonGiaoController.cs" />
@@ -1398,7 +1399,7 @@
     <Content Include="Views\MatHang\Edit.cshtml" />
     <Content Include="Views\MatHang\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\DanhSachMatHang.cshtml" />
+    <Content Include="Views\Home\MatHangTongHop.cshtml" />
     <Content Include="Views\Home\ViewMatHang.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\TrangThaiDonHang\Delete.cshtml" />
@@ -1438,6 +1439,8 @@
     <Content Include="Views\Admin\CauHinhCuoiTrang.cshtml" />
     <Content Include="Views\Admin\CauHinhTrangThai.cshtml" />
     <Content Include="Views\Admin\CauHinhGHTK.cshtml" />
+    <Content Include="Views\Home\DanhSachMatHang.cshtml" />
+    <Content Include="Views\Home\ListItemMatHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

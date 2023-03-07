@@ -168,8 +168,11 @@ select[readonly] {
 /* 0.1. Body / Typography
    ========================================================================== */
 
-body {
+* {
     font-family: 'Times New Roman' !important;
+}
+
+body {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;

@@ -39,6 +39,14 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
+.block2 img {
+    max-height: 250px;
+}
+
+* {
+    /*font-family: 'Times New Roman' !important;*/
+}
+
 .container-fluid {
     min-height: 400px;
 }

@@ -121,7 +121,8 @@ create table DKHACHHANG (
 	PASSWORD nvarchar(255) not null,
 	DNHOMKHACHHANGID varchar(36) foreign key references DNHOMKHACHHANG(ID),
 	LOAIVANCHUYEN int,
-	DNHAXEID varchar(36) foreign key references DNHAXE(ID)
+	DNHAXEID varchar(36) foreign key references DNHAXE(ID),
+	PARENTID varchar(36)
 );
 --15
 create table DTRANGTHAIDON (

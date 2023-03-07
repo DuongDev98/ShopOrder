@@ -34,6 +34,7 @@
     <Property Name="LOAIVANCHUYEN" Type="int" />
     <Property Name="DNHAXEID" Type="varchar" MaxLength="36" />
     <Property Name="EMAIL" Type="nvarchar" MaxLength="255" />
+    <Property Name="PARENTID" Type="varchar" MaxLength="36" />
   </EntityType>
   <EntityType Name="DMATHANG">
     <Key>

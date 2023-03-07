@@ -1,0 +1,30 @@
+﻿@using ShopOrder.Entities
+@model List<DMATHANG>
+@{
+    foreach (var item in Model)
+    {
+        <div class="col-6 col-md-2 p-b-35 isotope-item women itemMatHang" data-id="@item.ID">
+            <!-- Block2 -->
+            <div class="block2">
+                <div class="block2-pic hov-img0">
+                    <img src="~/Images/Items/@((item.DANHs == null || item.DANHs.Count == 0) ? "no-image.jpg" : item.DANHs.ElementAt(0).NAME)" alt="IMG-PRODUCT">
+                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                        View
+                    </a>
+                </div>
+
+                <div class="block2-txt flex-w flex-t p-t-14">
+                    <div class="block2-txt-child1 flex-col-l ">
+                        <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                            @item.NAME
+                        </a>
+
+                        <span class="stext-105 cl3">
+                            @((item.GIABAN ?? 0).ToString("n0")) vnđ
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

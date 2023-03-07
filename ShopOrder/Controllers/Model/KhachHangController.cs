@@ -38,7 +38,6 @@ namespace ShopOrder.Controllers.Model
             {
                 return HttpNotFound();
             }
-
             UserModel userLogin = CookieUtils.UserLogin();
             ViewBag.Title = userLogin.IsCustomer ? "Thông tin cá nhân" : "Chỉnh sửa";
             ViewBag.Layout = UiUtils.Layout(userLogin);
@@ -46,6 +45,9 @@ namespace ShopOrder.Controllers.Model
             ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
             ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
             ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(false, model.LOAIVANCHUYEN ?? 0);
+            //parentid
+            ViewBag.parentId = new SelectList(db.DKHACHHANGs.Where(x=>x.ID != id).OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.PARENTID);
+            ViewBag.linkChiaSe = LayLinkChiaSe(id);
             return View(model);
         }
 
@@ -70,6 +72,7 @@ namespace ShopOrder.Controllers.Model
                     khRow.LOAIVANCHUYEN = model.LOAIVANCHUYEN;
                     khRow.DNHAXEID = model.DNHAXEID;
                     khRow.DNHOMKHACHHANGID = model.DNHOMKHACHHANGID;
+                    khRow.PARENTID = model.PARENTID;
                     db.Entry(khRow).State = EntityState.Modified;
                     db.SaveChanges();
                     if (!CookieUtils.UserLogin().IsCustomer)
@@ -89,7 +92,16 @@ namespace ShopOrder.Controllers.Model
             ViewBag.DNHAXEID = new SelectList(db.DNHAXEs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHAXEID);
             ViewBag.DNHOMKHACHHANGID = new SelectList(db.DNHOMKHACHHANGs.OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.DNHOMKHACHHANGID);
             ViewBag.LOAIVANCHUYEN = LayLoaiVanChuyen(false, model.LOAIVANCHUYEN ?? 0);
+            //parentid
+            ViewBag.parentId = new SelectList(db.DKHACHHANGs.Where(x => x.ID != model.ID).OrderBy(x => x.NAME).ToList(), "ID", "NAME", model.PARENTID);
+            ViewBag.linkChiaSe = LayLinkChiaSe(model.ID);
             return View(khRow);
+        }
+
+        private string LayLinkChiaSe(string id)
+        {
+            if (id == null) return "";
+            return Request.Url.Host + "/User/Register/" + id;
         }
 
         public static SelectList LayLoaiVanChuyen(bool filter, int loai)

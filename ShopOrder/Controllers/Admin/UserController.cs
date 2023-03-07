@@ -71,16 +71,28 @@ namespace ShopOrder.Controllers
         }
 
         [HttpGet]
-        public ActionResult Register()
+        public ActionResult Register(string id)
         {
+            if (id != null)
+            {
+                DKHACHHANG tmpCheck = db.DKHACHHANGs.Find(id);
+                if (tmpCheck == null) return HttpNotFound();
+            }
+            ViewBag.parentId = id;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Register(string username, string phone, string name, string password, string confirmPassword)
+        public ActionResult Register(string username, string phone, string name, string password, string confirmPassword, string parentId)
         {
             if (ModelState.IsValid)
             {
+                if (parentId != null)
+                {
+                    DKHACHHANG tmpCheck = db.DKHACHHANGs.Find(parentId);
+                    if (tmpCheck == null) return HttpNotFound();
+                }
+
                 string error = "";
                 if (password != confirmPassword)
                 {
@@ -128,6 +140,10 @@ namespace ShopOrder.Controllers
                     khRow.PASSWORD = PasswordUtils.EncrytPass(password);
                     khRow.NAME = name;
                     khRow.DIENTHOAI = phone;
+                    if (parentId != null)
+                    {
+                        khRow.PARENTID = parentId;
+                    }
                     db.DKHACHHANGs.Add(khRow);
                     db.SaveChanges();
                     ViewBag.message = "Đăng ký tài khoản thành công";

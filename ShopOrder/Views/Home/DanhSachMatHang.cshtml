@@ -1,51 +1,262 @@
-﻿@model List<ShopOrder.Entities.DMATHANG>
+﻿@using ShopOrder.Entities
 @{
-    if (Model == null || Model.Count == 0)
-    {
-        return;
-    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="sec-product bg0 p-t-30 p-b-30">
+<div class="bg0 m-t-23 p-b-140">
     <div class="container">
-        <div class="p-b-32">
-            <h5 class="ltext-101 cl5 txt-center respon1">
-                @ViewBag.TieuDe
-            </h5>
-        </div>
+        <div class="p-b-25 p-lr-15">
+            <div class="row">
+                <div class="flex-w flex-c-m m-tb-10">
+                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+                        <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+                        <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                        Lọc
+                    </div>
 
-        <!-- Nội dung -->
-        <div class="wrap-slick2">
-            <div class="slick2">
-                @{
-                    foreach (var item in Model)
-                    {
-                        <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15 itemMatHang" data-id="@item.ID">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Images/Items/@((item.DANHs == null || item.DANHs.Count == 0) ? "no-image.jpg" : item.DANHs.ElementAt(0).NAME)" alt="IMG-PRODUCT">
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        View
-                                    </a>
-                                </div>
+                    <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+                        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+                        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                        Tìm kiếm
+                    </div>
+                </div>
+            </div>
 
-                                <div class="block2-txt flex-w flex-t p-t-14">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                            @item.NAME
-                                        </a>
+            <form class="row">
+                <!-- Search product -->
+                <div class="dis-none panel-search w-full p-t-10 p-b-15">
+                    <div class="bor8 dis-flex p-l-15">
+                        <button type="button" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 btnFilter">
+                            <i class="zmdi zmdi-search"></i>
+                        </button>
 
-                                        <span class="stext-105 cl3">
-                                            @((item.GIABAN ?? 0).ToString("n0")) vnđ
-                                        </span>
-                                    </div>
-                                </div>
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+                    </div>
+                </div>
+
+                <input id="numPage" class="dis-none" type="number" name="page" value="@ViewBag.page">
+
+                <!-- Filter -->
+                <div class="dis-none panel-filter w-full p-t-10">
+                    <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-10 p-lr-15-sm">
+
+                        <div class="filter-col1 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Loại
+                            </div>
+                            <input class="dis-none" type="number" name="loaiMatHang">
+                            <ul>
+                                <li class="p-b-6 p-l-15 row">
+                                    <input type="checkbox" id="chkHangSale">
+                                    <label class="m-b-0 m-l-10" for="chkHangSale">Hàng sale</label><br>
+                                </li>
+                                @*<li class="p-b-6 p-l-15 row">
+                                        <input type="checkbox" id="chkHangMoiVe">
+                                        <label class="m-b-0 m-l-10" for="chkHangMoiVe">Hàng mới về</label><br>
+                                    </li>
+                                    <li class="p-b-6 p-l-15 row">
+                                        <input type="checkbox" id="chkHangSapVe">
+                                        <label class="m-b-0 m-l-10" for="chkHangSapVe">Hàng sắp về</label><br>
+                                    </li>*@
+                            </ul>
+                        </div>
+
+                        <div class="filter-col2 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Dáng
+                            </div>
+                            <ul>
+                                @{
+                                    foreach (var item in ViewBag.dsDang)
+                                    {
+                                        <li class="p-b-6 p-l-15 row">
+                                            <input type="checkbox" id="@item.ID">
+                                            <input class="dis-none" type="text" name="dangId[]">
+                                            <label class="m-b-0 m-l-10" for="@item.ID">@item.NAME</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="filter-col3 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Nhóm
+                            </div>
+                            <ul>
+                                @{
+                                    foreach (var item in ViewBag.dsNhom)
+                                    {
+                                        <li class="p-b-6 p-l-15 row">
+                                            <input type="checkbox" id="@item.ID">
+                                            <input class="dis-none" type="text" name="nhomId[]">
+                                            <label class="m-b-0 m-l-10" for="@item.ID">@item.NAME</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="filter-col4 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Phân loại
+                            </div>
+                            <ul>
+                                @{
+                                    foreach (var item in ViewBag.dsPhanLoai)
+                                    {
+                                        <li class="p-b-6 p-l-15 row">
+                                            <input type="checkbox" id="@item.ID">
+                                            <input class="dis-none" type="text" name="phanLoaiId[]">
+                                            <label class="m-b-0 m-l-10" for="@item.ID">@item.NAME</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-10 p-lr-15-sm">
+                        <div class="filter-col1 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Size
+                            </div>
+                            <ul>
+                                @{
+                                    foreach (var item in ViewBag.dsSize)
+                                    {
+                                        <li class="p-b-6 p-l-15 row">
+                                            <input type="checkbox" id="@item.ID">
+                                            <input class="dis-none" type="text" name="sizeId[]">
+                                            <label class="m-b-0 m-l-10" for="@item.ID">@item.NAME</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="filter-col2 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Màu
+                            </div>
+                            <ul>
+                                @{
+                                    foreach (var item in ViewBag.dsMau)
+                                    {
+                                        <li class="p-b-6 p-l-15 row">
+                                            <input type="checkbox" id="@item.ID">
+                                            <input class="dis-none" type="text" name="mauId[]">
+                                            <label class="m-b-0 m-l-10" for="@item.ID">@item.NAME</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="filter-col3 p-r-15 p-b-10">
+                            <div class="mtext-102 cl2 p-b-15">
+                                Thời gian
+                            </div>
+                            <ul>
+                                @{
+                                    foreach (var item in ViewBag.dsThoiGian)
+                                    {
+                                        <li class="p-b-6 p-l-15 row">
+                                            <input type="checkbox" id="@item.ID">
+                                            <input class="dis-none" type="text" name="thoiGianId[]">
+                                            <label class="m-b-0 m-l-10" for="@item.ID">@item.NAME</label>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-10 p-lr-15-sm justify-content-end">
+                        <div class="p-b-10">
+                            <div class="btn btn-info btnFilter">
+                                Lọc dữ liệu
                             </div>
                         </div>
-                    }
-                }
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row isotope-grid">
+            @{
+                Html.RenderAction("ListItemMatHang", "Home",
+                    new
+                    {
+                        page = ViewBag.page,
+                        loaiMatHang = ViewBag.loaiMatHang,
+                        dangId = ViewBag.dangId,
+                        mauId = ViewBag.mauId,
+                        nhomId = ViewBag.nhomId,
+                        phanLoaiId = ViewBag.phanLoaiId,
+                        shopId = ViewBag.shopId,
+                        sizeId = ViewBag.sizeId,
+                        thoiGianId = ViewBag.thoiGianId,
+                    });
+            }
+        </div>
+
+        <!-- Load more -->
+        <div class="flex-c-m flex-w w-full p-t-45">
+            <div class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" id="btnTaiThem">
+                Tải thêm
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<script>
+    $("input[type='checkbox']").change(function () {
+        let checkControl = $(this);
+        let textControl = checkControl.closest("li").find("input[type='text']");
+        if (checkControl.is(":checked")) {
+            textControl.val(checkControl.attr("id"));
+        } else {
+            textControl.val("");
+        }
+    });
+
+    $('.btnFilter').click(function () {
+        LayDanhSachMatHang(true);
+    });
+
+    $('#btnTaiThem').click(function () {
+        LayDanhSachMatHang(false);
+    });
+
+    let lastData = "";
+    function LayDanhSachMatHang(init) {
+        let page = ConvertToJs.Int($('#numPage').val());
+        if (init || (!init && lastData != "")) {
+            if (init) {
+                page = 1;
+            } else {
+                page = page + 1;
+            }
+            $('#numPage').val(page);
+
+            let postData = {};
+            let arr = $(this).closest("form").serializeArray();
+            arr.forEach(function (value, key) {
+                postData[key] = value;
+            });
+
+            lastData = "";
+            $.post("/Home/ListItemMatHang", postData, function (success) {
+                lastData = success;
+                if (success != "") {
+                    if (init) {
+                        $('.isotope-grid').empty();
+                    }
+                    $('.isotope-grid').append(success);
+                }
+            });
+        }
+        alert(page);
+    }
+</script>

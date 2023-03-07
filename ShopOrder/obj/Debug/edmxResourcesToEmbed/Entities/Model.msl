@@ -22,6 +22,7 @@
     <EntitySetMapping Name="DKHACHHANGs">
       <EntityTypeMapping TypeName="shoporderModel.DKHACHHANG">
         <MappingFragment StoreEntitySet="DKHACHHANG">
+          <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />

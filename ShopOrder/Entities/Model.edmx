@@ -39,6 +39,7 @@
           <Property Name="LOAIVANCHUYEN" Type="int" />
           <Property Name="DNHAXEID" Type="varchar" MaxLength="36" />
           <Property Name="EMAIL" Type="nvarchar" MaxLength="255" />
+          <Property Name="PARENTID" Type="varchar" MaxLength="36" />
         </EntityType>
         <EntityType Name="DMATHANG">
           <Key>
@@ -878,6 +879,7 @@
           <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DKHACH__3493CFA7" FromRole="DKHACHHANG" ToRole="TDONHANG" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__DKHAC__42E1EEFE" FromRole="DKHACHHANG" ToRole="TDONHANGCHITIET" />
           <NavigationProperty Name="TGIAOHANGs" Relationship="Self.FK__TGIAOHANG__DKHAC__395884C4" FromRole="DKHACHHANG" ToRole="TGIAOHANG" />
+          <Property Name="PARENTID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DMATHANG">
           <Key>
@@ -1758,6 +1760,7 @@
           <EntitySetMapping Name="DKHACHHANGs">
             <EntityTypeMapping TypeName="shoporderModel.DKHACHHANG">
               <MappingFragment StoreEntitySet="DKHACHHANG">
+                <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />

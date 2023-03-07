@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LoginRegister.cshtml";
 }
 <form method="post" class="splash-container">
+    <input type="text" name="parentId" value="@ViewBag.phone" style="display: none;">
     <div class="card">
         <div class="card-header">
             <h3 class="mb-1">Đăng ký tài khoản</h3>
@@ -34,18 +35,18 @@
                 <button class="btn btn-block btn-primary" type="submit">Đăng ký tài khoản</button>
             </div>
             @*<div class="form-group">
-            <label class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox"><span class="custom-control-label">By creating an account, you agree the <a href="#">terms and conditions</a></span>
-            </label>
-        </div>
-        <div class="form-group row pt-0">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
-                <button class="btn btn-block btn-social btn-facebook " type="button">Facebook</button>
-            </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <button class="btn  btn-block btn-social btn-twitter" type="button">Twitter</button>
-            </div>
-        </div>*@
+                    <label class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox"><span class="custom-control-label">By creating an account, you agree the <a href="#">terms and conditions</a></span>
+                    </label>
+                </div>
+                <div class="form-group row pt-0">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                        <button class="btn btn-block btn-social btn-facebook " type="button">Facebook</button>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <button class="btn  btn-block btn-social btn-twitter" type="button">Twitter</button>
+                    </div>
+                </div>*@
         </div>
         <div class="card-footer bg-white">
             <p>Bạn đã có tài khoản? <a href="/User/Login" class="text-secondary">Đăng nhập ở đây</a></p>

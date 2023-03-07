@@ -13,7 +13,7 @@ namespace ShopOrder.Utils
 {
     public class FilterUser : ActionFilterAttribute, IAuthenticationFilter
     {
-        ShopOrderEntities db = new ShopOrderEntities();
+        //ShopOrderEntities db = new ShopOrderEntities();
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             string controller = filterContext.RouteData.Values["Controller"].ToString().ToLower();

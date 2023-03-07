@@ -17,11 +17,11 @@ namespace ShopOrder.Controllers.Admin
     {
         private ShopOrderEntities db = new ShopOrderEntities();
 
-        public ActionResult Index(ParamInfo info)
+        public ActionResult Index(ParamAdminInfo info)
         {
             if (info == null)
             {
-                info = new ParamInfo();
+                info = new ParamAdminInfo();
             }
 
             //param
