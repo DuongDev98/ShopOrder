@@ -9,8 +9,6 @@ namespace ShopOrder.Utils
 {
     public class Config
     {
-        ShopOrderEntities db = new ShopOrderEntities();
-
         public static SCONFIG DATA
         {
             get

@@ -172,6 +172,7 @@ namespace ShopOrder.Utils
 
         public static string GenCode(string field, string table, DNHANVIEN dNHANVIEN = null, int loai = 0)
         {
+            bool includeDate = false;
             int maxLength = 8;
             string code = "";
             if (table == "DMATHANG")
@@ -186,6 +187,7 @@ namespace ShopOrder.Utils
             else if (table == "DKHACHHANG") code = "KH";
             else if (table == "TDONHANG")
             {
+                includeDate = true;
                 if (loai == 0) code = "DH";
                 else if (loai == 1) code = "PN";
 
@@ -194,11 +196,13 @@ namespace ShopOrder.Utils
             }
             else if (table == "TTHANHTOAN")
             {
+                includeDate = true;
                 code = "TT" + DateTime.Now.ToString("yyMM");
                 maxLength = 12;
             }
             else if (table == "TGIAOHANG")
             {
+                includeDate = true;
                 code = "GH" + DateTime.Now.ToString("yyMM");
                 maxLength = 12;
             }
@@ -208,8 +212,16 @@ namespace ShopOrder.Utils
             if (table == "TDONHANG")
             {
                 query += " WHERE LOAI = " + loai;
+                if (includeDate)
+                {
+                    query += " AND {0} LIKE '{2}%'";
+                }
             }
-            string data = GetFirstFieldString(string.Format(query, field, table), null);
+            else if (includeDate)
+            {
+                query += " WHERE {0} LIKE '{2}%'";
+            }
+            string data = GetFirstFieldString(string.Format(query, field, table, code), null);
             if (data != null && data.Length > 0)
             {
                 data = data.Replace(code, "");

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Web;
 
 namespace ShopOrder.Utils
@@ -12,7 +14,7 @@ namespace ShopOrder.Utils
     {
         public bool isDeveloper = true;
         private const string urlDeveloper = "https://services-staging.ghtklab.com";
-        private const string tokenDeveloper = "35042506a888ba0154938b31c49994663E945275";
+        private const string tokenDeveloper = "0b604452B6e9B2fA23537fb7B0f843050886450a";
         private const string urlProduction = "https://services.giaohangtietkiem.vn";
         private const string tokenProduction = "";
 
@@ -20,7 +22,7 @@ namespace ShopOrder.Utils
         public ResponseGhtk listPick()
         {
             string _url = "/services/shipment/list_pick_add";
-            string dataJson = httpRequest((isDeveloper ? urlDeveloper : urlProduction) + _url, "", "GET");
+            string dataJson = httpRequest( _url, "", "GET");
             //dataJson = File.ReadAllText("D:/data.txt");
             if (dataJson == "") return null;
             return parseJson<ResponseGhtk>(dataJson);
@@ -30,7 +32,7 @@ namespace ShopOrder.Utils
         public ResponseGhtk orderCancel(string label_id)
         {
             string _url = "/services/shipment/cancel/" + label_id;
-            string dataJson = httpRequest((isDeveloper ? urlDeveloper : urlProduction) + _url, "", "POST");
+            string dataJson = httpRequest( _url, "", "POST");
             if (dataJson == "") return null;
             return parseJson<ResponseGhtk>(dataJson);
         }
@@ -39,7 +41,7 @@ namespace ShopOrder.Utils
         public ResponseGhtk orderInfo(string label_id)
         {
             string _url = "/services/shipment/v2/" + label_id;
-            string dataJson = httpRequest((isDeveloper ? urlDeveloper : urlProduction) + _url, "", "GET");
+            string dataJson = httpRequest( _url, "", "GET");
             if (dataJson == "") return null;
             return parseJson<ResponseGhtk>(dataJson);
         }
@@ -48,15 +50,15 @@ namespace ShopOrder.Utils
         public ResponseGhtk calculateFee(CalFeeRequest param)
         {
             string _url = "/services/shipment/fee?";
-            _url += "pick_province" + param.pick_province;
-            _url += "&pick_district" + param.pick_district;
-            _url += "&province" + param.province;
-            _url += "&district" + param.district;
-            _url += "&address" + param.address;
-            _url += "&weight" + param.weight;
-            _url += "&value" + param.value;
-            _url += "&transport" + param.transport;
-            string dataJson = httpRequest((isDeveloper ? urlDeveloper : urlProduction) + _url, "", "GET");
+            _url += "pick_province=" + param.pick_province;
+            _url += "&pick_district=" + param.pick_district;
+            _url += "&province=" + param.province;
+            _url += "&district=" + param.district;
+            _url += "&address=" + param.address;
+            _url += "&weight=" + param.weight;
+            _url += "&value=" + param.value;
+            _url += "&transport=" + param.transport;
+            string dataJson = httpRequest( _url, "", "GET");
             if (dataJson == "") return null;
             return parseJson<ResponseGhtk>(dataJson);
         }
@@ -79,7 +81,7 @@ namespace ShopOrder.Utils
         {
             HttpWebRequest http = (HttpWebRequest)WebRequest.Create((isDeveloper ? urlDeveloper : urlProduction) + _url);
             http.Headers.Add("token", tokenDeveloper);
-            http.ContentType = "application/json; charset=utf-8";
+            http.ContentType = "application/json;";
             http.ProtocolVersion = HttpVersion.Version11;
             http.Method = method;
             if (data != "")
@@ -92,14 +94,31 @@ namespace ShopOrder.Utils
 
             try
             {
-                using (StreamReader reader = new StreamReader(http.GetResponse().GetResponseStream()))
+                using (WebResponse webResponse = http.GetResponse())
                 {
-                    data = reader.ReadToEnd();
+                    using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
+                    {
+                        data = reader.ReadToEnd();
+                    }
                 }
             }
             catch (Exception ex)
             {
-                data = "";
+                if (ex.GetType() == typeof(WebException))
+                {
+                    WebResponse webResponse = (ex as WebException).Response;
+                    using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
+                    {
+                        data = reader.ReadToEnd();
+                    }
+                }
+                else
+                {
+                    ResponseGhtk tmp = new ResponseGhtk();
+                    tmp.success = false;
+                    tmp.message = ex.Message;
+                    data = JsonConvert.SerializeObject(tmp);
+                }
             }
             return data;
         }
@@ -150,7 +169,7 @@ namespace ShopOrder.Utils
         public string return_tel { set; get; }
         public string return_email { set; get; }
         //
-        public string is_freeship { set; get; }
+        public int is_freeship { set; get; }
         public string pick_date { set; get; }
         public decimal pick_money { set; get; }
         public string note { set; get; }

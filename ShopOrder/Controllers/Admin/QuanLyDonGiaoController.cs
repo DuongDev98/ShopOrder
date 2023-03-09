@@ -98,7 +98,7 @@ namespace ShopOrder.Controllers.Admin
         public ActionResult FormThemChiTiet(string dkhachhangid)
         {
             IQueryable<TDONHANGCHITIET> chiTiets = db.TDONHANGCHITIETs.Where(x => x.DKHACHHANGID == dkhachhangid 
-            && x.TDONHANG.DATHANHTOAN == 30 && x.SLNHAN != 30); ;
+            && x.TDONHANG.DATHANHTOAN == 30 && x.SLNHAN != 30 && x.DTRANGTHAIDONID == Config.DATA.TTSAUTHANHTOANID);
             return PartialView(chiTiets.ToList());
         }
 
